@@ -9,7 +9,8 @@ db_file = "school.db"
 data.csv_to_sqlite('professors.csv', db_file, 'professors')
 data.csv_to_sqlite('offerings.csv', db_file, 'offerings')
 
-# For testing purposes, define a course name and build an example SQL query
+# get a text file
+
 courseName = "Machine Learning"
 
 sql_query = f"""

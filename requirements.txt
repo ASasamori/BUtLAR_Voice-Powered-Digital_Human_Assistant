@@ -1,0 +1,15 @@
+in the whisper venv ensure the following are installed (example is for macOS):
+
+brew install python@3.10
+pip3 install torch torchvision torchaudio   
+brew install ffmpeg     
+pip3 install -U openai-whisper 
+/Applications/Python\ 3.10/Install\ Certificates.command 
+pip install pydub  
+________________________
+pip3 install pandas
+
+
+COMMAND LINE:
+
+python whisperTabulate.py fileName.wav  --model tiny.en 

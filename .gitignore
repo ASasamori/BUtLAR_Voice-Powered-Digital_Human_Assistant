@@ -10,4 +10,5 @@
 /Audio/path
 /Audio/venv
 /Transcripts/
-/database/OpenAI_Integration/api_key.json
+/database/OpenAI_Integration/api_key.jsonwhisperenv/
+myenv/
