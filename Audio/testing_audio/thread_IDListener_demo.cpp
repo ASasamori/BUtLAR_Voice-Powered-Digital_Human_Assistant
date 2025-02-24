@@ -1,4 +1,10 @@
+// Yobe file that reads from std in and writes to std out
+// THREADED VERSION
+
 // File used for original Yobe Processing ID
+// run from the samples directory:
+// cmake --build build/
+// ./build/IDListener_demo "temp.wav" broadside target-speaker "student-pc" ./build
 
 /**
  * @file: IDListener_demo.cpp
@@ -15,6 +21,17 @@
 #include <fstream>
 #include <iostream>
 #include <vector>
+#include <csignal>
+#include <unistd.h>
+#include <errno.h>
+
+#include <queue>
+#include <thread>
+#include <mutex>
+#include <condition_variable>
+
+constexpr int SAMPLE_RATE = 16000;
+constexpr int BUFFER_SIZE = 4096;
 
 /// This is an enviornment variable that store your Yobe license.
 constexpr auto ENV_VAR_LICENSE = "YOBE_LICENSE";
@@ -46,44 +63,110 @@ std::shared_ptr<Yobe::IDTemplate> CreateTemplateFromFile(const std::unique_ptr<Y
 /// This ofstream is to demo the logging callback.
 std::ofstream log_stream;
 
+// flag for standard in things
+volatile sig_atomic_t running = 1;
+void handle_signal(int sig) {
+    running = 0;
+}
+
+// Global queue for passing audio data to Yobe processing
+std::queue<std::vector<float>> audio_queue;
+std::mutex queue_mutex;
+std::condition_variable queue_cv;
+bool processing_done = false;
+
+void YobeProcessingThread(const std::string& license, const std::string& device_name, const std::string& file_path, 
+                          Yobe::MicOrientation mic_orientation, Yobe::OutputBufferType out_buffer_type) {
+    while (true) {
+        std::vector<float> input_buffer;
+
+        // Lock queue access
+        {
+            std::unique_lock<std::mutex> lock(queue_mutex);
+            queue_cv.wait(lock, [] { return !audio_queue.empty() || processing_done; });
+
+            if (processing_done && audio_queue.empty()) break;  // Stop processing
+
+            input_buffer = std::move(audio_queue.front());
+            audio_queue.pop();
+        }
+
+        std::vector<float> processed_audio;
+        try {
+            processed_audio = YobeProcessing(license, device_name, file_path, input_buffer, mic_orientation, out_buffer_type);
+        } catch (const std::exception& e) {
+            std::cerr << "Yobe Processing Error: " << e.what() << std::endl;
+            continue;
+        }
+
+        // Convert float back to int16 PCM for output
+        std::vector<int16_t> output_pcm(processed_audio.size());
+        for (size_t i = 0; i < processed_audio.size(); ++i) {
+            output_pcm[i] = static_cast<int16_t>(std::max(-1.0f, std::min(1.0f, processed_audio[i])) * 32767);
+        }
+
+        // Write to stdout
+        ssize_t bytes_written = write(STDOUT_FILENO, output_pcm.data(), output_pcm.size() * sizeof(int16_t));
+        if (bytes_written < 0) {
+            std::cerr << "Failed to write to stdout.\n";
+        }
+    }
+}
+
 int main(int argc, char* argv[]) {
     if (argc < 6) {
         std::cerr << "\nERROR- invalid arguments\n\n";
-        std::cerr << "Example: IDListener_demo WAV_FILE_PATH [end-fire|broadside] [target-speaker|no-target] device_name license_file_path\n";
-    } else {
-        // Just printing out the setting the IDListener expects
-        std::cout << "Just checking to see if the Yobe parameters match the audio file.\n";
-        std::cout << "Expected sampling rate: " << Yobe::Info::SamplingRate() << '\n';
-        std::cout << "Expected buffer size in seconds: " << Yobe::Info::AudioBufferTime() << '\n';
-        std::cout << "Number expected input channels: " << Yobe::Info::InputChannels() << '\n';
-        std::cout << "Number expected output channels: " << Yobe::Info::OutputChannels() << "\n\n";
-
-        const std::string file_path(argv[1]);
-        Yobe::MicOrientation mic_orientation = DemoUtil::GetMicOrientation(argv[2]);
-        Yobe::OutputBufferType out_buffer_type = DemoUtil::GetOutputBufferType(argv[3]);
-        
-        // Preparing input buffer
-        const auto input_buffer = DemoUtil::ReadAudioFile(file_path);
-
-        std::cout << '\n';
-
-        std::vector<float> processed_audio;
-        std::string device_name = argv[4];
-        std::string license_file_path = argv[5];
-        
-        try {
-            // All the Yobe processing happens in this function
-            processed_audio = YobeProcessing(getLicense(ENV_VAR_LICENSE), device_name, license_file_path, input_buffer, mic_orientation, out_buffer_type);
-        } catch (const std::exception& e) {
-            std::cerr << e.what() << '\n';
-            return 1;
-        }
-
-        // Writing the processed data to a .wav file
-        std::string output_file = file_path.substr(0, file_path.size()-4) + "_" + argv[2] + ".wav";
-        DemoUtil::WriteAudioFile(output_file, processed_audio);
+        return 1;
     }
 
+    const std::string file_path(argv[1]);
+    Yobe::MicOrientation mic_orientation = DemoUtil::GetMicOrientation(argv[2]);
+    Yobe::OutputBufferType out_buffer_type = DemoUtil::GetOutputBufferType(argv[3]);
+    std::string device_name = argv[4];
+    std::string license_file_path = argv[5];
+
+    signal(SIGINT, handle_signal);
+    signal(SIGTERM, handle_signal);
+
+    std::cout << "Listening for audio input...\n";
+
+    // Start Yobe processing in a separate thread
+    std::thread yobe_thread(YobeProcessingThread, getLicense(ENV_VAR_LICENSE), device_name, license_file_path, mic_orientation, out_buffer_type);
+
+    // Read audio from stdin and push to queue
+    while (running) {
+        std::vector<int16_t> pcm_data(BUFFER_SIZE * 2);  // 2 channels
+        ssize_t bytes_read = read(STDIN_FILENO, pcm_data.data(), pcm_data.size() * sizeof(int16_t));
+
+        if (bytes_read <= 0) {
+            std::cerr << "Failed to read from stdin or reached EOF.\n";
+            break;
+        }
+
+        // Convert PCM int16 to float for Yobe
+        std::vector<float> input_buffer;
+        for (size_t i = 0; i < bytes_read / sizeof(int16_t); ++i) {
+            input_buffer.push_back(static_cast<float>(pcm_data[i]) / 32768.0f);
+        }
+
+        // Add input buffer to the queue
+        {
+            std::lock_guard<std::mutex> lock(queue_mutex);
+            audio_queue.push(std::move(input_buffer));
+        }
+        queue_cv.notify_one();
+    }
+
+    // Signal processing thread to stop
+    {
+        std::lock_guard<std::mutex> lock(queue_mutex);
+        processing_done = true;
+    }
+    queue_cv.notify_one();
+
+    yobe_thread.join(); // Wait for the processing thread to finish
+
+    std::cout << "Exiting...\n";
     return 0;
 }
 
@@ -171,6 +254,8 @@ std::vector<float> YobeProcessing(const std::string& license, const std::string&
     return output_buffer;
 }
 
+
+
 std::shared_ptr<Yobe::IDTemplate> CreateTemplateFromFile(const std::unique_ptr<Yobe::IDListener>& id_listener, const std::string& wav_file_path) {
     std::cout << "Now registering a template.\n";
 
@@ -202,3 +287,5 @@ std::shared_ptr<Yobe::IDTemplate> CreateTemplateFromFile(const std::unique_ptr<Y
 
     return enrollment_template;
 }
+
+
