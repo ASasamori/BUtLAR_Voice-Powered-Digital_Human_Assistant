@@ -12,3 +12,5 @@
 /Transcripts/
 /database/OpenAI_Integration/api_key.jsonwhisperenv/
 myenv/
+/TextToResponse/__pycache__
+/whisperenv
