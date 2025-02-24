@@ -37,14 +37,14 @@ Return only the corrected sentence as your output.
 
 # Assume user_sentence is provided, e.g., "where is professor nawads office?"
 # Call LLM with prompt (pseudo-code, depends on your LLM API)
-response = callLlm.lastNames(promptLastName)
-if response is None:
-    response = user_sentence  # Fallback to original sentence if LLM fails
-print(response)
+userResponse = callLlm.lastNames(promptLastName)
+if userResponse is None:
+    userResponse = user_sentence  # Fallback to original sentence if LLM fails
+print(userResponse)
 # now last names are good. so just need to connect to DB
 
 # Generate SQL query based on corrected sentence
-sql_query = callLlm.generateSql(response)
+sql_query = callLlm.generateSql(userResponse)
 if sql_query is None:
     sql_query = "SELECT 'Error: Could not generate SQL query'"  # Fallback
 print("Generated SQL query:", sql_query)
@@ -66,3 +66,6 @@ try:
     conn.close()
 except sqlite3.Error as e:
     print(f"Error executing SQL query: {e}")
+
+sayOut = callLlm.respondToUser(userResponse, result)
+print(sayOut)

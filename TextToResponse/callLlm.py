@@ -90,3 +90,25 @@ def generateSql(user_question):
     except Exception as e:
         print(f"Error generating SQL query: {e}")
         return None
+
+def respondToUser(userResponse, result):
+    promptResponse = f"""
+    You are a helpful assistant tasked with responding to the users questions given the case specific database. 
+    You were asked
+    {userResponse} and the answer received from the SQL query is '{result}'  
+    Now return the corresponding answer
+    """
+
+    try:
+        completion = client.chat.completions.create(
+            model="gpt-4o-mini",  # Use the same model as your boilerplate
+            messages=[
+                {"role": "system", "content": "You are a helpful assistant."},
+                {"role": "user", "content": promptResponse}
+            ]
+        )
+        return completion.choices[0].message.content.strip()
+    except Exception as e:
+        print(f"Error calling OpenAI: {e}")
+        return None  # Return None or handle error as needed
+    
