@@ -6,7 +6,7 @@ from datetime import datetime
 
 
 # Load your API key safely
-client = OpenAI(api_key="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")
+client = OpenAI(api_key="API KEY")
 
 with open("questions.txt") as qfile:
     question = qfile.read().strip()
