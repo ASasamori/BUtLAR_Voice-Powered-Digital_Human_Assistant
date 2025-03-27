@@ -7,7 +7,7 @@ from pathlib import Path
 from google.cloud.speech_v1 import RecognitionConfig, StreamingRecognitionConfig, StreamingRecognizeRequest
 import pandas as pd
 import sqlite3
-from getAssistance import lastNamesFunction, generateSql, respondToUser
+from getAssistance import lastNamesFunction, generateSql, respondToUser, 
 import threading
 
 # flag for when the sentence is being processed. have audio sleep while that happens
@@ -40,8 +40,8 @@ def process_audio_stream():
             elapsed_time = time.time() - timeout_start_time[0]
             # print(f"time is {elapsed_time}")
             if elapsed_time > 60:
-                print("\nHi there! I didn't detect anyone speaking, so I'll shut down our session now.")
-                print("Thanks for chatting, and I hope I answered your questions. Goodbye!")
+                print("\nI didn't detect anyone speaking. I hope I answered your questions. Goodbye!")
+                # play goodbye_speech_two.mp3
                 sys.stdout.flush()
                 os._exit(0)  # Forcefully exit the entire process
             time.sleep(1)
@@ -82,6 +82,7 @@ def process_audio_stream():
             # if "goodbye butler" in transcript_lower:
             if "goodbye" in transcript_lower:
                 print("I hope I answered your questions. Goodbye!")
+                # play goodbye_speech_one.mp3  
                 sys.stdout.flush()  # Flush on exit
                 try:
                     sys.stdin.close()
