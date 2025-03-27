@@ -3,7 +3,6 @@ import os
 from dotenv import load_dotenv
 from pathlib import Path
 import pandas as pd
-from butlar_goodbye import generate_goodbye_message
 
 # PATH SETUP: Get the directory of this script
 script_dir = Path(__file__).resolve().parent

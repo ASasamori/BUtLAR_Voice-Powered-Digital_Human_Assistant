@@ -7,7 +7,7 @@ from pathlib import Path
 from google.cloud.speech_v1 import RecognitionConfig, StreamingRecognitionConfig, StreamingRecognizeRequest
 import pandas as pd
 import sqlite3
-from getAssistance import lastNamesFunction, generateSql, respondToUser, 
+from getAssistance import lastNamesFunction, generateSql, respondToUser
 import threading
 
 # flag for when the sentence is being processed. have audio sleep while that happens
