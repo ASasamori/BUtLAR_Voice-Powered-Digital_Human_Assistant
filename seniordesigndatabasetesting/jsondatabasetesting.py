@@ -11,7 +11,7 @@ client = OpenAI(api_key="API KEY")
 with open("questions.txt") as qfile:
     question = qfile.read().strip()
 
-with open("BUECEClasses_SP2025.json") as f:
+with open("BUECEClasses_SP2025_cleaned.json") as f:
     data = json.load(f)
 
 courses = data["New item - 2"]["classes"]
@@ -75,6 +75,24 @@ def is_professor_question(question):
 def summarize_course_for_question(question):
     summary = []
     requested_type = get_requested_section_type(question)
+
+    # Handle case: "what courses does [professor] teach?"
+    if is_professor_question(question):
+        professor_courses = []
+        seen = set()
+        for section_list in course_groups.values():
+            for sec in section_list:
+                for instructor in sec.get("instructors", []):
+                    name = instructor.get("name", "").lower()
+                    if name and name in question.lower():
+                        course_code = f"{sec['subject'].replace('ENG', '')} {sec['catalog_nbr']}"
+                        course_title = sec.get("descr", "")
+                        if course_code not in seen:
+                            professor_courses.append(f"{course_code} - {course_title}")
+                            seen.add(course_code)
+        if professor_courses:
+            return [f"This professor teaches:\n" + "\n".join(professor_courses)]
+
 
     for section_list in course_groups.values():
         subject = section_list[0]["subject"]
