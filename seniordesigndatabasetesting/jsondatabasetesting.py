@@ -83,8 +83,12 @@ def summarize_course_for_question(question):
         for section_list in course_groups.values():
             for sec in section_list:
                 for instructor in sec.get("instructors", []):
-                    name = instructor.get("name", "").lower()
-                    if name and name in question.lower():
+                    full_name = instructor.get("name", "").lower()
+                    last_name = full_name.split()[-1] if full_name else ""
+                    if full_name and (full_name in question.lower() or last_name in question.lower()):
+                        subject = sec["subject"]
+                        if subject.startswith("ENG"):
+                            subject = subject[3:]
                         course_code = f"{sec['subject'].replace('ENG', '')} {sec['catalog_nbr']}"
                         course_title = sec.get("descr", "")
                         if course_code not in seen:
