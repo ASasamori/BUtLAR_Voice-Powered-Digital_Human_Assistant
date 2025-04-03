@@ -70,7 +70,11 @@ def is_location_question(question):
 
 def is_professor_question(question):
     q = question.lower()
-    return ("who teaches" in q or "which courses" in q or "what courses" in q or "professor" in q)
+    return any(phrase in q for phrase in [
+        "who teaches", "which courses", "which classes",
+        "what courses", "what classes",
+        "professor", "dr.", "instructor", "taught by"
+    ])
 
 def summarize_course_for_question(question):
     summary = []
