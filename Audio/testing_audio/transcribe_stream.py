@@ -104,3 +104,8 @@ def process_audio_stream():
 
 if __name__ == "__main__":
     process_audio_stream()
+
+'''
+Audio Stream Capture through Rode -> Calls Miniaudio + Whisper/ASR script (to transcribe)
+-> Streams message and text_to_LLM.py (has access to edge case functions)
+'''

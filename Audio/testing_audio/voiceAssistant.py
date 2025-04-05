@@ -7,7 +7,8 @@ from pathlib import Path
 from google.cloud.speech_v1 import RecognitionConfig, StreamingRecognitionConfig, StreamingRecognizeRequest
 import pandas as pd
 import sqlite3
-from getAssistance import lastNamesFunction, generateSql, respondToUser
+# from getAssistance import lastNamesFunction, generateSql, respondToUser
+from fullDatabaseRetrieval import answer_course_question
 import threading
 
 # flag for when the sentence is being processed. have audio sleep while that happens
@@ -99,27 +100,29 @@ def process_audio_stream():
                 sys.stdout.flush()
                 current_time = time.time()
                 if full_question and not processed:
-                    print(f"Processing question: '{full_question.strip()}'")
+                    # print(f"Processing question: '{full_question.strip()}'")
 
                     # Latency check before processing the question
                     question_start_time = time.time()
 
                     is_in_LLM = True
                     sys.stdout.flush()  # Flush to show processing start
-                    userResponse = lastNamesFunction(full_question.strip())
-                    sql_query = generateSql(userResponse) if not None else "SELECT 'Error...'"
+                    # userResponse = lastNamesFunction(full_question.strip())
+                    # sql_query = generateSql(userResponse) if not None else "SELECT 'Error...'"
 
-                    try:
-                        conn = sqlite3.connect(script_dir / "database/school.db")
-                        cursor = conn.cursor()
-                        cursor.execute(sql_query)
-                        result = cursor.fetchall()
-                        conn.close()
-                    except sqlite3.Error as e:
-                        # print(f"Error executing SQL query: {e}")
-                        result = "Error"
-                    # Generate and print response immediately
-                    llm_response = respondToUser(userResponse, result)
+                    # try:
+                    #     conn = sqlite3.connect(script_dir / "database/school.db")
+                    #     cursor = conn.cursor()
+                    #     cursor.execute(sql_query)
+                    #     result = cursor.fetchall()
+                    #     conn.close()
+                    # except sqlite3.Error as e:
+                    #     # print(f"Error executing SQL query: {e}")
+                    #     result = "Error"
+
+                    # # Generate and print response immediately
+                    llm_response = answer_course_question(full_question.strip())
+
                     os.write(1, f"Response: {llm_response}\n".encode())  # Print immediately with os.write
                     os.write(1, b"Ready for next question...\n")  # Immediate prompt
                     sys.stdout.flush()  # Additional flush for safety

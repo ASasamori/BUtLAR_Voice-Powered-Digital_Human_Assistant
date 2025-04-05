@@ -47,6 +47,8 @@ def lastNamesFunction(userSentence):
         print(f"Error calling OpenAI: {e}")
         return None
 
+
+
 def generateSql(user_question):
     prompt = f"""
     You are an expert SQL assistant. Based on user's question, if any relevant info in school.db, generate a SQL query to retrieve the requested information from a SQLite database called 'school.db'. The database has two tables with the following schemas:
