@@ -13,6 +13,7 @@ import threading
 
 # flag for when the sentence is being processed. have audio sleep while that happens
 is_in_LLM = False
+pause_audio = False
 
 def process_audio_stream():
 
@@ -30,7 +31,7 @@ def process_audio_stream():
     streaming_config = StreamingRecognitionConfig(config=config, interim_results=True)
 
     # moved to display right at the start
-    print("Hi! I'm BUtLAR, here to answer any of your BU-related questions. I'm listening...\nSay 'Goodbye, BUtLAR!' to stop.")
+    print("Response: Hi! I'm BUtLAR, here to answer any of your BU-related questions. I'm listening...\nSay 'Goodbye, BUtLAR!' to stop.")
     sys.stdout.flush()  # Ensure startup message displays immediately
 
     # Shared variable to track timeout start time
@@ -40,8 +41,8 @@ def process_audio_stream():
         while True:
             elapsed_time = time.time() - timeout_start_time[0]
             # print(f"time is {elapsed_time}")
-            if elapsed_time > 60:
-                print("\nI didn't detect anyone speaking. I hope I answered your questions. Goodbye!")
+            if elapsed_time > 45:
+                print("\nResponse: I didn't detect anyone speaking. I hope I answered your questions. Goodbye!")
                 # play goodbye_speech_two.mp3
                 sys.stdout.flush()
                 os._exit(0)  # Forcefully exit the entire process
@@ -82,7 +83,7 @@ def process_audio_stream():
 
             # if "goodbye butler" in transcript_lower:
             if "goodbye" in transcript_lower:
-                print("I hope I answered your questions. Goodbye!")
+                print("Response: I hope I answered your questions. Goodbye!")
                 # play goodbye_speech_one.mp3  
                 sys.stdout.flush()  # Flush on exit
                 try:
@@ -124,6 +125,7 @@ def process_audio_stream():
                     llm_response = answer_course_question(full_question.strip())
 
                     os.write(1, f"Response: {llm_response}\n".encode())  # Print immediately with os.write
+
                     os.write(1, b"Ready for next question...\n")  # Immediate prompt
                     sys.stdout.flush()  # Additional flush for safety
 
