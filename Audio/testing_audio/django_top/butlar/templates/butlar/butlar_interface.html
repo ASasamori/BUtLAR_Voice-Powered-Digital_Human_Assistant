@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+
+{% load static %}
+
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Talk to BUtLAR</title>
+  <link rel="stylesheet" href="{% static 'styles-butlar.css' %}">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+  <h1>🎙️ BUtLAR Voice Assistant</h1>
+  <button onclick="start()">Start BUtLAR</button>
+
+  <!-- Chat-style transcript window -->
+  <div id="chat-window"></div>
+
+  <!-- Logs for backend info -->
+  <div id="logs">
+    <strong>Logs:</strong><br>
+    <pre id="console"></pre>
+  </div>
+
+  <script>
+    function start() {
+      const socket = new WebSocket("ws://" + window.location.host + "/ws/butlar/");
+      const chatWindow = document.getElementById("chat-window");
+      const consoleDiv = document.getElementById("console");
+
+      socket.onmessage = function(event) {
+        const data = JSON.parse(event.data);
+        const messageDiv = document.createElement("div");
+        messageDiv.classList.add("message");
+
+        if (data.type === "transcript") {
+          messageDiv.classList.add("user-message");
+          messageDiv.textContent = data.text;
+          chatWindow.appendChild(messageDiv);
+        } else if (data.type === "response") {
+          messageDiv.classList.add("bot-message");
+          messageDiv.textContent = data.text;
+          chatWindow.appendChild(messageDiv);
+
+          // speak the reponse out
+          const utterance = new SpeechSynthesisUtterance(data.text);
+
+          utterance.lang = 'en-US';
+          utterance.pitch = 1.0;
+          utterance.rate = 1.0;
+
+          speechSynthesis.speak(utterance);
+        } else {
+          consoleDiv.innerHTML += data.text + "\n";
+          consoleDiv.scrollTop = consoleDiv.scrollHeight;
+        }
+
+        chatWindow.scrollTop = chatWindow.scrollHeight;
+      };
+
+      socket.onclose = function() {
+        consoleDiv.innerHTML += "\n<em>Connection closed.</em>\n";
+      };
+    }
+  </script>
+</body>
+</html>
