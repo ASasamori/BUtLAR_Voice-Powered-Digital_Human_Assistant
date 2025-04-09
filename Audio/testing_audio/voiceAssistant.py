@@ -31,7 +31,7 @@ def process_audio_stream():
     streaming_config = StreamingRecognitionConfig(config=config, interim_results=True)
 
     # moved to display right at the start
-    print("Response: Hi! I'm BUtLAR, here to answer any of your BU-related questions. I'm listening...\nSay 'Goodbye, BUtLAR!' to stop.")
+    print("Response: Hi! I'm BUtLAR, here to answer any of your BU-related questions. Say 'Goodbye, BUtLAR!' to stop. I'm listening...\n")
     sys.stdout.flush()  # Ensure startup message displays immediately
 
     # Shared variable to track timeout start time

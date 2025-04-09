@@ -23,6 +23,21 @@
   </div>
 
   <script>
+
+    let preferredVoice = null;
+
+    window.speechSynthesis.onvoiceschanged = () => {
+      const voices = speechSynthesis.getVoices();
+      // print the available voices
+      // const consoleDiv = document.getElementById("console");
+      // consoleDiv.innerHTML += "<em>Available voices:</em><br>";
+      // voices.forEach(voice => {
+      //   consoleDiv.innerHTML += voice.name + "<br>";
+      // });
+      // consoleDiv.innerHTML += "<br>";
+      preferredVoice = voices[1];
+    };
+
     function start() {
       const socket = new WebSocket("ws://" + window.location.host + "/ws/butlar/");
       const chatWindow = document.getElementById("chat-window");
@@ -42,22 +57,15 @@
           messageDiv.textContent = data.text;
           chatWindow.appendChild(messageDiv);
 
-
-          // better voice synthesis
-          const voices = speechSynthesis.getVoices();
-          const preferredVoice = voices.find(v =>
-            v.name.includes("Google US English")
-          );
-
           // Send PAUSE signal to backend before speaking
           socket.send(JSON.stringify({ type: "pause" }));
 
           const utterance = new SpeechSynthesisUtterance(data.text);
-          utterance.voice = preferredVoice || voices[0];
+          utterance.voice = preferredVoice;
           utterance.lang = 'en-US';
           utterance.pitch = 1.0;
-          utterance.rate = 1.15;
-a
+          utterance.rate = 1.10;
+
           // When done speaking, tell backend to resume
           utterance.onend = () => {
             socket.send(JSON.stringify({ type: "resume" }));

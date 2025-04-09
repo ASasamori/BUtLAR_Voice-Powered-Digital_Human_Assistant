@@ -292,7 +292,7 @@ def summarize_course_for_question(question, courses):
                 summary.append(f"{course_code} {section_type} with {instructor} meets on {days} from {times} in {rooms}. Topic: {course_title}")
 
     if not summary:
-        summary.append("No matching course section was found based on your question.")
+        summary.append("No matching information was found based on your question.")
 
     return summary
 
@@ -332,6 +332,7 @@ def answer_course_question(question):
     # print("Converting response to speech...")
     # audio_file = text_to_speech(response_text)
     # print(f"Audio file saved to: {audio_file}")
+    # os.write(1, f"Audio: {audio_file}\n".encode())
 
     return response_text
 
