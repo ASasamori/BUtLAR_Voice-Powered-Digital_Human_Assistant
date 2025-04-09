@@ -55,10 +55,18 @@ Examples:
 - Q: What classes does Professor Pisano teach?
   A: SELECT crse_id, descr FROM classes WHERE instructors LIKE '%Pisano%';
 
+- Q: Who teaches Physics of Semiconductor Devices?
+  A: SELECT DISTINCT instructors FROM classes WHERE descr LIKE '%Physics of Semiconductor Devices%';
+
 - Q: What room is ENGEC 311 lecture in?
   A: SELECT room FROM classes WHERE subject = 'ENGEC' AND catalog_nbr = '311' AND component = 'LEC';
 
 If a user asks "when is [course]" or "what time is EC[xxx]", assume they are asking about the lecture unless they specifically mention discussion, lab, or another section type. In that case, filter by component accordingly (e.g., 'DIS' for discussion, 'LAB' for lab, etc).
+
+If the user refers to a course by its full name (from the 'descr' column), match it using:
+WHERE descr LIKE '%<course name>%'
+For example, for "Who teaches Physics of Semiconductor Devices?" use:
+SELECT DISTINCT instructors FROM classes WHERE descr LIKE '%Physics of Semiconductor Devices%';
 
 User Question: {user_question}
 Return only the SQL query.
