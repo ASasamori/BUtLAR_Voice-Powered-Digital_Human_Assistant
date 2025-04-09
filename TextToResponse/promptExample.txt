@@ -1,0 +1,17 @@
+Task: Identify potential last names in the given sentence, compare them to a database of correct last names, and correct any misspellings. If no last names are present or need correction, return the sentence unchanged.
+
+Database of last names: [Batmanghelich, Sharifzadeh, Trachtenberg, Pisano, Nawab, etc.]
+
+Examples:
+Input: "where is ML414?"
+Output: "where is ML414?"
+
+Input: "where is professor nawads office hours?"
+Output: "where is professor nawab office hours?"
+
+Input: "can I meet with dr. sharizadeh?"
+Output: "can I meet with dr. sharifzadeh?"
+
+Now process this new input:
+Input: "{user_sentence}"
+Output:

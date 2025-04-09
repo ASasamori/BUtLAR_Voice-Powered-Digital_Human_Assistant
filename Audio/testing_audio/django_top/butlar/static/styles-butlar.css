@@ -1,0 +1,129 @@
+/* File: static/styles-voters.css
+Author: Suhani Mitra (suhanim@bu.edu), 3/29/2025
+Description: Running .css file for Django project HTML files */
+
+body {
+    background-color: #e1edfa;
+    font-family:Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    /* margins kind of ... */
+    padding: 20px;
+}
+
+h1, h2, h3, p {
+    color: darkslategray;
+    text-align: center;
+}
+
+h1 {
+    font-size: 2.5em;
+}
+
+h2 {
+    font-size: 2em;
+}
+
+h3 {
+    font-size: 1.25em;
+    /* make this one unbolded */
+    font-weight: normal;
+}
+
+p {
+    font-size: 1em;
+}
+
+/* link color */
+a {
+    color: darkslategray;
+}
+
+/* use both of the below for plain black border */
+table, th, td {
+    /* black lines */
+    /* border: 1px solid; */
+    width: 100%;
+    text-align: center;
+    padding: 10px;
+  }
+
+table {
+    /* sets the lines to be one */
+    border-collapse: collapse;
+    color: darkslategray;
+    /* center it */
+    margin: 0 auto;
+    table-layout: fixed;
+    /* make table not too wide */
+    width: 90%;
+    justify-content: center;
+    align-items: center;
+}
+
+
+/* Navigation bar styles */
+.navbar {
+    background-color: darkslategray;
+    padding: 10px 0;
+    text-align: center;
+    position: fixed;
+    width: 100%;
+    top: 0;
+    left: 0;
+    z-index: 1000;
+}
+
+.navbar-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+}
+
+.navbar-liste li {
+    display: inline;
+}
+
+.navbar-list a {
+    text-decoration: none;
+    color: #e1edfa;
+    font-size: 1.2em;
+    padding: 10px 15px;
+    border-radius: 5px;
+}
+
+/* move content below nav bar so we can see it */
+.content {
+    margin-top: 70px;
+}
+
+.footer{
+    /* smaller size font */
+    font-size: 0.8em;
+}
+
+.voter-table {
+    width: 60%;
+}
+
+.to-center {
+    text-align: center;
+    align-items: center;
+    margin: 0 auto;
+}
+
+.search-container {
+    align-items: center;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.graph-container {
+    justify-content: center;
+    align-items: center;
+    margin: 20px auto;
+    width: 80%;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}

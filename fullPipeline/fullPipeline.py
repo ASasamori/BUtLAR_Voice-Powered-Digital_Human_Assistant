@@ -1,11 +1,10 @@
-import os
-import sys
-import time
-from google.cloud import speech
+import os, sys, time, io, torch, whisper
+import numpy as np
+import soundfile as sf
 from pathlib import Path
-from google.cloud.speech_v1 import RecognitionConfig, StreamingRecognitionConfig, StreamingRecognizeRequest
 from openai import OpenAI
 from dotenv import load_dotenv
+import callLlm
 
 # Get the directory of the current script
 script_dir = Path(__file__).resolve().parent
@@ -22,59 +21,49 @@ api_key = os.getenv("open_ai_api_key")
 
 
 def process_audio_stream():
-    client = speech.SpeechClient()
-    
-    config = RecognitionConfig(
-        encoding=speech.RecognitionConfig.AudioEncoding.LINEAR16,
-        sample_rate_hertz=16000,
-        language_code="en-US",
-        # enable_spoken_emojis=True,
-        enable_automatic_punctuation=True
-    )
+    """Captures and transcribes live audio using Whisper AI."""
+    model_size = "tiny.en"
+    device = "cuda" if torch.cuda.is_available() else "cpu"
+    model = whisper.load_model(model_size, device=device)
 
-    streaming_config = StreamingRecognitionConfig(
-        config=config,
-        interim_results=True
-    )
- 
+    full_question = ""
+    last_final_time = time.time()
+
     def audio_generator():
+        buffer = bytearray()
         while True:
-            chunk = sys.stdin.buffer.read(4096)
+            print("in audio stream function")
+            chunk = sys.stdin.buffer.read(4096)  # Read raw PCM audio
             if not chunk:
                 print("End of audio stream.", file=sys.stderr)
                 break
-            yield StreamingRecognizeRequest(audio_content=chunk)
+            buffer.extend(chunk)
+            if len(buffer) >= 32000:  # Process every ~1s of 16kHz audio (assuming 16-bit mono)
+                yield bytes(buffer[:32000])
+                buffer = buffer[32000:]
 
-    requests = audio_generator()
-    responses = client.streaming_recognize(
-        config=streaming_config,
-        requests=requests
-    )
+    for audio_chunk in audio_generator():
+        try:
+            print("Processing audio chunk...")  # Debug print
+            # Convert raw PCM to NumPy array
+            audio_np = np.frombuffer(audio_chunk, dtype=np.int16).astype(np.float32) / 32768.0
 
-    # Variable to accumulate the full question
-    full_question = ""
-    last_final_time = time.time()  # Track the time of the last final result
+            print(f"Converted {len(audio_np)} samples to float format.")  # Debugging print
 
-    try:
-        for response in responses:
-            if not response.results:
-                print("No results in response.", file=sys.stderr)
-                continue
+            # Save to a temporary file (Whisper requires a file input)
+            with io.BytesIO() as temp_wav:
+                sf.write(temp_wav, audio_np, 16000, format='WAV')
+                temp_wav.seek(0)
 
-            result = response.results[0]
-            if not result.alternatives:
-                print("No alternatives in result.", file=sys.stderr)
-                continue
+                print("Sending to Whisper model...")  # Debug print
+                result = model.transcribe(temp_wav)
+            
+            transcript = result["text"].strip()
 
-            transcript = result.alternatives[0].transcript
-
-            if result.is_final:
-                # Append the final transcript to the full question
+            if transcript:
                 full_question += transcript + " "
-                last_final_time = time.time()  # Update the time of the last final result
+                last_final_time = time.time()
                 print(f"Final transcript: {transcript}")
-            else:
-                print(f"Interim transcript: {transcript}", end='\r')
                 
             sys.stdout.flush()
 
@@ -99,8 +88,8 @@ def process_audio_stream():
                 except Exception as e:
                     print(f"Error calling OpenAI API: {str(e)}", file=sys.stderr)
 
-    except Exception as e:
-        print(f"Error occurred: {str(e)}", file=sys.stderr)
+        except Exception as e:
+            print(f"Error occurred: {str(e)}", file=sys.stderr)
 
 if __name__ == "__main__":
     process_audio_stream()
