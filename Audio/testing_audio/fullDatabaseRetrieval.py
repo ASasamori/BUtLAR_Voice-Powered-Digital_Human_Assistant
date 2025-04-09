@@ -307,12 +307,12 @@ def ask_question(question):
     # print("course info string for debugging", course_info_string)
 
     prompt = f"""You are an assistant who answers questions about Boston University Spring 2025 courses.
-Answer using ONLY the course info provided below. Do not guess or make up any details not in the list.
+    Answer using ONLY the course info provided below. Do not guess or make up any details not in the list.
 
-{shorten(course_info_string, width=12000, placeholder="...")}
+    {shorten(course_info_string, width=12000, placeholder="...")}
 
-Q: {question}
-A:"""
+    Q: {question}
+    A:"""
 
     response = client.chat.completions.create(
         model="gpt-4o-mini",
@@ -335,6 +335,74 @@ def answer_course_question(question):
     # os.write(1, f"Audio: {audio_file}\n".encode())
 
     return response_text
+
+from vanna.openai import OpenAI_Chat
+from vanna.chromadb import ChromaDB_VectorStore
+from openai import OpenAI
+import os
+from dotenv import load_dotenv
+import io
+from contextlib import redirect_stdout
+
+# Load the .env file
+load_dotenv()
+
+# Retrieve the values using os.environ
+api_key = os.getenv('NEW_OPENAI_API_KEY')
+
+class MyVanna(ChromaDB_VectorStore, OpenAI_Chat):
+    def __init__(self, config=None):
+        ChromaDB_VectorStore.__init__(self, config=config)
+        OpenAI_Chat.__init__(self, config=config)
+
+def answer_course_question_new(question: str):
+    vn = MyVanna(config={'api_key': api_key, 'model': 'gpt-3.5-turbo'})
+    vn.connect_to_postgres(host='34.134.126.254', dbname='tutorialDB', user='postgres', password='butlar', port='5432')
+    df_information_schema = vn.run_sql("SELECT * FROM INFORMATION_SCHEMA.COLUMNS")
+    # This will break up the information schema into bite-sized chunks that can be referenced by the LLM
+    plan = vn.get_training_plan_generic(df_information_schema)
+    plan
+
+
+    # If you like the plan, then uncomment this and run it to train
+    vn.train(plan=plan)
+    vn.train(documentation="My tables outline the coures for a college university. In each row you can see the college" \
+    "course with its respective course number and name, which professor teaches it, what times it runs from," \
+    "where it meets, how many students can attend, and how many units the course is worth. ")
+
+    my_question = question
+    buffer = io.StringIO()
+
+    with redirect_stdout(buffer):
+        response = vn.ask(question=my_question, allow_llm_to_see_data=True)
+    capt_vanna_ans = buffer.getvalue()
+
+    if "error" not in capt_vanna_ans:
+        lines = capt_vanna_ans.splitlines()
+
+        SQL_query_commands = ["SELECT", "AND", "WHERE", "FROM", ";", "gpt"]
+        filtered_lines = [line for line in lines if not any(substring in line for substring in SQL_query_commands)]
+        vanna_ans_tables = "\n".join(filtered_lines)
+
+        print(vanna_ans_tables)
+    else:
+        print("Something happened")
+    
+
+    client = OpenAI()
+    client.api_key = api_key
+
+    completion = client.chat.completions.create(
+    model="gpt-3.5-turbo",
+    messages=[
+        {"role": "developer", "content": "You are a helpful assistant in interpreting data tables into complete sentences and an intelligible response."},
+        {"role": "user", "content": f"Answer the question of: {my_question}, given this data table of{vanna_ans_tables}"}
+    ]
+    )
+
+    print(completion.choices[0].message.content)
+
+
 
 if __name__ == "__main__":
     with open("questions.txt") as qfile:
