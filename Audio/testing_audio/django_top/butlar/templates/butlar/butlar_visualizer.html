@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>BUtLAR Voice Assistant</title>
+  <link rel="stylesheet" href="{% static 'styles-visualizer.css' %}">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+  <canvas id="visualizer"></canvas>
+  <div class="glow"></div>
+
+  <div class="container">
+    <h1 id="status-label">🎙️ BUtLAR Voice Assistant</h1>
+    <button onclick="start()">Start BUtLAR</button>
+    <button onclick="toggleTranscript()">Toggle Transcript</button>
+
+    <div id="transcript-box" style="display:none;">
+      <strong>Transcript:</strong>
+      <pre id="transcript-text"></pre>
+    </div>
+
+    <div id="logs">
+      <strong>Logs:</strong>
+      <pre id="console"></pre>
+    </div>
+  </div>
+
+  <script>
+    let socket;
+    const transcriptText = document.getElementById("transcript-text");
+    const consoleDiv = document.getElementById("console");
+    const statusLabel = document.getElementById("status-label");
+
+    function toggleTranscript() {
+      const box = document.getElementById("transcript-box");
+      box.style.display = box.style.display === "none" ? "block" : "none";
+    }
+
+    function start() {
+      socket = new WebSocket("ws://" + window.location.host + "/ws/butlar/");
+      statusLabel.textContent = "🟢 BUtLAR is listening...";
+
+      socket.onmessage = function(event) {
+        const data = JSON.parse(event.data);
+
+        if (data.type === "transcript") {
+          transcriptText.textContent += "🧑 " + data.text + "\n";
+        } else if (data.type === "response") {
+          transcriptText.textContent += "🤖 " + data.text + "\n";
+
+          // Send PAUSE signal to backend before speaking
+          socket.send(JSON.stringify({ type: "pause" }));
+
+          const utterance = new SpeechSynthesisUtterance(data.text);
+          const voices = speechSynthesis.getVoices();
+          const preferredVoice = voices.find(v => v.name.includes("Google US English"));
+          utterance.voice = preferredVoice || voices[0];
+          utterance.lang = 'en-US';
+          utterance.pitch = 1.0;
+          utterance.rate = 1.15;
+
+          utterance.onend = () => {
+            socket.send(JSON.stringify({ type: "resume" }));
+            stopVisualizer();
+          };
+
+          startVisualizer(utterance);
+          speechSynthesis.speak(utterance);
+        } else {
+          consoleDiv.innerHTML += data.text + "\n";
+          consoleDiv.scrollTop = consoleDiv.scrollHeight;
+        }
+      };
+
+      socket.onclose = function() {
+        statusLabel.textContent = "🔴 Connection closed.";
+        consoleDiv.innerHTML += "\n<em>Connection closed.</em>\n";
+      };
+    }
+
+    // ==== Visualizer: Animate while TTS is speaking ====
+    const canvas = document.getElementById("visualizer");
+    const ctx = canvas.getContext("2d");
+    let visualizerLoop;
+    let audioContext, analyser, sourceNode, gainNode, dummySource;
+
+    function resizeCanvas() {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    }
+    resizeCanvas();
+    window.addEventListener("resize", resizeCanvas);
+
+    function startVisualizer(utterance) {
+      // Cancel previous animation if running
+      if (visualizerLoop) cancelAnimationFrame(visualizerLoop);
+
+      // Setup Web Audio pipeline to analyze the TTS audio
+      audioContext = new (window.AudioContext || window.webkitAudioContext)();
+      analyser = audioContext.createAnalyser();
+      gainNode = audioContext.createGain();
+      analyser.fftSize = 256;
+      analyser.smoothingTimeConstant = 0.8;
+
+      // Create dummy source that keeps the audioContext alive
+      const buffer = audioContext.createBuffer(1, 1, 22050);
+      dummySource = audioContext.createBufferSource();
+      dummySource.buffer = buffer;
+      dummySource.loop = true;
+      dummySource.connect(audioContext.destination);
+      dummySource.start();
+
+      const ttsStream = audioContext.createMediaStreamDestination();
+      const mediaStream = ttsStream.stream;
+      sourceNode = audioContext.createMediaStreamSource(mediaStream);
+      sourceNode.connect(analyser);
+
+      // Connect TTS to this stream
+      speechSynthesis.cancel(); // stop any existing speech
+      utterance.voice = utterance.voice;
+      utterance.onstart = () => {
+        // Monkey patch workaround to connect speech to analyser
+        // No direct TTS piping is supported, so we simulate visuals
+        animateVisualizer();
+      };
+    }
+
+    function animateVisualizer() {
+      const frequencyData = new Uint8Array(analyser.frequencyBinCount);
+      const centerX = canvas.width / 2;
+      const centerY = canvas.height / 2;
+      const maxRadius = Math.min(canvas.width, canvas.height) * 0.3;
+
+      function draw() {
+        analyser.getByteFrequencyData(frequencyData);
+
+        let volume = 0;
+        for (let i = 0; i < frequencyData.length; i++) {
+          volume += frequencyData[i];
+        }
+        volume = volume / frequencyData.length / 255; // Normalize to 0–1
+
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        drawCircle(centerX, centerY, maxRadius * (0.25 + 0.75 * volume), "rgba(255, 100, 200, 0.6)", 4);
+        drawCircle(centerX, centerY, maxRadius * (0.15 + 0.5 * volume), "rgba(100, 200, 255, 0.5)", 3);
+        drawCircle(centerX, centerY, maxRadius * (0.10 + 0.3 * volume), "rgba(200, 255, 100, 0.3)", 2);
+
+        visualizerLoop = requestAnimationFrame(draw);
+      }
+
+      draw();
+    }
+
+    function drawCircle(x, y, radius, color, lineWidth) {
+      ctx.beginPath();
+      ctx.arc(x, y, radius, 0, Math.PI * 2);
+      ctx.strokeStyle = color;
+      ctx.lineWidth = lineWidth;
+      ctx.shadowBlur = 20;
+      ctx.shadowColor = color;
+      ctx.stroke();
+      ctx.shadowBlur = 0;
+    }
+
+    function stopVisualizer() {
+      if (visualizerLoop) cancelAnimationFrame(visualizerLoop);
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      if (dummySource) dummySource.stop();
+    }
+
+    function updateGlow() {
+      const glow = document.querySelector(".glow");
+      const hue = (performance.now() / 50) % 360;
+      glow.style.background = `radial-gradient(ellipse at center, hsla(${hue}, 100%, 60%, 0.3) 0%, rgba(0, 0, 0, 0) 70%)`;
+      requestAnimationFrame(updateGlow);
+    }
+    updateGlow();
+  </script>
+</body>
+</html>
