@@ -23,7 +23,7 @@ if not open_ai_api_key:
 client = OpenAI(api_key=open_ai_api_key)
 
 # File path for course data
-COURSE_DATA_FILE = "database/BUECEClasses_SP2025.json"
+COURSE_DATA_FILE = "/home/yobe/BUtLAR_Voice-Powered-Digital_Human_Assistant/Audio/testing_audio/database/BUECEClasses_SP2025.json"
 
 
 day_lookup = {
@@ -137,6 +137,7 @@ def correct_last_name(question):
         f"- '{var['correct_first']} {var['correct_last']}' can be matched to: {', '.join(var['variations'])}"
         for var in name_variations[:5]  # Show first 5 as examples
     ])
+    # print(examples)
     
     prompt = f"""You are an expert at matching professor names with possible misspellings. Your task is to:
 1. Analyze this question: "{question}"
@@ -148,6 +149,7 @@ def correct_last_name(question):
 
 Special Rules:
 - "Brian coulis" should become "Brian Kulis"
+- "Tally Moret" should become "Tali Moreshet": though this is an extreme case, it is important to note that the name "Tally Moret" is not a valid name in our database.
 - Match even with minor typos or phonetic similarities
 - Only correct names that match our database
 - Return the original question if no clear match exists
@@ -323,14 +325,14 @@ def answer_course_question(question):
     """Single function to call when importing this file elsewhere."""
     corrected_question = correct_last_name(question)
     print(f"Processing question: '{corrected_question}'")
-    # Convert response to speech and play it
+
     response_text = ask_question(corrected_question)
 
     # Text to Speech Conversion
-    print("Converting response to speech...")
-    audio_file = text_to_speech(response_text)
-    print(f"Audio file saved to: {audio_file}")
-    
+    # print("Converting response to speech...")
+    # audio_file = text_to_speech(response_text)
+    # print(f"Audio file saved to: {audio_file}")
+
     return response_text
 
 if __name__ == "__main__":

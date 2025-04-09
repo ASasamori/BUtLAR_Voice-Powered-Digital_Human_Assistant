@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BUtLAR Voice Assistant</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            overflow: hidden;
+            font-family: 'Arial', sans-serif;
+        }
+
+        .container {
+            width: 100%;
+            height: 100%;
+            position: relative;
+        }
+
+        canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+
+        .status-label {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 14px;
+            z-index: 10;
+            text-align: center;
+            background-color: rgba(0, 0, 0, 0.5);
+            padding: 8px 15px;
+            border-radius: 20px;
+            backdrop-filter: blur(5px);
+        }
+
+        .glow {
+            position: absolute;
+            bottom: -150px;
+            width: 100%;
+            height: 300px;
+            background: radial-gradient(ellipse at center, rgba(0, 183, 255, 0.3) 0%, rgba(0, 0, 0, 0) 70%);
+            z-index: 5;
+            filter: blur(20px);
+        }
+
+        .transcript-container {
+            position: absolute;
+            top: 40px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80%;
+            max-width: 600px;
+            background-color: rgba(0, 0, 0, 0.5);
+            border-radius: 10px;
+            padding: 15px;
+            z-index: 20;
+            color: white;
+            display: none;
+        }
+
+        .transcript {
+            margin-bottom: 10px;
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        .response {
+            color: #00c3ff;
+            font-weight: 500;
+        }
+
+        .controls {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            z-index: 100;
+        }
+
+        .btn {
+            background-color: rgba(0, 0, 0, 0.5);
+            border: 1px solid rgba(0, 191, 255, 0.5);
+            color: white;
+            padding: 10px 15px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 14px;
+            margin-left: 10px;
+            backdrop-filter: blur(5px);
+            transition: all 0.3s ease;
+        }
+
+        .btn:hover {
+            background-color: rgba(0, 191, 255, 0.3);
+        }
+
+        .btn.recording {
+            background-color: rgba(255, 0, 0, 0.3);
+            border-color: rgba(255, 0, 0, 0.5);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <canvas id="visualizer"></canvas>
+        <div class="glow"></div>
+        <div class="status-label" id="status-label">Click anywhere to start</div>
+        
+        <div class="transcript-container" id="transcript-container">
+            <div class="transcript" id="transcript"></div>
+            <div class="response" id="response"></div>
+        </div>
+        
+        <div class="controls">
+            <button id="record-btn" class="btn">Start Recording</button>
+        </div>
+        
+        <!-- Hidden audio element for playback -->
+        <audio id="audio-element" style="display:none"></audio>
+    </div>
+
+    <script>
+        // DOM Elements
+        const canvas = document.getElementById('visualizer');
+        const ctx = canvas.getContext('2d');
+        const statusLabel = document.getElementById('status-label');
+        const audioElement = document.getElementById('audio-element');
+        const transcriptContainer = document.getElementById('transcript-container');
+        const transcriptDiv = document.getElementById('transcript');
+        const responseDiv = document.getElementById('response');
+        const recordBtn = document.getElementById('record-btn');
+        
+        // Audio context and analysis variables
+        let audioContext, analyser, source;
+        let frequencyData;
+        let animationId;
+        let audioReady = false;
+        
+        // Recording variables
+        let mediaRecorder;
+        let recordingChunks = [];
+        let isRecording = false;
+        
+        // Smoothing for volume - longer for more stability
+        const volumeHistory = new Array(5).fill(0);
+        
+        // Set canvas size
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+        resizeCanvas();
+        window.addEventListener('resize', resizeCanvas);
+        
+        // Initialize on first user interaction
+        document.addEventListener('click', function() {
+            if (!audioReady) {
+                initAudio();
+            }
+        }, { once: true });
+        
+        // Record button event listener
+        recordBtn.addEventListener('click', function() {
+            if (isRecording) {
+                stopRecording();
+                recordBtn.textContent = 'Start Recording';
+                recordBtn.classList.remove('recording');
+            } else {
+                startRecording();
+                recordBtn.textContent = 'Stop Recording';
+                recordBtn.classList.add('recording');
+            }
+        });
+        
+        // Initialize audio context and analyzer
+        function initAudio() {
+            try {
+                // Create audio context
+                audioContext = new (window.AudioContext || window.webkitAudioContext)();
+                
+                // Create analyzer
+                analyser = audioContext.createAnalyser();
+                analyser.fftSize = 1024; 
+                analyser.smoothingTimeConstant = 0.8;
+                analyser.minDecibels = -70; 
+                analyser.maxDecibels = -10;
+                
+                // Create data arrays for analysis
+                frequencyData = new Uint8Array(analyser.frequencyBinCount);
+                
+                // Set up microphone input
+                setupMicrophone()
+                    .then(() => {
+                        startVisualization();
+                        statusLabel.textContent = 'Ready - click "Start Recording" to begin';
+                    })
+                    .catch(error => {
+                        statusLabel.textContent = `Microphone error: ${error.message}`;
+                        console.error('Microphone access error:', error);
+                    });
+                
+                // Flag audio as ready
+                audioReady = true;
+            } catch (error) {
+                statusLabel.textContent = `Error initializing audio: ${error.message}`;
+                console.error('Audio initialization error:', error);
+            }
+        }
+        
+        // Set up microphone input
+        async function setupMicrophone() {
+            try {
+                statusLabel.textContent = 'Requesting microphone access...';
+                
+                // Get microphone stream with noise suppression for better quality
+                const stream = await navigator.mediaDevices.getUserMedia({ 
+                    audio: {
+                        echoCancellation: true,
+                        noiseSuppression: true,
+                        autoGainControl: true
+                    }
+                });
+                
+                // Create source from microphone stream
+                source = audioContext.createMediaStreamSource(stream);
+                
+                // Connect source to analyzer (but not to destination to avoid feedback)
+                source.connect(analyser);
+                
+                // Setup media recorder
+                const options = { mimeType: 'audio/webm' };
+                mediaRecorder = new MediaRecorder(stream, options);
+                
+                // Handle recorded data
+                mediaRecorder.ondataavailable = function(event) {
+                    if (event.data.size > 0) {
+                        recordingChunks.push(event.data);
+                    }
+                };
+                
+                // When recording stops, process the audio
+                mediaRecorder.onstop = function() {
+                    processAudio();
+                };
+                
+                statusLabel.textContent = 'Microphone ready';
+                return true;
+            } catch (error) {
+                console.error('Microphone access error:', error);
+                throw error;
+            }
+        }
+        
+        // Start recording audio
+        function startRecording() {
+            if (mediaRecorder && !isRecording) {
+                recordingChunks = [];
+                mediaRecorder.start();
+                isRecording = true;
+                statusLabel.textContent = 'Recording...';
+            }
+        }
+        
+        // Stop recording audio
+        function stopRecording() {
+            if (mediaRecorder && isRecording) {
+                mediaRecorder.stop();
+                isRecording = false;
+                statusLabel.textContent = 'Processing...';
+            }
+        }
+        
+        // Process recorded audio
+        function processAudio() {
+            // Create blob from recorded chunks
+            const audioBlob = new Blob(recordingChunks, { type: 'audio/webm' });
+            recordingChunks = [];
+            
+            // For this demo, we'll simulate the backend response
+            // In a real implementation, you would send this to your server
+            
+            // Simulate processing delay
+            setTimeout(() => {
+                // Display transcript
+                transcriptContainer.style.display = 'block';
+                transcriptDiv.textContent = 'You: When does EC 311 with Tali Moreshet meet?';
+                
+                // Simulate backend response
+                const response = 'EC 311 lecture with Tali Moreshet meets on Tuesdays and Thursdays from 9:00 to 10:45 in PHO 210. There are also lab sections available on various days of the week.';
+                responseDiv.textContent = 'BUtLAR: ' + response;
+                
+                statusLabel.textContent = 'Ready - click "Start Recording" to ask another question';
+            }, 1500);
+        }
+        
+        // Start visualization loop
+        function startVisualization() {
+            // Cancel any existing animation
+            if (animationId) {
+                cancelAnimationFrame(animationId);
+            }
+            
+            // Animation function
+            function animate() {
+                // Get audio data
+                analyser.getByteFrequencyData(frequencyData);
+                
+                // Clear canvas
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                
+                // Draw calmer circles based on volume
+                drawCalmCircles();
+                
+                // Continue animation
+                animationId = requestAnimationFrame(animate);
+            }
+            
+            // Start animation
+            animate();
+        }
+        
+        // Simple circular visualization based on volume
+        function drawCalmCircles() {
+            const width = canvas.width;
+            const height = canvas.height;
+            const centerX = width / 2;
+            const centerY = height / 2;
+            const maxRadius = Math.min(width, height) * 0.4;
+            
+            // Get overall volume level (average of all frequencies)
+            let volume = getAverageFrequency() * 2.5; // Boost gain slightly
+            
+            // Clamp to 0-1 range
+            volume = Math.min(1, volume);
+            
+            // Apply noise gate to prevent small random movements
+            const noiseThreshold = 0.02;
+            if (volume < noiseThreshold) volume = 0;
+            
+            // Update history and calculate smooth volume
+            volumeHistory.push(volume);
+            volumeHistory.shift();
+            
+            // Calculate average volume for stability
+            const smoothVolume = volumeHistory.reduce((a, b) => a + b, 0) / volumeHistory.length;
+            
+            // Calculate radius for each circle based on volume only
+            const bassRadius = maxRadius * 0.15 + maxRadius * 0.85 * smoothVolume;
+            const midRadius = maxRadius * 0.10 + maxRadius * 0.6 * smoothVolume;
+            const trebleRadius = maxRadius * 0.05 + maxRadius * 0.35 * smoothVolume;
+            
+            // Draw bass circle
+            drawCircle(centerX, centerY, bassRadius, 'rgb(0, 191, 255)', 4);
+            
+            // Draw mid circle
+            drawCircle(centerX, centerY, midRadius, 'rgb(128, 0, 255)', 3);
+            
+            // Draw treble circle
+            drawCircle(centerX, centerY, trebleRadius, 'rgb(255, 0, 128)', 2);
+        }
+        
+        function drawCircle(x, y, radius, color, lineWidth) {
+            ctx.beginPath();
+            ctx.arc(x, y, radius, 0, Math.PI * 2);
+            ctx.strokeStyle = color;
+            ctx.lineWidth = lineWidth;
+            ctx.shadowBlur = 15;
+            ctx.shadowColor = color;
+            ctx.stroke();
+            ctx.shadowBlur = 0;
+        }
+        
+        // Helper function to get average frequency
+        function getAverageFrequency() {
+            let sum = 0;
+            
+            // Sum all frequency values
+            for (let i = 0; i < frequencyData.length; i++) {
+                sum += frequencyData[i];
+            }
+            
+            // Return normalized average (0-1)
+            return sum / (frequencyData.length * 255);
+        }
+        
+        // Add gentle glow effect
+        function updateGlow() {
+            const glow = document.querySelector('.glow');
+            const hue = (performance.now() / 50) % 360;
+            glow.style.background = `radial-gradient(ellipse at center, hsla(${hue}, 100%, 60%, 0.3) 0%, rgba(0, 0, 0, 0) 70%)`;
+            requestAnimationFrame(updateGlow);
+        }
+        updateGlow();
+
+        // Listen for audio element ending
+        audioElement.addEventListener('ended', function() {
+            // Ready for next recording
+            recordBtn.textContent = 'Start Recording';
+            recordBtn.classList.remove('recording');
+        });
+    </script>
+</body>
+</html>

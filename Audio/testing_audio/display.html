@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BUtLAR Voice Assistant</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f5f5f5;
+            color: #333;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+        }
+        h1 {
+            color: #B22234; /* BU red */
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .controls {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 20px;
+            gap: 10px;
+        }
+        button {
+            padding: 12px 24px;
+            font-size: 16px;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        #startButton {
+            background-color: #B22234;
+            color: white;
+        }
+        #stopButton {
+            background-color: #333;
+            color: white;
+        }
+        button:hover {
+            opacity: 0.9;
+            transform: scale(1.05);
+        }
+        button:disabled {
+            background-color: #cccccc;
+            cursor: not-allowed;
+            transform: none;
+        }
+        .conversation {
+            height: 400px;
+            overflow-y: auto;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 15px;
+            background-color: #f9f9f9;
+            margin-bottom: 20px;
+        }
+        .message {
+            margin-bottom: 15px;
+            padding: 10px 15px;
+            border-radius: 18px;
+            max-width: 80%;
+        }
+        .user {
+            background-color: #E6F7FF;
+            margin-left: auto;
+            border-bottom-right-radius: 5px;
+        }
+        .assistant {
+            background-color: #F2F2F2;
+            margin-right: auto;
+            border-bottom-left-radius: 5px;
+        }
+        .transcript {
+            background-color: #FFFDE7;
+            width: 90%;
+            margin: 10px auto;
+            padding: 8px 12px;
+            border-left: 3px solid #FFC107;
+            font-style: italic;
+        }
+        .status {
+            text-align: center;
+            font-style: italic;
+            color: #666;
+            margin: 10px 0;
+        }
+        .pulse {
+            display: inline-block;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: #B22234;
+            margin-left: 10px;
+            animation: pulse 1.5s infinite;
+        }
+        @keyframes pulse {
+            0% {
+                transform: scale(0.8);
+                opacity: 0.8;
+            }
+            50% {
+                transform: scale(1.2);
+                opacity: 1;
+            }
+            100% {
+                transform: scale(0.8);
+                opacity: 0.8;
+            }
+        }
+        .connection-status {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            padding: 5px 10px;
+            border-radius: 15px;
+            font-size: 12px;
+        }
+        .connected {
+            background-color: #4CAF50;
+            color: white;
+        }
+        .disconnected {
+            background-color: #F44336;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <div class="connection-status" id="connectionStatus">Connecting...</div>
+    
+    <div class="container">
+        <h1>BUtLAR Voice Assistant</h1>
+        
+        <div class="conversation" id="conversation">
+            <div class="message assistant">
+                Hi! I'm BUtLAR, here to answer any of your BU-related questions. Press "Start Talking" to begin!
+            </div>
+        </div>
+        
+        <div class="status" id="status">Ready</div>
+        
+        <div class="controls">
+            <button id="startButton">Start Talking</button>
+            <button id="stopButton">Stop Listening</button>
+            <button id="clearButton">Clear Conversation</button>
+        </div>
+    </div>
+
+    <script>
+        // DOM elements
+        const conversation = document.getElementById('conversation');
+        const statusElement = document.getElementById('status');
+        const connectionStatus = document.getElementById('connectionStatus');
+        const startButton = document.getElementById('startButton');
+        const stopButton = document.getElementById('stopButton');
+        const clearButton = document.getElementById('clearButton');
+        
+        // Variables for tracking connection status
+        let socket;
+        let reconnectInterval;
+        let isListening = false;
+        let currentTranscript = '';
+
+        // flag for speaking so we don't capture the audio while the assistant is speaking
+        let isSpeaking = false;  
+        
+        // Update connection status display
+        function updateConnectionStatus(connected) {
+            if (connected) {
+                connectionStatus.textContent = 'Connected';
+                connectionStatus.className = 'connection-status connected';
+            } else {
+                connectionStatus.textContent = 'Disconnected';
+                connectionStatus.className = 'connection-status disconnected';
+            }
+        }
+        
+        // Connect to WebSocket server
+        function connectWebSocket() {
+            // Close existing connection if any
+            if (socket) {
+                socket.close();
+            }
+            
+            // Connect to WebSocket server
+            socket = new WebSocket('ws://localhost:8765');
+            
+            socket.onopen = () => {
+                console.log('WebSocket connection established');
+                updateConnectionStatus(true);
+                clearInterval(reconnectInterval);
+                startButton.disabled = false;
+                // Send a message to the server to let it know we're ready
+                socket.send(JSON.stringify({
+                    type: 'client_ready'
+                }));
+            };
+            
+            socket.onclose = () => {
+                console.log('WebSocket connection closed');
+                updateConnectionStatus(false);
+                startButton.disabled = true;
+                
+                // Try to reconnect
+                if (!reconnectInterval) {
+                    reconnectInterval = setInterval(() => {
+                        console.log('Attempting to reconnect...');
+                        connectWebSocket();
+                    }, 5000); // Retry every 5 seconds
+                }
+            };
+            
+            socket.onerror = (error) => {
+                console.error('WebSocket error:', error);
+                updateConnectionStatus(false);
+                startButton.disabled = true;
+            };
+            
+            socket.onmessage = (event) => {
+                handleServerMessage(event.data);
+            };
+        }
+        
+        // Start the voice assistant
+        function startTalking() {
+            if (socket && socket.readyState === WebSocket.OPEN) {
+                socket.send(JSON.stringify({
+                    type: 'command',
+                    command: 'start'
+                }));
+                isListening = true;
+                updateStatus('Listening...');
+                startButton.disabled = true;
+                stopButton.disabled = false;
+                
+                // Add a system message to show we've started
+                const messageElement = document.createElement('div');
+                messageElement.classList.add('message', 'assistant');
+                messageElement.textContent = "I'm listening now. Please speak clearly...";
+                conversation.appendChild(messageElement);
+                conversation.scrollTop = conversation.scrollHeight;
+            } else {
+                alert('Not connected to server. Please wait for connection and try again.');
+            }
+        }
+        
+        // Stop listening
+        function stopListening() {
+            if (socket && socket.readyState === WebSocket.OPEN) {
+                socket.send(JSON.stringify({
+                    type: 'command',
+                    command: 'stop'
+                }));
+                isListening = false;
+                updateStatus('Stopped listening');
+                startButton.disabled = false;
+                stopButton.disabled = true;
+                
+                // Add a system message to show we've stopped
+                const messageElement = document.createElement('div');
+                messageElement.classList.add('message', 'assistant');
+                messageElement.textContent = "I've stopped listening. Press 'Start Talking' when you want to continue.";
+                conversation.appendChild(messageElement);
+                conversation.scrollTop = conversation.scrollHeight;
+            }
+        }
+        
+        // Clear the conversation
+        function clearConversation() {
+            // Remove all messages except the first welcome message
+            while (conversation.childNodes.length > 1) {
+                conversation.removeChild(conversation.lastChild);
+            }
+            currentTranscript = '';
+            updateStatus('Conversation cleared');
+        }
+        
+        // Handle messages from the server
+        function handleServerMessage(data) {
+            try {
+                const message = JSON.parse(data);
+                console.log('Received message:', message);
+                
+                if (message.type === 'transcript') {
+                    print(isSpeaking);
+                    if (isSpeaking) return;  // Ignore any transcript while assistant is speaking
+
+                    if (message.isFinal) {
+                        // Final transcript - add to conversation
+                        addTranscriptToConversation(message.text);
+                        updateStatus('Processing your question...');
+                    } else {
+                        // Interim transcript - update status and current transcript
+                        currentTranscript = message.text;
+                        updateStatus(`Listening: ${message.text}`);
+                        
+                        // Update the current transcript display or create it if it doesn't exist
+                        let transcriptElement = document.getElementById('current-transcript');
+                        if (!transcriptElement) {
+                            transcriptElement = document.createElement('div');
+                            transcriptElement.id = 'current-transcript';
+                            transcriptElement.classList.add('transcript');
+                            conversation.appendChild(transcriptElement);
+                        }
+                        transcriptElement.textContent = `Currently hearing: "${message.text}"`;
+                        conversation.scrollTop = conversation.scrollHeight;
+                    }
+                
+                } else if (message.type === 'response') {
+                    addMessageToConversation(message.text, 'assistant');
+                    updateStatus('Listening...');
+
+                    // ✨ NEW: Speak the response using browser TTS
+                    const utterance = new SpeechSynthesisUtterance(message.text);
+                    isSpeaking = true;
+                    print(isSpeaking);
+                    utterance.onend = () => {
+                        isSpeaking = false;
+                        console.log("Assistant finished speaking.");
+                    };
+                    window.speechSynthesis.speak(utterance);
+
+                    const transcriptElement = document.getElementById('current-transcript');
+                    if (transcriptElement) {
+                        transcriptElement.remove();
+                    }
+                } else if (message.type === 'status') {
+                    if (message.text === 'listening') {
+                        isListening = true;
+                        updateStatus('Listening...');
+                    } else if (message.text === 'processing') {
+                        isListening = false;
+                        updateStatus('Processing...');
+                    }
+                }
+            } catch (error) {
+                console.error('Error parsing message:', error);
+            }
+        }
+        
+        // Add transcript to conversation
+        function addTranscriptToConversation(text) {
+            // Remove any current transcript display
+            const currentTranscriptElement = document.getElementById('current-transcript');
+            if (currentTranscriptElement) {
+                currentTranscriptElement.remove();
+            }
+            
+            // Create the final transcript message
+            const messageElement = document.createElement('div');
+            messageElement.classList.add('message', 'user');
+            messageElement.textContent = text;
+            conversation.appendChild(messageElement);
+            conversation.scrollTop = conversation.scrollHeight;
+        }
+        
+        // Add message to conversation
+        function addMessageToConversation(text, sender) {
+            const messageElement = document.createElement('div');
+            messageElement.classList.add('message', sender);
+            messageElement.textContent = text;
+            conversation.appendChild(messageElement);
+            conversation.scrollTop = conversation.scrollHeight;
+        }
+        
+        // Update status message
+        function updateStatus(text) {
+            if (isListening) {
+                statusElement.innerHTML = text + '<span class="pulse"></span>';
+            } else {
+                statusElement.textContent = text;
+            }
+        }
+        
+        // Event listeners
+        startButton.addEventListener('click', startTalking);
+        stopButton.addEventListener('click', stopListening);
+        clearButton.addEventListener('click', clearConversation);
+        
+        // Disable stop button initially
+        stopButton.disabled = true;
+        
+        // Initialize connection when page loads
+        window.addEventListener('load', () => {
+            connectWebSocket();
+        });
+    </script>
+</body>
+</html>
