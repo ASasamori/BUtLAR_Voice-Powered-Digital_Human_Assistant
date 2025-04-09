@@ -46,9 +46,7 @@
           // better voice synthesis
           const voices = speechSynthesis.getVoices();
           const preferredVoice = voices.find(v =>
-            v.name.includes("Google UK English Female") || 
-            v.name.includes("Google US English") ||
-            v.name.includes("Samantha") // Fallback
+            v.name.includes("Google US English")
           );
 
           // Send PAUSE signal to backend before speaking
@@ -59,7 +57,7 @@
           utterance.lang = 'en-US';
           utterance.pitch = 1.0;
           utterance.rate = 1.15;
-
+a
           // When done speaking, tell backend to resume
           utterance.onend = () => {
             socket.send(JSON.stringify({ type: "resume" }));
