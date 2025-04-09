@@ -11,3 +11,9 @@
 /Audio/venv
 /Transcripts/
 /database/OpenAI_Integration/api_key.json
+
+/Vanna/*
+
+# But NOT these 3 files
+!Vanna/test.ipynb
+!Vanna/database_converter.ipynb
