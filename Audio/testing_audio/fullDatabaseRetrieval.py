@@ -344,18 +344,23 @@ from dotenv import load_dotenv
 import io
 from contextlib import redirect_stdout
 
-# Load the .env file
-load_dotenv()
-
-# Retrieve the values using os.environ
-api_key = os.getenv('NEW_OPENAI_API_KEY')
 
 class MyVanna(ChromaDB_VectorStore, OpenAI_Chat):
     def __init__(self, config=None):
         ChromaDB_VectorStore.__init__(self, config=config)
         OpenAI_Chat.__init__(self, config=config)
 
+
+# Load the .env file
+load_dotenv()
+
+# Retrieve the values using os.environ
+api_key = os.getenv('open_ai_api_key')
+# print(f"The variable is {api_key}")
+
 def answer_course_question_new(question: str):
+
+
     vn = MyVanna(config={'api_key': api_key, 'model': 'gpt-3.5-turbo'})
     vn.connect_to_postgres(host='34.134.126.254', dbname='tutorialDB', user='postgres', password='butlar', port='5432')
     df_information_schema = vn.run_sql("SELECT * FROM INFORMATION_SCHEMA.COLUMNS")
@@ -401,6 +406,7 @@ def answer_course_question_new(question: str):
     )
 
     print(completion.choices[0].message.content)
+    return completion.choices[0].message.content
 
 
 
