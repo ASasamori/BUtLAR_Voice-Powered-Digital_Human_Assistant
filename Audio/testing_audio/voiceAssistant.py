@@ -8,6 +8,7 @@ from google.cloud.speech_v1 import RecognitionConfig, StreamingRecognitionConfig
 import pandas as pd
 import sqlite3
 from fullDatabaseRetrieval import answer_course_question_new, answer_course_question
+from Vanna_in_audio.test import interpret_vanna_msg
 import threading, queue
 from pathlib import Path
 

@@ -363,23 +363,11 @@ def answer_course_question_new(question: str):
 
     vn = MyVanna(config={'api_key': api_key, 'model': 'gpt-3.5-turbo'})
     vn.connect_to_postgres(host='34.134.126.254', dbname='tutorialDB', user='postgres', password='butlar', port='5432')
-    df_information_schema = vn.run_sql("SELECT * FROM INFORMATION_SCHEMA.COLUMNS")
-    # This will break up the information schema into bite-sized chunks that can be referenced by the LLM
-    plan = vn.get_training_plan_generic(df_information_schema)
-    plan
 
-
-    # If you like the plan, then uncomment this and run it to train
-    vn.train(plan=plan)
-    vn.train(documentation="My tables outline the coures for a college university. In each row you can see the college" \
-    "course with its respective course number and name, which professor teaches it, what times it runs from," \
-    "where it meets, how many students can attend, and how many units the course is worth. ")
-
-    my_question = question
     buffer = io.StringIO()
 
     with redirect_stdout(buffer):
-        response = vn.ask(question=my_question, allow_llm_to_see_data=True)
+        response = vn.ask(question=question, allow_llm_to_see_data=True)
     capt_vanna_ans = buffer.getvalue()
 
     if "error" not in capt_vanna_ans:
@@ -401,7 +389,7 @@ def answer_course_question_new(question: str):
     model="gpt-3.5-turbo",
     messages=[
         {"role": "developer", "content": "You are a helpful assistant in interpreting data tables into complete sentences and an intelligible response."},
-        {"role": "user", "content": f"Answer the question of: {my_question}, given this data table of{vanna_ans_tables}"}
+        {"role": "user", "content": f"Answer the question of: {question}, given this data table of{vanna_ans_tables}"}
     ]
     )
 

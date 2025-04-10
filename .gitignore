@@ -13,7 +13,11 @@
 /database/OpenAI_Integration/api_key.json
 
 /Vanna/*
-
-# But NOT these 3 files
 !Vanna/test.ipynb
 !Vanna/database_converter.ipynb
+
+/Audio/testing_audio/Vanna_in_audio/*
+!Audio/testing_audio/Vanna_in_audio/use_vanna.ipynb
+!Audio/testing_audio/Vanna_in_audio/new_dummy.ipynb
+!Audio/testing_audio/Vanna_in_audio/test.py
+!Audio/testing_audio/Vanna_in_audio/test2.py
