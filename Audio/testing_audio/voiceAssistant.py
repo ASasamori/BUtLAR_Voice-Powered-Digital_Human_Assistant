@@ -9,6 +9,7 @@ import pandas as pd
 import sqlite3
 # from getAssistance import lastNamesFunction, generateSql, respondToUser
 from fullDatabaseRetrieval import answer_course_question
+from Vanna_in_audio.test import interpret_vanna_msg
 import threading
 
 # flag for when the sentence is being processed. have audio sleep while that happens
