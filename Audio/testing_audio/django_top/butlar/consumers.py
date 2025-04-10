@@ -67,24 +67,22 @@ class BUtlARConsumer(AsyncWebsocketConsumer):
         print("🔴 WebSocket disconnected.")
 
     async def receive(self, text_data):
-        """
-        Handle pause/resume signals sent from frontend.
-        """
         data = json.loads(text_data)
         msg_type = data.get("type", "")
         flag_dir = "/home/yobe/BUtLAR_Voice-Powered-Digital_Human_Assistant/Audio/testing_audio/django_top/butlar/flag"
-        # Ensure the directory exists
-        os.makedirs(flag_dir, exist_ok=True)
         flag_file = os.path.join(flag_dir, "responding.flag")
+        duration_file = os.path.join(flag_dir, "tts_duration.flag")
 
         if msg_type == "pause":
             os.makedirs(flag_dir, exist_ok=True)
             with open(flag_file, "w") as f:
                 f.write("responding")
-            print("🛑 Received 'pause' → flag written.")
+            if "duration" in data:
+                with open(duration_file, "w") as f:
+                    f.write(str(data["duration"]))
+            print("🛑 Received 'pause' → flag and duration written.")
+
         elif msg_type == "resume":
-            # resume
-            os.makedirs(flag_dir, exist_ok=True)
             with open(flag_file, "w") as f:
                 f.write("resume")
             print("▶️ Received 'resume' → flag written.")

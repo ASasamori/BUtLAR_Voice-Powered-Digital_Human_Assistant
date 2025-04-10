@@ -58,13 +58,18 @@
           chatWindow.appendChild(messageDiv);
 
           // Send PAUSE signal to backend before speaking
-          socket.send(JSON.stringify({ type: "pause" }));
+          // socket.send(JSON.stringify({ type: "pause" }));
 
           const utterance = new SpeechSynthesisUtterance(data.text);
           utterance.voice = preferredVoice;
           utterance.lang = 'en-US';
           utterance.pitch = 1.0;
           utterance.rate = 1.10;
+
+          utterance.onstart = () => {
+            const estimatedDurationSec = data.text.split(' ').length / 2.5;  // rough estimate: 2.5 wps
+            socket.send(JSON.stringify({ type: "pause", duration: estimatedDurationSec }));
+          };
 
           // When done speaking, tell backend to resume
           utterance.onend = () => {

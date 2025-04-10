@@ -30,4 +30,5 @@ def ButlarHome(request):
 def butlar_interface(request):
     return render(request, "butlar/butlar_interface.html")
 
-    
+def visualizer(request):
+    return render(request, "butlar/visualizer.html")

@@ -14,6 +14,7 @@ from datetime import datetime
 urlpatterns = [
     path('', views.ButlarHome, name='home'),
     path('interface/', butlar_interface, name="butlar"),
+    path('visualizer/', visualizer, name="visualizer")
 ]
 
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
