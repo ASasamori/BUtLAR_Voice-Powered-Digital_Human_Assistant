@@ -4,6 +4,7 @@ import os
 # Initialize OpenAI client
 client = OpenAI(api_key="API KEY")
 
+
 def lastNames(prompt):
     try:
         completion = client.chat.completions.create(
@@ -19,6 +20,7 @@ def lastNames(prompt):
         return None
 
 def generateSql(user_question):
+    user_question = user_question.upper()
     prompt = f"""
 You are an expert SQL assistant. Based on the user’s question, generate a SQL query to retrieve the requested information from a SQLite database called 'school.db'.
 
@@ -42,7 +44,12 @@ Table: classes
 
 Use subject + catalog_nbr for identifying courses (e.g., subject = 'ENGEC' AND catalog_nbr = '311'). Do NOT rely on crse_id for queries.
 
+Course codes should be interpreted case-insensitively (e.g., 'ec330' and 'EC330' should be treated the same).
+
 Examples:
+- Q: When is EC330?
+  A: SELECT days, time, room FROM classes WHERE subject = 'ENGEC' AND catalog_nbr = '330' AND component = 'LEC';
+
 - Q: What classes does Tali Moreshet teach?
   A: SELECT crse_id, descr FROM classes WHERE instructors LIKE '%Tali Moreshet%';
 
