@@ -1,0 +1,4041 @@
+{
+    "New item - 2": {
+        "pageCount": 4,
+        "classes": [
+            {
+                "index": 1,
+                "crse_id": "124985",
+                "crse_offer_nbr": 1,
+                "class_section": "A1",
+                "start_dt": "01/21/2025",
+                "end_dt": "05/01/2025",
+                "campus_descr": "Boston University",
+                "class_nbr": 9634,
+                "component": "LEC",
+                "subject": "ENGEC",
+                "subject_descr": "ENGEC Electrical & Comp Engr",
+                "catalog_nbr": "311",
+                "class_type": "E",
+                "schedule_print": "Y",
+                "acad_group": "ENG",
+                "acad_org": "ENG",
+                "descr": "Introduction to Logic Design",
+                "instructors": [
+                    {
+                        "name": "Tali Moreshet",
+                        "email": ""
+                    }
+                ],
+                "section_type": "Lecture",
+                "meetings": [
+                    {
+                        "days": "TuTh",
+                        "start_time": "09.00.00.000000",
+                        "end_time": "10.45.00.000000",
+                        "start_dt": "01/21/2025",
+                        "end_dt": "05/01/2025",
+                        "bldg_cd": "PHO",
+                        "bldg_has_coordinates": false,
+                        "facility_descr": "8 St. Mary's St PHO 210",
+                        "room": "210",
+                        "facility_id": "PHO 210",
+                        "instructor": "Tali Moreshet"
+                    }
+                ]
+            },
+            {
+                "index": 2,
+                "crse_id": "124985",
+                "crse_offer_nbr": 1,
+                "class_section": "C1",
+                "start_dt": "01/21/2025",
+                "end_dt": "05/01/2025",
+                "campus_descr": "Boston University",
+                "class_nbr": 14308,
+                "component": "LAB",
+                "subject": "ENGEC",
+                "subject_descr": "ENGEC Electrical & Comp Engr",
+                "catalog_nbr": "311",
+                "class_type": "N",
+                "schedule_print": "Y",
+                "acad_group": "ENG",
+                "acad_org": "ENG",
+                "descr": "Introduction to Logic Design",
+                "instructors": [
+                    {
+                        "name": "Tali Moreshet",
+                        "email": ""
+                    }
+                ],
+                "section_type": "Laboratory",
+                "meetings": [
+                    {
+                        "days": "Tu",
+                        "start_time": "15.30.00.000000",
+                        "end_time": "17.15.00.000000",
+                        "start_dt": "01/21/2025",
+                        "end_dt": "05/01/2025",
+                        "bldg_cd": "PHO",
+                        "bldg_has_coordinates": false,
+                        "facility_descr": "8 St. Mary's St PHO 307",
+                        "room": "307",
+                        "facility_id": "PHO 307",
+                        "instructor": "Tali Moreshet"
+                    }
+                ]
+            },
+            {
+                "index": 3,
+                "crse_id": "124985",
+                "crse_offer_nbr": 1,
+                "class_section": "C2",
+                "start_dt": "01/21/2025",
+                "end_dt": "05/01/2025",
+                "campus_descr": "Boston University",
+                "class_nbr": 14309,
+                "component": "LAB",
+                "subject": "ENGEC",
+                "subject_descr": "ENGEC Electrical & Comp Engr",
+                "catalog_nbr": "311",
+                "class_type": "N",
+                "schedule_print": "Y",
+                "acad_group": "ENG",
+                "acad_org": "ENG",
+                "descr": "Introduction to Logic Design",
+                "instructors": [
+                    {
+                        "name": "Tali Moreshet",
+                        "email": ""
+                    }
+                ],
+                "section_type": "Laboratory",
+                "meetings": [
+                    {
+                        "days": "Mo",
+                        "start_time": "18.30.00.000000",
+                        "end_time": "20.15.00.000000",
+                        "start_dt": "01/21/2025",
+                        "end_dt": "05/01/2025",
+                        "bldg_cd": "PHO",
+                        "bldg_has_coordinates": false,
+                        "facility_descr": "8 St. Mary's St PHO 202",
+                        "room": "202",
+                        "facility_id": "PHO 202",
+                        "instructor": "Tali Moreshet"
+                    }
+                ]
+            },
+            {
+                "index": 4,
+                "crse_id": "124985",
+                "crse_offer_nbr": 1,
+                "class_section": "C3",
+                "start_dt": "01/21/2025",
+                "end_dt": "05/01/2025",
+                "campus_descr": "Boston University",
+                "class_nbr": 14316,
+                "component": "LAB",
+                "subject": "ENGEC",
+                "subject_descr": "ENGEC Electrical & Comp Engr",
+                "catalog_nbr": "311",
+                "class_type": "N",
+                "schedule_print": "Y",
+                "acad_group": "ENG",
+                "acad_org": "ENG",
+                "descr": "Introduction to Logic Design",
+                "instructors": [
+                    {
+                        "name": "Tali Moreshet",
+                        "email": ""
+                    }
+                ],
+                "section_type": "Laboratory",
+                "meetings": [
+                    {
+                        "days": "Th",
+                        "start_time": "18.30.00.000000",
+                        "end_time": "20.15.00.000000",
+                        "start_dt": "01/21/2025",
+                        "end_dt": "05/01/2025",
+                        "bldg_cd": "PHO",
+                        "bldg_has_coordinates": false,
+                        "facility_descr": "8 St. Mary's St PHO 202",
+                        "room": "202",
+                        "facility_id": "PHO 202",
+                        "instructor": "Tali Moreshet"
+                    }
+                ]
+            },
+            {
+                "index": 5,
+                "crse_id": "124985",
+                "crse_offer_nbr": 1,
+                "class_section": "C4",
+                "start_dt": "01/21/2025",
+                "end_dt": "05/01/2025",
+                "campus_descr": "Boston University",
+                "class_nbr": 14317,
+                "component": "LAB",
+                "subject": "ENGEC",
+                "subject_descr": "ENGEC Electrical & Comp Engr",
+                "catalog_nbr": "311",
+                "class_type": "N",
+                "schedule_print": "Y",
+                "acad_group": "ENG",
+                "acad_org": "ENG",
+                "descr": "Introduction to Logic Design",
+                "instructors": [
+                    {
+                        "name": "Tali Moreshet",
+                        "email": ""
+                    }
+                ],
+                "section_type": "Laboratory",
+                "meetings": [
+                    {
+                        "days": "We",
+                        "start_time": "16.30.00.000000",
+                        "end_time": "18.15.00.000000",
+                        "start_dt": "01/21/2025",
+                        "end_dt": "05/01/2025",
+                        "bldg_cd": "PSY",
+                        "bldg_has_coordinates": false,
+                        "facility_descr": "64-86 Cummington Mall PSY B41",
+                        "room": "B41",
+                        "facility_id": "PSY B41",
+                        "instructor": "Tali Moreshet"
+                    }
+                ]
+            },
+            {
+                "index": 6,
+                "crse_id": "124985",
+                "crse_offer_nbr": 1,
+                "class_section": "C5",
+                "start_dt": "01/21/2025",
+                "end_dt": "05/01/2025",
+                "campus_descr": "Boston University",
+                "class_nbr": 14318,
+                "component": "LAB",
+                "subject": "ENGEC",
+                "subject_descr": "ENGEC Electrical & Comp Engr",
+                "catalog_nbr": "311",
+                "class_type": "N",
+                "schedule_print": "Y",
+                "acad_group": "ENG",
+                "acad_org": "ENG",
+                "descr": "Introduction to Logic Design",
+                "instructors": [
+                    {
+                        "name": "Tali Moreshet",
+                        "email": ""
+                    }
+                ],
+                "section_type": "Laboratory",
+                "meetings": [
+                    {
+                        "days": "We",
+                        "start_time": "18.30.00.000000",
+                        "end_time": "20.15.00.000000",
+                        "start_dt": "01/21/2025",
+                        "end_dt": "05/01/2025",
+                        "bldg_cd": "PHO",
+                        "bldg_has_coordinates": false,
+                        "facility_descr": "8 St. Mary's St PHO 202",
+                        "room": "202",
+                        "facility_id": "PHO 202",
+                        "instructor": "Tali Moreshet"
+                    }
+                ]
+            },
+            {
+                "index": 7,
+                "crse_id": "124989",
+                "crse_offer_nbr": 1,
+                "class_section": "A1",
+                "start_dt": "01/21/2025",
+                "end_dt": "05/01/2025",
+                "campus_descr": "Boston University",
+                "class_nbr": 9636,
+                "component": "LEC",
+                "subject": "ENGEC",
+                "subject_descr": "ENGEC Electrical & Comp Engr",
+                "catalog_nbr": "327",
+                "class_type": "E",
+                "schedule_print": "Y",
+                "acad_group": "ENG",
+                "acad_org": "ENG",
+                "descr": "Introduction to Software Engineering",
+                "instructors": [
+                    {
+                        "name": "Ed Solovey",
+                        "email": ""
+                    }
+                ],
+                "section_type": "Lecture",
+                "meetings": [
+                    {
+                        "days": "MoWe",
+                        "start_time": "14.30.00.000000",
+                        "end_time": "16.15.00.000000",
+                        "start_dt": "01/21/2025",
+                        "end_dt": "05/01/2025",
+                        "bldg_cd": "PHO",
+                        "bldg_has_coordinates": false,
+                        "facility_descr": "8 St. Mary's St PHO 211",
+                        "room": "211",
+                        "facility_id": "PHO 211",
+                        "instructor": "Ed Solovey"
+                    }
+                ]
+            },
+            {
+                "index": 8,
+                "crse_id": "124989",
+                "crse_offer_nbr": 1,
+                "class_section": "C1",
+                "start_dt": "01/21/2025",
+                "end_dt": "05/01/2025",
+                "campus_descr": "Boston University",
+                "class_nbr": 14320,
+                "component": "LAB",
+                "subject": "ENGEC",
+                "subject_descr": "ENGEC Electrical & Comp Engr",
+                "catalog_nbr": "327",
+                "class_type": "N",
+                "schedule_print": "Y",
+                "acad_group": "ENG",
+                "acad_org": "ENG",
+                "descr": "Introduction to Software Engineering",
+                "instructors": [
+                    {
+                        "name": "Ed Solovey",
+                        "email": ""
+                    }
+                ],
+                "section_type": "Laboratory",
+                "meetings": [
+                    {
+                        "days": "Tu",
+                        "start_time": "15.30.00.000000",
+                        "end_time": "17.15.00.000000",
+                        "start_dt": "01/21/2025",
+                        "end_dt": "05/01/2025",
+                        "bldg_cd": "PHO",
+                        "bldg_has_coordinates": false,
+                        "facility_descr": "8 St. Mary's St PHO 307",
+                        "room": "307",
+                        "facility_id": "PHO 307",
+                        "instructor": "Ed Solovey"
+                    }
+                ]
+            },
+            {
+                "index": 9,
+                "crse_id": "124989",
+                "crse_offer_nbr": 1,
+                "class_section": "C2",
+                "start_dt": "01/21/2025",
+                "end_dt": "05/01/2025",
+                "campus_descr": "Boston University",
+                "class_nbr": 14321,
+                "component": "LAB",
+                "subject": "ENGEC",
+                "subject_descr": "ENGEC Electrical & Comp Engr",
+                "catalog_nbr": "327",
+                "class_type": "N",
+                "schedule_print": "Y",
+                "acad_group": "ENG",
+                "acad_org": "ENG",
+                "descr": "Introduction to Software Engineering",
+                "instructors": [
+                    {
+                        "name": "Ed Solovey",
+                        "email": ""
+                    }
+                ],
+                "section_type": "Laboratory",
+                "meetings": [
+                    {
+                        "days": "We",
+                        "start_time": "16.30.00.000000",
+                        "end_time": "18.15.00.000000",
+                        "start_dt": "01/21/2025",
+                        "end_dt": "05/01/2025",
+                        "bldg_cd": "PHO",
+                        "bldg_has_coordinates": false,
+                        "facility_descr": "8 St. Mary's St PHO 307",
+                        "room": "307",
+                        "facility_id": "PHO 307",
+                        "instructor": "Ed Solovey"
+                    }
+                ]
+            },
+            {
+                "index": 10,
+                "crse_id": "124989",
+                "crse_offer_nbr": 1,
+                "class_section": "C3",
+                "start_dt": "01/21/2025",
+                "end_dt": "05/01/2025",
+                "campus_descr": "Boston University",
+                "class_nbr": 14322,
+                "component": "LAB",
+                "subject": "ENGEC",
+                "subject_descr": "ENGEC Electrical & Comp Engr",
+                "catalog_nbr": "327",
+                "class_type": "N",
+                "schedule_print": "Y",
+                "acad_group": "ENG",
+                "acad_org": "ENG",
+                "descr": "Introduction to Software Engineering",
+                "instructors": [
+                    {
+                        "name": "Ed Solovey",
+                        "email": ""
+                    }
+                ],
+                "section_type": "Laboratory",
+                "meetings": [
+                    {
+                        "days": "Fr",
+                        "start_time": "14.30.00.000000",
+                        "end_time": "16.15.00.000000",
+                        "start_dt": "01/21/2025",
+                        "end_dt": "05/01/2025",
+                        "bldg_cd": "PHO",
+                        "bldg_has_coordinates": false,
+                        "facility_descr": "8 St. Mary's St PHO 307",
+                        "room": "307",
+                        "facility_id": "PHO 307",
+                        "instructor": "Ed Solovey"
+                    }
+                ]
+            },
+            {
+                "index": 11,
+                "crse_id": "124991",
+                "crse_offer_nbr": 1,
+                "class_section": "A1",
+                "start_dt": "01/21/2025",
+                "end_dt": "05/01/2025",
+                "campus_descr": "Boston University",
+                "class_nbr": 9637,
+                "component": "LEC",
+                "subject": "ENGEC",
+                "subject_descr": "ENGEC Electrical & Comp Engr",
+                "catalog_nbr": "330",
+                "class_type": "E",
+                "schedule_print": "Y",
+                "acad_group": "ENG",
+                "acad_org": "ENG",
+                "descr": "Applied Algorithms for Engineers",
+                "instructors": [
+                    {
+                        "name": "Wenchao Li",
+                        "email": ""
+                    }
+                ],
+                "section_type": "Lecture",
+                "meetings": [
+                    {
+                        "days": "MoWe",
+                        "start_time": "12.20.00.000000",
+                        "end_time": "14.05.00.000000",
+                        "start_dt": "01/21/2025",
+                        "end_dt": "05/01/2025",
+                        "bldg_cd": "SAR",
+                        "bldg_has_coordinates": false,
+                        "facility_descr": "635 Commonwealth Ave SAR 103",
+                        "room": "103",
+                        "facility_id": "SAR 103",
+                        "instructor": "Wenchao Li"
+                    }
+                ]
+            },
+            {
+                "index": 12,
+                "crse_id": "124991",
+                "crse_offer_nbr": 1,
+                "class_section": "B1",
+                "start_dt": "01/21/2025",
+                "end_dt": "05/01/2025",
+                "campus_descr": "Boston University",
+                "class_nbr": 14325,
+                "component": "DIS",
+                "subject": "ENGEC",
+                "subject_descr": "ENGEC Electrical & Comp Engr",
+                "catalog_nbr": "330",
+                "class_type": "N",
+                "schedule_print": "Y",
+                "acad_group": "ENG",
+                "acad_org": "ENG",
+                "descr": "Applied Algorithms for Engineers",
+                "instructors": [
+                    {
+                        "name": "Wenchao Li",
+                        "email": ""
+                    }
+                ],
+                "section_type": "Discussion",
+                "meetings": [
+                    {
+                        "days": "Fr",
+                        "start_time": "11.15.00.000000",
+                        "end_time": "12.05.00.000000",
+                        "start_dt": "01/21/2025",
+                        "end_dt": "05/01/2025",
+                        "bldg_cd": "EPC",
+                        "bldg_has_coordinates": false,
+                        "facility_descr": "750 Commonwealth Ave EPC 208",
+                        "room": "208",
+                        "facility_id": "EPC 208",
+                        "instructor": "Wenchao Li"
+                    }
+                ]
+            },
+            {
+                "index": 13,
+                "crse_id": "124991",
+                "crse_offer_nbr": 1,
+                "class_section": "B2",
+                "start_dt": "01/21/2025",
+                "end_dt": "05/01/2025",
+                "campus_descr": "Boston University",
+                "class_nbr": 14326,
+                "component": "DIS",
+                "subject": "ENGEC",
+                "subject_descr": "ENGEC Electrical & Comp Engr",
+                "catalog_nbr": "330",
+                "class_type": "N",
+                "schedule_print": "Y",
+                "acad_group": "ENG",
+                "acad_org": "ENG",
+                "descr": "Applied Algorithms for Engineers",
+                "instructors": [
+                    {
+                        "name": "Wenchao Li",
+                        "email": ""
+                    }
+                ],
+                "section_type": "Discussion",
+                "meetings": [
+                    {
+                        "days": "Fr",
+                        "start_time": "12.20.00.000000",
+                        "end_time": "13.10.00.000000",
+                        "start_dt": "01/21/2025",
+                        "end_dt": "05/01/2025",
+                        "bldg_cd": "EPC",
+                        "bldg_has_coordinates": false,
+                        "facility_descr": "750 Commonwealth Ave EPC 204",
+                        "room": "204",
+                        "facility_id": "EPC 204",
+                        "instructor": "Wenchao Li"
+                    }
+                ]
+            },
+            {
+                "index": 14,
+                "crse_id": "124997",
+                "crse_offer_nbr": 1,
+                "class_section": "A1",
+                "start_dt": "01/21/2025",
+                "end_dt": "05/01/2025",
+                "campus_descr": "Boston University",
+                "class_nbr": 9638,
+                "component": "LEC",
+                "subject": "ENGEC",
+                "subject_descr": "ENGEC Electrical & Comp Engr",
+                "catalog_nbr": "401",
+                "class_type": "E",
+                "schedule_print": "Y",
+                "acad_group": "ENG",
+                "acad_org": "ENG",
+                "descr": "Signals and Systems",
+                "instructors": [
+                    {
+                        "name": "Archana Venkataraman",
+                        "email": ""
+                    }
+                ],
+                "section_type": "Lecture",
+                "meetings": [
+                    {
+                        "days": "MoWe",
+                        "start_time": "12.20.00.000000",
+                        "end_time": "14.05.00.000000",
+                        "start_dt": "01/21/2025",
+                        "end_dt": "05/01/2025",
+                        "bldg_cd": "PHO",
+                        "bldg_has_coordinates": false,
+                        "facility_descr": "8 St. Mary's St PHO 203",
+                        "room": "203",
+                        "facility_id": "PHO 203",
+                        "instructor": "Archana Venkataraman"
+                    }
+                ]
+            },
+            {
+                "index": 15,
+                "crse_id": "124997",
+                "crse_offer_nbr": 1,
+                "class_section": "B1",
+                "start_dt": "01/21/2025",
+                "end_dt": "05/01/2025",
+                "campus_descr": "Boston University",
+                "class_nbr": 19606,
+                "component": "DIS",
+                "subject": "ENGEC",
+                "subject_descr": "ENGEC Electrical & Comp Engr",
+                "catalog_nbr": "401",
+                "class_type": "N",
+                "schedule_print": "Y",
+                "acad_group": "ENG",
+                "acad_org": "ENG",
+                "descr": "Signals and Systems",
+                "instructors": [
+                    {
+                        "name": "Archana Venkataraman",
+                        "email": ""
+                    }
+                ],
+                "section_type": "Discussion",
+                "meetings": [
+                    {
+                        "days": "Tu",
+                        "start_time": "18.30.00.000000",
+                        "end_time": "20.15.00.000000",
+                        "start_dt": "01/21/2025",
+                        "end_dt": "05/01/2025",
+                        "bldg_cd": "EPC",
+                        "bldg_has_coordinates": false,
+                        "facility_descr": "750 Commonwealth Ave EPC 209",
+                        "room": "209",
+                        "facility_id": "EPC 209",
+                        "instructor": "Archana Venkataraman"
+                    }
+                ]
+            },
+            {
+                "index": 16,
+                "crse_id": "124997",
+                "crse_offer_nbr": 1,
+                "class_section": "C2",
+                "start_dt": "01/21/2025",
+                "end_dt": "05/01/2025",
+                "campus_descr": "Boston University",
+                "class_nbr": 19607,
+                "component": "DIS",
+                "subject": "ENGEC",
+                "subject_descr": "ENGEC Electrical & Comp Engr",
+                "catalog_nbr": "401",
+                "class_type": "N",
+                "schedule_print": "Y",
+                "acad_group": "ENG",
+                "acad_org": "ENG",
+                "descr": "Signals and Systems",
+                "instructors": [
+                    {
+                        "name": "Archana Venkataraman",
+                        "email": ""
+                    }
+                ],
+                "section_type": "Discussion",
+                "meetings": [
+                    {
+                        "days": "Mo",
+                        "start_time": "18.30.00.000000",
+                        "end_time": "20.15.00.000000",
+                        "start_dt": "01/21/2025",
+                        "end_dt": "05/01/2025",
+                        "bldg_cd": "EPC",
+                        "bldg_has_coordinates": false,
+                        "facility_descr": "750 Commonwealth Ave EPC 204",
+                        "room": "204",
+                        "facility_id": "EPC 204",
+                        "instructor": "Archana Venkataraman"
+                    }
+                ]
+            },
+            {
+                "index": 17,
+                "crse_id": "124999",
+                "crse_offer_nbr": 1,
+                "class_section": "A1",
+                "start_dt": "01/21/2025",
+                "end_dt": "05/01/2025",
+                "campus_descr": "Boston University",
+                "class_nbr": 9639,
+                "component": "LEC",
+                "subject": "ENGEC",
+                "subject_descr": "ENGEC Electrical & Comp Engr",
+                "catalog_nbr": "402",
+                "class_type": "E",
+                "schedule_print": "Y",
+                "acad_group": "ENG",
+                "acad_org": "ENG",
+                "descr": "Control Systems",
+                "instructors": [
+                    {
+                        "name": "Alan Pisano",
+                        "email": ""
+                    }
+                ],
+                "section_type": "Lecture",
+                "meetings": [
+                    {
+                        "days": "MoWe",
+                        "start_time": "12.20.00.000000",
+                        "end_time": "14.05.00.000000",
+                        "start_dt": "01/21/2025",
+                        "end_dt": "05/01/2025",
+                        "bldg_cd": "EPC",
+                        "bldg_has_coordinates": false,
+                        "facility_descr": "750 Commonwealth Ave EPC 209",
+                        "room": "209",
+                        "facility_id": "EPC 209",
+                        "instructor": "Alan Pisano"
+                    }
+                ]
+            },
+            {
+                "index": 18,
+                "crse_id": "124999",
+                "crse_offer_nbr": 1,
+                "class_section": "B1",
+                "start_dt": "01/21/2025",
+                "end_dt": "05/01/2025",
+                "campus_descr": "Boston University",
+                "class_nbr": 9640,
+                "component": "DIS",
+                "subject": "ENGEC",
+                "subject_descr": "ENGEC Electrical & Comp Engr",
+                "catalog_nbr": "402",
+                "class_type": "N",
+                "schedule_print": "Y",
+                "acad_group": "ENG",
+                "acad_org": "ENG",
+                "descr": "Control Systems",
+                "instructors": [
+                    {
+                        "name": "Alan Pisano",
+                        "email": ""
+                    }
+                ],
+                "section_type": "Discussion",
+                "meetings": [
+                    {
+                        "days": "TBA",
+                        "start_time": "",
+                        "end_time": "",
+                        "start_dt": "01/21/2025",
+                        "end_dt": "05/01/2025",
+                        "facility_id": "TBA",
+                        "facility_descr": "TBA",
+                        "instructor": "Alan Pisano"
+                    }
+                ]
+            },
+            {
+                "index": 19,
+                "crse_id": "125002",
+                "crse_offer_nbr": 1,
+                "class_section": "A1",
+                "start_dt": "01/21/2025",
+                "end_dt": "05/01/2025",
+                "campus_descr": "Boston University",
+                "class_nbr": 9641,
+                "component": "LEC",
+                "subject": "ENGEC",
+                "subject_descr": "ENGEC Electrical & Comp Engr",
+                "catalog_nbr": "410",
+                "class_type": "E",
+                "schedule_print": "Y",
+                "acad_group": "ENG",
+                "acad_org": "ENG",
+                "descr": "Introduction to Electronics",
+                "instructors": [
+                    {
+                        "name": "Min-Chang Lee",
+                        "email": ""
+                    }
+                ],
+                "section_type": "Lecture",
+                "meetings": [
+                    {
+                        "days": "MoWe",
+                        "start_time": "10.10.00.000000",
+                        "end_time": "11.55.00.000000",
+                        "start_dt": "01/21/2025",
+                        "end_dt": "05/01/2025",
+                        "bldg_cd": "CAS",
+                        "bldg_has_coordinates": false,
+                        "facility_descr": "685-725 Comm Ave CAS B20",
+                        "room": "B20",
+                        "facility_id": "CAS B20",
+                        "instructor": "Min-Chang Lee"
+                    }
+                ]
+            },
+            {
+                "index": 20,
+                "crse_id": "125002",
+                "crse_offer_nbr": 1,
+                "class_section": "B1",
+                "start_dt": "01/21/2025",
+                "end_dt": "05/01/2025",
+                "campus_descr": "Boston University",
+                "class_nbr": 14333,
+                "component": "DIS",
+                "subject": "ENGEC",
+                "subject_descr": "ENGEC Electrical & Comp Engr",
+                "catalog_nbr": "410",
+                "class_type": "N",
+                "schedule_print": "Y",
+                "acad_group": "ENG",
+                "acad_org": "ENG",
+                "descr": "Introduction to Electronics",
+                "instructors": [
+                    {
+                        "name": "Min-Chang Lee",
+                        "email": ""
+                    }
+                ],
+                "section_type": "Discussion",
+                "meetings": [
+                    {
+                        "days": "Fr",
+                        "start_time": "10.10.00.000000",
+                        "end_time": "11.00.00.000000",
+                        "start_dt": "01/21/2025",
+                        "end_dt": "05/01/2025",
+                        "bldg_cd": "EPC",
+                        "bldg_has_coordinates": false,
+                        "facility_descr": "750 Commonwealth Ave EPC 206",
+                        "room": "206",
+                        "facility_id": "EPC 206",
+                        "instructor": "Min-Chang Lee"
+                    }
+                ]
+            },
+            {
+                "index": 21,
+                "crse_id": "125002",
+                "crse_offer_nbr": 1,
+                "class_section": "B2",
+                "start_dt": "01/21/2025",
+                "end_dt": "05/01/2025",
+                "campus_descr": "Boston University",
+                "class_nbr": 14334,
+                "component": "DIS",
+                "subject": "ENGEC",
+                "subject_descr": "ENGEC Electrical & Comp Engr",
+                "catalog_nbr": "410",
+                "class_type": "N",
+                "schedule_print": "Y",
+                "acad_group": "ENG",
+                "acad_org": "ENG",
+                "descr": "Introduction to Electronics",
+                "instructors": [
+                    {
+                        "name": "Min-Chang Lee",
+                        "email": ""
+                    }
+                ],
+                "section_type": "Discussion",
+                "meetings": [
+                    {
+                        "days": "Fr",
+                        "start_time": "12.20.00.000000",
+                        "end_time": "13.10.00.000000",
+                        "start_dt": "01/21/2025",
+                        "end_dt": "05/01/2025",
+                        "bldg_cd": "CAS",
+                        "bldg_has_coordinates": false,
+                        "facility_descr": "685-725 Comm Ave CAS 204B",
+                        "room": "204B",
+                        "facility_id": "CAS 204B",
+                        "instructor": "Min-Chang Lee"
+                    }
+                ]
+            },
+            {
+                "index": 22,
+                "crse_id": "125002",
+                "crse_offer_nbr": 1,
+                "class_section": "C1",
+                "start_dt": "01/21/2025",
+                "end_dt": "05/01/2025",
+                "campus_descr": "Boston University",
+                "class_nbr": 14335,
+                "component": "LAB",
+                "subject": "ENGEC",
+                "subject_descr": "ENGEC Electrical & Comp Engr",
+                "catalog_nbr": "410",
+                "class_type": "N",
+                "schedule_print": "Y",
+                "acad_group": "ENG",
+                "acad_org": "ENG",
+                "descr": "Introduction to Electronics",
+                "instructors": [
+                    {
+                        "name": "Min-Chang Lee",
+                        "email": ""
+                    }
+                ],
+                "section_type": "Laboratory",
+                "meetings": [
+                    {
+                        "days": "Th",
+                        "start_time": "18.30.00.000000",
+                        "end_time": "20.15.00.000000",
+                        "start_dt": "01/21/2025",
+                        "end_dt": "05/01/2025",
+                        "bldg_cd": "PHO",
+                        "bldg_has_coordinates": false,
+                        "facility_descr": "8 St. Mary's St PHO 105",
+                        "room": "105",
+                        "facility_id": "PHO 105",
+                        "instructor": "Min-Chang Lee"
+                    }
+                ]
+            },
+            {
+                "index": 23,
+                "crse_id": "125002",
+                "crse_offer_nbr": 1,
+                "class_section": "C2",
+                "start_dt": "01/21/2025",
+                "end_dt": "05/01/2025",
+                "campus_descr": "Boston University",
+                "class_nbr": 14336,
+                "component": "LAB",
+                "subject": "ENGEC",
+                "subject_descr": "ENGEC Electrical & Comp Engr",
+                "catalog_nbr": "410",
+                "class_type": "N",
+                "schedule_print": "Y",
+                "acad_group": "ENG",
+                "acad_org": "ENG",
+                "descr": "Introduction to Electronics",
+                "instructors": [
+                    {
+                        "name": "Min-Chang Lee",
+                        "email": ""
+                    }
+                ],
+                "section_type": "Laboratory",
+                "meetings": [
+                    {
+                        "days": "Fr",
+                        "start_time": "14.30.00.000000",
+                        "end_time": "16.15.00.000000",
+                        "start_dt": "01/21/2025",
+                        "end_dt": "05/01/2025",
+                        "bldg_cd": "PHO",
+                        "bldg_has_coordinates": false,
+                        "facility_descr": "8 St. Mary's St PHO 105",
+                        "room": "105",
+                        "facility_id": "PHO 105",
+                        "instructor": "Min-Chang Lee"
+                    }
+                ]
+            },
+            {
+                "index": 24,
+                "crse_id": "125004",
+                "crse_offer_nbr": 1,
+                "class_section": "A1",
+                "start_dt": "01/21/2025",
+                "end_dt": "05/01/2025",
+                "campus_descr": "Boston University",
+                "class_nbr": 9642,
+                "component": "LEC",
+                "subject": "ENGEC",
+                "subject_descr": "ENGEC Electrical & Comp Engr",
+                "catalog_nbr": "412",
+                "class_type": "E",
+                "schedule_print": "Y",
+                "acad_group": "ENG",
+                "acad_org": "ENG",
+                "descr": "Analog Electronics",
+                "instructors": [
+                    {
+                        "name": "Alexander (Sasha) Sergienko",
+                        "email": ""
+                    }
+                ],
+                "section_type": "Lecture",
+                "meetings": [
+                    {
+                        "days": "MoWe",
+                        "start_time": "14.30.00.000000",
+                        "end_time": "16.15.00.000000",
+                        "start_dt": "01/21/2025",
+                        "end_dt": "05/01/2025",
+                        "bldg_cd": "PHO",
+                        "bldg_has_coordinates": false,
+                        "facility_descr": "8 St. Mary's St PHO 202",
+                        "room": "202",
+                        "facility_id": "PHO 202",
+                        "instructor": "Alexander (Sasha) Sergienko"
+                    }
+                ]
+            },
+            {
+                "index": 25,
+                "crse_id": "125004",
+                "crse_offer_nbr": 1,
+                "class_section": "B1",
+                "start_dt": "01/21/2025",
+                "end_dt": "05/01/2025",
+                "campus_descr": "Boston University",
+                "class_nbr": 14337,
+                "component": "DIS",
+                "subject": "ENGEC",
+                "subject_descr": "ENGEC Electrical & Comp Engr",
+                "catalog_nbr": "412",
+                "class_type": "N",
+                "schedule_print": "Y",
+                "acad_group": "ENG",
+                "acad_org": "ENG",
+                "descr": "Analog Electronics",
+                "instructors": [
+                    {
+                        "name": "Alexander (Sasha) Sergienko",
+                        "email": ""
+                    }
+                ],
+                "section_type": "Discussion",
+                "meetings": [
+                    {
+                        "days": "Fr",
+                        "start_time": "12.20.00.000000",
+                        "end_time": "13.10.00.000000",
+                        "start_dt": "01/21/2025",
+                        "end_dt": "05/01/2025",
+                        "bldg_cd": "PHO",
+                        "bldg_has_coordinates": false,
+                        "facility_descr": "8 St. Mary's St PHO 202",
+                        "room": "202",
+                        "facility_id": "PHO 202",
+                        "instructor": "Alexander (Sasha) Sergienko"
+                    }
+                ]
+            },
+            {
+                "index": 26,
+                "crse_id": "125004",
+                "crse_offer_nbr": 1,
+                "class_section": "C1",
+                "start_dt": "01/21/2025",
+                "end_dt": "05/01/2025",
+                "campus_descr": "Boston University",
+                "class_nbr": 14338,
+                "component": "LAB",
+                "subject": "ENGEC",
+                "subject_descr": "ENGEC Electrical & Comp Engr",
+                "catalog_nbr": "412",
+                "class_type": "N",
+                "schedule_print": "Y",
+                "acad_group": "ENG",
+                "acad_org": "ENG",
+                "descr": "Analog Electronics",
+                "instructors": [
+                    {
+                        "name": "Alexander (Sasha) Sergienko",
+                        "email": ""
+                    }
+                ],
+                "section_type": "Laboratory",
+                "meetings": [
+                    {
+                        "days": "Fr",
+                        "start_time": "10.10.00.000000",
+                        "end_time": "11.55.00.000000",
+                        "start_dt": "01/21/2025",
+                        "end_dt": "05/01/2025",
+                        "bldg_cd": "PHO",
+                        "bldg_has_coordinates": false,
+                        "facility_descr": "8 St. Mary's St PHO 105",
+                        "room": "105",
+                        "facility_id": "PHO 105",
+                        "instructor": "Alexander (Sasha) Sergienko"
+                    }
+                ]
+            },
+            {
+                "index": 27,
+                "crse_id": "125007",
+                "crse_offer_nbr": 1,
+                "class_section": "A1",
+                "start_dt": "01/21/2025",
+                "end_dt": "05/01/2025",
+                "campus_descr": "Boston University",
+                "class_nbr": 9643,
+                "component": "LEC",
+                "subject": "ENGEC",
+                "subject_descr": "ENGEC Electrical & Comp Engr",
+                "catalog_nbr": "413",
+                "class_type": "E",
+                "schedule_print": "Y",
+                "acad_group": "ENG",
+                "acad_org": "ENG",
+                "descr": "Computer Organization",
+                "instructors": [
+                    {
+                        "name": "Tali Moreshet",
+                        "email": ""
+                    }
+                ],
+                "section_type": "Lecture",
+                "meetings": [
+                    {
+                        "days": "MoWe",
+                        "start_time": "10.10.00.000000",
+                        "end_time": "11.55.00.000000",
+                        "start_dt": "01/21/2025",
+                        "end_dt": "05/01/2025",
+                        "bldg_cd": "EPC",
+                        "bldg_has_coordinates": false,
+                        "facility_descr": "750 Commonwealth Ave EPC 209",
+                        "room": "209",
+                        "facility_id": "EPC 209",
+                        "instructor": "Tali Moreshet"
+                    }
+                ]
+            },
+            {
+                "index": 28,
+                "crse_id": "125007",
+                "crse_offer_nbr": 1,
+                "class_section": "B1",
+                "start_dt": "01/21/2025",
+                "end_dt": "05/01/2025",
+                "campus_descr": "Boston University",
+                "class_nbr": 14339,
+                "component": "DIS",
+                "subject": "ENGEC",
+                "subject_descr": "ENGEC Electrical & Comp Engr",
+                "catalog_nbr": "413",
+                "class_type": "N",
+                "schedule_print": "Y",
+                "acad_group": "ENG",
+                "acad_org": "ENG",
+                "descr": "Computer Organization",
+                "instructors": [
+                    {
+                        "name": "Tali Moreshet",
+                        "email": ""
+                    }
+                ],
+                "section_type": "Discussion",
+                "meetings": [
+                    {
+                        "days": "Mo",
+                        "start_time": "16.40.00.000000",
+                        "end_time": "17.30.00.000000",
+                        "start_dt": "01/21/2025",
+                        "end_dt": "05/01/2025",
+                        "bldg_cd": "PHO",
+                        "bldg_has_coordinates": false,
+                        "facility_descr": "8 St. Mary's St PHO 305",
+                        "room": "305",
+                        "facility_id": "PHO 305",
+                        "instructor": "Tali Moreshet"
+                    }
+                ]
+            },
+            {
+                "index": 29,
+                "crse_id": "125007",
+                "crse_offer_nbr": 1,
+                "class_section": "B2",
+                "start_dt": "01/21/2025",
+                "end_dt": "05/01/2025",
+                "campus_descr": "Boston University",
+                "class_nbr": 14340,
+                "component": "DIS",
+                "subject": "ENGEC",
+                "subject_descr": "ENGEC Electrical & Comp Engr",
+                "catalog_nbr": "413",
+                "class_type": "N",
+                "schedule_print": "Y",
+                "acad_group": "ENG",
+                "acad_org": "ENG",
+                "descr": "Computer Organization",
+                "instructors": [
+                    {
+                        "name": "Tali Moreshet",
+                        "email": ""
+                    }
+                ],
+                "section_type": "Discussion",
+                "meetings": [
+                    {
+                        "days": "Mo",
+                        "start_time": "18.30.00.000000",
+                        "end_time": "19.20.00.000000",
+                        "start_dt": "01/21/2025",
+                        "end_dt": "05/01/2025",
+                        "bldg_cd": "PHO",
+                        "bldg_has_coordinates": false,
+                        "facility_descr": "8 St. Mary's St PHO 305",
+                        "room": "305",
+                        "facility_id": "PHO 305",
+                        "instructor": "Tali Moreshet"
+                    }
+                ]
+            },
+            {
+                "index": 30,
+                "crse_id": "125007",
+                "crse_offer_nbr": 1,
+                "class_section": "C1",
+                "start_dt": "01/21/2025",
+                "end_dt": "05/01/2025",
+                "campus_descr": "Boston University",
+                "class_nbr": 14341,
+                "component": "LAB",
+                "subject": "ENGEC",
+                "subject_descr": "ENGEC Electrical & Comp Engr",
+                "catalog_nbr": "413",
+                "class_type": "N",
+                "schedule_print": "Y",
+                "acad_group": "ENG",
+                "acad_org": "ENG",
+                "descr": "Computer Organization",
+                "instructors": [
+                    {
+                        "name": "Tali Moreshet",
+                        "email": ""
+                    }
+                ],
+                "section_type": "Laboratory",
+                "meetings": [
+                    {
+                        "days": "TBA",
+                        "start_time": "",
+                        "end_time": "",
+                        "start_dt": "01/21/2025",
+                        "end_dt": "05/01/2025",
+                        "facility_id": "TBA",
+                        "facility_descr": "TBA",
+                        "instructor": "Tali Moreshet"
+                    }
+                ]
+            },
+            {
+                "index": 31,
+                "crse_id": "125009",
+                "crse_offer_nbr": 1,
+                "class_section": "A1",
+                "start_dt": "01/21/2025",
+                "end_dt": "05/01/2025",
+                "campus_descr": "Boston University",
+                "class_nbr": 9644,
+                "component": "LEC",
+                "subject": "ENGEC",
+                "subject_descr": "ENGEC Electrical & Comp Engr",
+                "catalog_nbr": "414",
+                "class_type": "E",
+                "schedule_print": "Y",
+                "acad_group": "ENG",
+                "acad_org": "ENG",
+                "descr": "Introduction to Machine Learning",
+                "instructors": [
+                    {
+                        "name": "Kayhan Batmanghelich",
+                        "email": ""
+                    }
+                ],
+                "section_type": "Lecture",
+                "meetings": [
+                    {
+                        "days": "MoWe",
+                        "start_time": "14.30.00.000000",
+                        "end_time": "16.15.00.000000",
+                        "start_dt": "01/21/2025",
+                        "end_dt": "05/01/2025",
+                        "bldg_cd": "PHO",
+                        "bldg_has_coordinates": false,
+                        "facility_descr": "8 St. Mary's St PHO 203",
+                        "room": "203",
+                        "facility_id": "PHO 203",
+                        "instructor": "Kayhan Batmanghelich"
+                    }
+                ]
+            },
+            {
+                "index": 32,
+                "crse_id": "125009",
+                "crse_offer_nbr": 1,
+                "class_section": "B1",
+                "start_dt": "01/21/2025",
+                "end_dt": "05/01/2025",
+                "campus_descr": "Boston University",
+                "class_nbr": 14342,
+                "component": "DIS",
+                "subject": "ENGEC",
+                "subject_descr": "ENGEC Electrical & Comp Engr",
+                "catalog_nbr": "414",
+                "class_type": "N",
+                "schedule_print": "Y",
+                "acad_group": "ENG",
+                "acad_org": "ENG",
+                "descr": "Introduction to Machine Learning",
+                "instructors": [
+                    {
+                        "name": "Kayhan Batmanghelich",
+                        "email": ""
+                    }
+                ],
+                "section_type": "Discussion",
+                "meetings": [
+                    {
+                        "days": "Fr",
+                        "start_time": "10.10.00.000000",
+                        "end_time": "11.00.00.000000",
+                        "start_dt": "01/21/2025",
+                        "end_dt": "05/01/2025",
+                        "bldg_cd": "EPC",
+                        "bldg_has_coordinates": false,
+                        "facility_descr": "750 Commonwealth Ave EPC 208",
+                        "room": "208",
+                        "facility_id": "EPC 208",
+                        "instructor": "Kayhan Batmanghelich"
+                    }
+                ]
+            },
+            {
+                "index": 33,
+                "crse_id": "125009",
+                "crse_offer_nbr": 1,
+                "class_section": "B2",
+                "start_dt": "01/21/2025",
+                "end_dt": "05/01/2025",
+                "campus_descr": "Boston University",
+                "class_nbr": 14343,
+                "component": "DIS",
+                "subject": "ENGEC",
+                "subject_descr": "ENGEC Electrical & Comp Engr",
+                "catalog_nbr": "414",
+                "class_type": "N",
+                "schedule_print": "Y",
+                "acad_group": "ENG",
+                "acad_org": "ENG",
+                "descr": "Introduction to Machine Learning",
+                "instructors": [
+                    {
+                        "name": "Kayhan Batmanghelich",
+                        "email": ""
+                    }
+                ],
+                "section_type": "Discussion",
+                "meetings": [
+                    {
+                        "days": "Fr",
+                        "start_time": "12.20.00.000000",
+                        "end_time": "13.10.00.000000",
+                        "start_dt": "01/21/2025",
+                        "end_dt": "05/01/2025",
+                        "bldg_cd": "EPC",
+                        "bldg_has_coordinates": false,
+                        "facility_descr": "750 Commonwealth Ave EPC 208",
+                        "room": "208",
+                        "facility_id": "EPC 208",
+                        "instructor": "Kayhan Batmanghelich"
+                    }
+                ]
+            },
+            {
+                "index": 34,
+                "crse_id": "125021",
+                "crse_offer_nbr": 1,
+                "class_section": "A1",
+                "start_dt": "01/21/2025",
+                "end_dt": "05/01/2025",
+                "campus_descr": "Boston University",
+                "class_nbr": 9646,
+                "component": "LEC",
+                "subject": "ENGEC",
+                "subject_descr": "ENGEC Electrical & Comp Engr",
+                "catalog_nbr": "441",
+                "class_type": "E",
+                "schedule_print": "Y",
+                "acad_group": "ENG",
+                "acad_org": "ENG",
+                "descr": "Introduction to Computer Networking",
+                "instructors": [
+                    {
+                        "name": "Jeffrey Carruthers",
+                        "email": ""
+                    }
+                ],
+                "section_type": "Lecture",
+                "meetings": [
+                    {
+                        "days": "MoWe",
+                        "start_time": "14.30.00.000000",
+                        "end_time": "16.15.00.000000",
+                        "start_dt": "01/21/2025",
+                        "end_dt": "05/01/2025",
+                        "bldg_cd": "LSE",
+                        "bldg_has_coordinates": false,
+                        "facility_descr": "24 Cummington St LSE B03",
+                        "room": "B03",
+                        "facility_id": "LSE B03",
+                        "instructor": "Jeffrey Carruthers"
+                    }
+                ]
+            },
+            {
+                "index": 35,
+                "crse_id": "125021",
+                "crse_offer_nbr": 1,
+                "class_section": "B1",
+                "start_dt": "01/21/2025",
+                "end_dt": "05/01/2025",
+                "campus_descr": "Boston University",
+                "class_nbr": 9647,
+                "component": "LAB",
+                "subject": "ENGEC",
+                "subject_descr": "ENGEC Electrical & Comp Engr",
+                "catalog_nbr": "441",
+                "class_type": "N",
+                "schedule_print": "Y",
+                "acad_group": "ENG",
+                "acad_org": "ENG",
+                "descr": "Introduction to Computer Networking",
+                "instructors": [
+                    {
+                        "name": "Jeffrey Carruthers",
+                        "email": ""
+                    }
+                ],
+                "section_type": "Laboratory",
+                "meetings": [
+                    {
+                        "days": "TBA",
+                        "start_time": "",
+                        "end_time": "",
+                        "start_dt": "01/21/2025",
+                        "end_dt": "05/01/2025",
+                        "facility_id": "TBA",
+                        "facility_descr": "TBA",
+                        "instructor": "Jeffrey Carruthers"
+                    }
+                ]
+            },
+            {
+                "index": 36,
+                "crse_id": "125044",
+                "crse_offer_nbr": 1,
+                "class_section": "A1",
+                "start_dt": "01/21/2025",
+                "end_dt": "05/01/2025",
+                "campus_descr": "Boston University",
+                "class_nbr": 9683,
+                "component": "LAB",
+                "subject": "ENGEC",
+                "subject_descr": "ENGEC Electrical & Comp Engr",
+                "catalog_nbr": "464",
+                "class_type": "E",
+                "schedule_print": "Y",
+                "acad_group": "ENG",
+                "acad_org": "ENG",
+                "descr": "Senior Design Project 2",
+                "instructors": [
+                    {
+                        "name": "Alan Pisano",
+                        "email": ""
+                    },
+                    {
+                        "name": "Michael Hirsch",
+                        "email": ""
+                    },
+                    {
+                        "name": "Osama Alshaykh",
+                        "email": ""
+                    }
+                ],
+                "section_type": "Laboratory",
+                "meetings": [
+                    {
+                        "days": "TuTh",
+                        "start_time": "15.30.00.000000",
+                        "end_time": "17.15.00.000000",
+                        "start_dt": "01/21/2025",
+                        "end_dt": "05/01/2025",
+                        "facility_id": "TBA",
+                        "facility_descr": "TBA",
+                        "instructor": "Alan Pisano,\n\rMichael Hirsch,\n\rOsama Alshaykh"
+                    }
+                ]
+            },
+            {
+                "index": 37,
+                "crse_id": "125051",
+                "crse_offer_nbr": 1,
+                "class_section": "A1",
+                "start_dt": "01/21/2025",
+                "end_dt": "05/01/2025",
+                "campus_descr": "Boston University",
+                "class_nbr": 9715,
+                "component": "IND",
+                "subject": "ENGEC",
+                "subject_descr": "ENGEC Electrical & Comp Engr",
+                "catalog_nbr": "471",
+                "class_type": "E",
+                "schedule_print": "Y",
+                "acad_group": "ENG",
+                "acad_org": "ENG",
+                "descr": "Physics of Semiconductor Devices",
+                "instructors": [
+                    {
+                        "name": "Sahar Sharifzadeh",
+                        "email": ""
+                    }
+                ],
+                "section_type": "IND",
+                "meetings": [
+                    {
+                        "days": "TuTh",
+                        "start_time": "13.30.00.000000",
+                        "end_time": "15.15.00.000000",
+                        "start_dt": "01/21/2025",
+                        "end_dt": "05/01/2025",
+                        "bldg_cd": "CAS",
+                        "bldg_has_coordinates": false,
+                        "facility_descr": "685-725 Comm Ave CAS 227",
+                        "room": "227",
+                        "facility_id": "CAS 227",
+                        "instructor": "Sahar Sharifzadeh"
+                    }
+                ]
+            },
+            {
+                "index": 38,
+                "crse_id": "125055",
+                "crse_offer_nbr": 1,
+                "class_section": "A1",
+                "start_dt": "01/21/2025",
+                "end_dt": "05/01/2025",
+                "campus_descr": "Boston University",
+                "class_nbr": 9716,
+                "component": "IND",
+                "subject": "ENGEC",
+                "subject_descr": "ENGEC Electrical & Comp Engr",
+                "catalog_nbr": "500",
+                "class_type": "E",
+                "schedule_print": "Y",
+                "acad_group": "ENG",
+                "acad_org": "ENG",
+                "descr": "Special Topics in Electrical and Computer Engineering",
+                "instructors": [
+                    {
+                        "name": "Ed Solovey",
+                        "email": ""
+                    }
+                ],
+                "section_type": "IND",
+                "meetings": [
+                    {
+                        "days": "MoWe",
+                        "start_time": "12.20.00.000000",
+                        "end_time": "14.05.00.000000",
+                        "start_dt": "01/21/2025",
+                        "end_dt": "05/01/2025",
+                        "bldg_cd": "IEC",
+                        "bldg_has_coordinates": false,
+                        "facility_descr": "888 Commonwealth Ave IEC B11",
+                        "room": "B11",
+                        "facility_id": "IEC B11",
+                        "instructor": "Ed Solovey"
+                    }
+                ]
+            },
+            {
+                "index": 39,
+                "crse_id": "125055",
+                "crse_offer_nbr": 1,
+                "class_section": "A2",
+                "start_dt": "01/21/2025",
+                "end_dt": "05/01/2025",
+                "campus_descr": "Boston University",
+                "class_nbr": 14344,
+                "component": "IND",
+                "subject": "ENGEC",
+                "subject_descr": "ENGEC Electrical & Comp Engr",
+                "catalog_nbr": "500",
+                "class_type": "E",
+                "schedule_print": "Y",
+                "acad_group": "ENG",
+                "acad_org": "ENG",
+                "descr": "Special Topics in Electrical and Computer Engineering",
+                "instructors": [
+                    {
+                        "name": "Emiliano Dall'Anese",
+                        "email": ""
+                    }
+                ],
+                "section_type": "IND",
+                "meetings": [
+                    {
+                        "days": "MoWe",
+                        "start_time": "10.10.00.000000",
+                        "end_time": "11.55.00.000000",
+                        "start_dt": "01/21/2025",
+                        "end_dt": "05/01/2025",
+                        "bldg_cd": "COM",
+                        "bldg_has_coordinates": false,
+                        "facility_descr": "640 Commonwealth Ave COM 215",
+                        "room": "215",
+                        "facility_id": "COM 215",
+                        "instructor": "Emiliano Dall'Anese"
+                    }
+                ]
+            },
+            {
+                "index": 40,
+                "crse_id": "125057",
+                "crse_offer_nbr": 1,
+                "class_section": "A1",
+                "start_dt": "01/21/2025",
+                "end_dt": "05/01/2025",
+                "campus_descr": "Boston University",
+                "class_nbr": 9717,
+                "component": "LEC",
+                "subject": "ENGEC",
+                "subject_descr": "ENGEC Electrical & Comp Engr",
+                "catalog_nbr": "503",
+                "class_type": "E",
+                "schedule_print": "Y",
+                "acad_group": "ENG",
+                "acad_org": "ENG",
+                "descr": "Introduction to Learning from Data",
+                "instructors": [
+                    {
+                        "name": "Venkatesh Saligrama",
+                        "email": ""
+                    }
+                ],
+                "section_type": "Lecture",
+                "meetings": [
+                    {
+                        "days": "TuTh",
+                        "start_time": "13.30.00.000000",
+                        "end_time": "15.15.00.000000",
+                        "start_dt": "01/21/2025",
+                        "end_dt": "05/01/2025",
+                        "bldg_cd": "EPC",
+                        "bldg_has_coordinates": false,
+                        "facility_descr": "750 Commonwealth Ave EPC 208",
+                        "room": "208",
+                        "facility_id": "EPC 208",
+                        "instructor": "Venkatesh Saligrama"
+                    }
+                ]
+            },
+            {
+                "index": 41,
+                "crse_id": "125057",
+                "crse_offer_nbr": 1,
+                "class_section": "B1",
+                "start_dt": "01/21/2025",
+                "end_dt": "05/01/2025",
+                "campus_descr": "Boston University",
+                "class_nbr": 14345,
+                "component": "DIS",
+                "subject": "ENGEC",
+                "subject_descr": "ENGEC Electrical & Comp Engr",
+                "catalog_nbr": "503",
+                "class_type": "N",
+                "schedule_print": "Y",
+                "acad_group": "ENG",
+                "acad_org": "ENG",
+                "descr": "Introduction to Learning from Data",
+                "instructors": [
+                    {
+                        "name": "Venkatesh Saligrama",
+                        "email": ""
+                    }
+                ],
+                "section_type": "Discussion",
+                "meetings": [
+                    {
+                        "days": "We",
+                        "start_time": "18.30.00.000000",
+                        "end_time": "20.15.00.000000",
+                        "start_dt": "01/21/2025",
+                        "end_dt": "05/01/2025",
+                        "bldg_cd": "CAS",
+                        "bldg_has_coordinates": false,
+                        "facility_descr": "685-725 Comm Ave CAS 203",
+                        "room": "203",
+                        "facility_id": "CAS 203",
+                        "instructor": "Venkatesh Saligrama"
+                    }
+                ]
+            },
+            {
+                "index": 42,
+                "crse_id": "125059",
+                "crse_offer_nbr": 1,
+                "class_section": "A1",
+                "start_dt": "01/21/2025",
+                "end_dt": "05/01/2025",
+                "campus_descr": "Boston University",
+                "class_nbr": 9718,
+                "component": "IND",
+                "subject": "ENGEC",
+                "subject_descr": "ENGEC Electrical & Comp Engr",
+                "catalog_nbr": "504",
+                "class_type": "E",
+                "schedule_print": "Y",
+                "acad_group": "ENG",
+                "acad_org": "ENG",
+                "descr": "Advanced Data Structures",
+                "instructors": [
+                    {
+                        "name": "David Castanon",
+                        "email": ""
+                    }
+                ],
+                "section_type": "IND",
+                "meetings": [
+                    {
+                        "days": "MoWe",
+                        "start_time": "14.30.00.000000",
+                        "end_time": "16.15.00.000000",
+                        "start_dt": "01/21/2025",
+                        "end_dt": "05/01/2025",
+                        "bldg_cd": "CDS",
+                        "bldg_has_coordinates": false,
+                        "facility_descr": "665 Comm Ave CDS B62",
+                        "room": "B62",
+                        "facility_id": "CDS B62",
+                        "instructor": "David Castanon"
+                    }
+                ]
+            },
+            {
+                "index": 43,
+                "crse_id": "125064",
+                "crse_offer_nbr": 1,
+                "class_section": "A1",
+                "start_dt": "01/21/2025",
+                "end_dt": "05/01/2025",
+                "campus_descr": "Boston University",
+                "class_nbr": 9719,
+                "component": "IND",
+                "subject": "ENGEC",
+                "subject_descr": "ENGEC Electrical & Comp Engr",
+                "catalog_nbr": "512",
+                "class_type": "E",
+                "schedule_print": "Y",
+                "acad_group": "ENG",
+                "acad_org": "ENG",
+                "descr": "Enterprise Client-Server Software Systems Design",
+                "instructors": [
+                    {
+                        "name": "Thomas Skinner",
+                        "email": ""
+                    }
+                ],
+                "section_type": "IND",
+                "meetings": [
+                    {
+                        "days": "MoWe",
+                        "start_time": "12.20.00.000000",
+                        "end_time": "14.05.00.000000",
+                        "start_dt": "01/21/2025",
+                        "end_dt": "05/01/2025",
+                        "bldg_cd": "PHO",
+                        "bldg_has_coordinates": false,
+                        "facility_descr": "8 St. Mary's St PHO 210",
+                        "room": "210",
+                        "facility_id": "PHO 210",
+                        "instructor": "Thomas Skinner"
+                    }
+                ]
+            },
+            {
+                "index": 44,
+                "crse_id": "125065",
+                "crse_offer_nbr": 1,
+                "class_section": "A1",
+                "start_dt": "01/21/2025",
+                "end_dt": "05/01/2025",
+                "campus_descr": "Boston University",
+                "class_nbr": 9720,
+                "component": "IND",
+                "subject": "ENGEC",
+                "subject_descr": "ENGEC Electrical & Comp Engr",
+                "catalog_nbr": "513",
+                "class_type": "E",
+                "schedule_print": "Y",
+                "acad_group": "ENG",
+                "acad_org": "ENG",
+                "descr": "Computer Architecture",
+                "instructors": [
+                    {
+                        "name": "Ajay Joshi",
+                        "email": ""
+                    }
+                ],
+                "section_type": "IND",
+                "meetings": [
+                    {
+                        "days": "Fr",
+                        "start_time": "13.25.00.000000",
+                        "end_time": "14.15.00.000000",
+                        "start_dt": "01/21/2025",
+                        "end_dt": "05/01/2025",
+                        "bldg_cd": "PHO",
+                        "bldg_has_coordinates": false,
+                        "facility_descr": "8 St. Mary's St PHO 202",
+                        "room": "202",
+                        "facility_id": "PHO 202",
+                        "instructor": "Ajay Joshi"
+                    },
+                    {
+                        "days": "TuTh",
+                        "start_time": "13.30.00.000000",
+                        "end_time": "15.15.00.000000",
+                        "start_dt": "01/21/2025",
+                        "end_dt": "05/01/2025",
+                        "bldg_cd": "IEC",
+                        "bldg_has_coordinates": false,
+                        "facility_descr": "888 Commonwealth Ave IEC B10",
+                        "room": "B10",
+                        "facility_id": "IEC B10",
+                        "instructor": "Ajay Joshi"
+                    }
+                ]
+            },
+            {
+                "index": 45,
+                "crse_id": "125075",
+                "crse_offer_nbr": 1,
+                "class_section": "A1",
+                "start_dt": "01/21/2025",
+                "end_dt": "05/01/2025",
+                "campus_descr": "Boston University",
+                "class_nbr": 9721,
+                "component": "IND",
+                "subject": "ENGEC",
+                "subject_descr": "ENGEC Electrical & Comp Engr",
+                "catalog_nbr": "520",
+                "class_type": "E",
+                "schedule_print": "Y",
+                "acad_group": "ENG",
+                "acad_org": "ENG",
+                "descr": "Digital Image Processing and Communication",
+                "instructors": [
+                    {
+                        "name": "Janusz Konrad",
+                        "email": ""
+                    }
+                ],
+                "section_type": "IND",
+                "meetings": [
+                    {
+                        "days": "MoWe",
+                        "start_time": "12.20.00.000000",
+                        "end_time": "14.05.00.000000",
+                        "start_dt": "01/21/2025",
+                        "end_dt": "05/01/2025",
+                        "bldg_cd": "EPC",
+                        "bldg_has_coordinates": false,
+                        "facility_descr": "750 Commonwealth Ave EPC 208",
+                        "room": "208",
+                        "facility_id": "EPC 208",
+                        "instructor": "Janusz Konrad"
+                    }
+                ]
+            },
+            {
+                "index": 46,
+                "crse_id": "125077",
+                "crse_offer_nbr": 1,
+                "class_section": "A1",
+                "start_dt": "01/21/2025",
+                "end_dt": "05/01/2025",
+                "campus_descr": "Boston University",
+                "class_nbr": 9722,
+                "component": "LEC",
+                "subject": "ENGEC",
+                "subject_descr": "ENGEC Electrical & Comp Engr",
+                "catalog_nbr": "521",
+                "class_type": "E",
+                "schedule_print": "Y",
+                "acad_group": "ENG",
+                "acad_org": "ENG",
+                "descr": "Cybersecurity",
+                "instructors": [
+                    {
+                        "name": "Gianluca Stringhini",
+                        "email": ""
+                    }
+                ],
+                "section_type": "Lecture",
+                "meetings": [
+                    {
+                        "days": "MoWe",
+                        "start_time": "10.10.00.000000",
+                        "end_time": "11.55.00.000000",
+                        "start_dt": "01/21/2025",
+                        "end_dt": "05/01/2025",
+                        "bldg_cd": "KCB",
+                        "bldg_has_coordinates": false,
+                        "facility_descr": "565 Commonwealth Ave KCB 106",
+                        "room": "106",
+                        "facility_id": "KCB 106",
+                        "instructor": "Gianluca Stringhini"
+                    }
+                ]
+            },
+            {
+                "index": 47,
+                "crse_id": "125077",
+                "crse_offer_nbr": 1,
+                "class_section": "B1",
+                "start_dt": "01/21/2025",
+                "end_dt": "05/01/2025",
+                "campus_descr": "Boston University",
+                "class_nbr": 9723,
+                "component": "LAB",
+                "subject": "ENGEC",
+                "subject_descr": "ENGEC Electrical & Comp Engr",
+                "catalog_nbr": "521",
+                "class_type": "N",
+                "schedule_print": "Y",
+                "acad_group": "ENG",
+                "acad_org": "ENG",
+                "descr": "Cybersecurity",
+                "instructors": [
+                    {
+                        "name": "Gianluca Stringhini",
+                        "email": ""
+                    }
+                ],
+                "section_type": "Laboratory",
+                "meetings": [
+                    {
+                        "days": "TBA",
+                        "start_time": "",
+                        "end_time": "",
+                        "start_dt": "01/21/2025",
+                        "end_dt": "05/01/2025",
+                        "facility_id": "TBA",
+                        "facility_descr": "TBA",
+                        "instructor": "Gianluca Stringhini"
+                    }
+                ]
+            },
+            {
+                "index": 48,
+                "crse_id": "125078",
+                "crse_offer_nbr": 1,
+                "class_section": "A1",
+                "start_dt": "01/21/2025",
+                "end_dt": "05/01/2025",
+                "campus_descr": "Boston University",
+                "class_nbr": 9724,
+                "component": "LEC",
+                "subject": "ENGEC",
+                "subject_descr": "ENGEC Electrical & Comp Engr",
+                "catalog_nbr": "522",
+                "class_type": "E",
+                "schedule_print": "Y",
+                "acad_group": "ENG",
+                "acad_org": "ENG",
+                "descr": "Computational Optical Imaging",
+                "instructors": [
+                    {
+                        "name": "Lei Tian",
+                        "email": ""
+                    }
+                ],
+                "section_type": "Lecture",
+                "meetings": [
+                    {
+                        "days": "MoWe",
+                        "start_time": "14.30.00.000000",
+                        "end_time": "16.15.00.000000",
+                        "start_dt": "01/21/2025",
+                        "end_dt": "05/01/2025",
+                        "bldg_cd": "EPC",
+                        "bldg_has_coordinates": false,
+                        "facility_descr": "750 Commonwealth Ave EPC 204",
+                        "room": "204",
+                        "facility_id": "EPC 204",
+                        "instructor": "Lei Tian"
+                    }
+                ]
+            },
+            {
+                "index": 49,
+                "crse_id": "125078",
+                "crse_offer_nbr": 1,
+                "class_section": "B1",
+                "start_dt": "01/21/2025",
+                "end_dt": "05/01/2025",
+                "campus_descr": "Boston University",
+                "class_nbr": 9725,
+                "component": "DIS",
+                "subject": "ENGEC",
+                "subject_descr": "ENGEC Electrical & Comp Engr",
+                "catalog_nbr": "522",
+                "class_type": "N",
+                "schedule_print": "Y",
+                "acad_group": "ENG",
+                "acad_org": "ENG",
+                "descr": "Computational Optical Imaging",
+                "instructors": [
+                    {
+                        "name": "Lei Tian",
+                        "email": ""
+                    }
+                ],
+                "section_type": "Discussion",
+                "meetings": [
+                    {
+                        "days": "TBA",
+                        "start_time": "",
+                        "end_time": "",
+                        "start_dt": "01/21/2025",
+                        "end_dt": "05/01/2025",
+                        "facility_id": "TBA",
+                        "facility_descr": "TBA",
+                        "instructor": "Lei Tian"
+                    }
+                ]
+            },
+            {
+                "index": 50,
+                "crse_id": "125080",
+                "crse_offer_nbr": 1,
+                "class_section": "A1",
+                "start_dt": "01/21/2025",
+                "end_dt": "05/01/2025",
+                "campus_descr": "Boston University",
+                "class_nbr": 9726,
+                "component": "IND",
+                "subject": "ENGEC",
+                "subject_descr": "ENGEC Electrical & Comp Engr",
+                "catalog_nbr": "523",
+                "class_type": "E",
+                "schedule_print": "Y",
+                "acad_group": "ENG",
+                "acad_org": "ENG",
+                "descr": "Deep Learning",
+                "instructors": [
+                    {
+                        "name": "Brian Kulis",
+                        "email": ""
+                    }
+                ],
+                "section_type": "IND",
+                "meetings": [
+                    {
+                        "days": "TuTh",
+                        "start_time": "13.30.00.000000",
+                        "end_time": "15.15.00.000000",
+                        "start_dt": "01/21/2025",
+                        "end_dt": "05/01/2025",
+                        "bldg_cd": "PHO",
+                        "bldg_has_coordinates": false,
+                        "facility_descr": "8 St. Mary's St PHO 205",
+                        "room": "205",
+                        "facility_id": "PHO 205",
+                        "instructor": "Brian Kulis"
+                    }
+                ]
+            },
+            {
+                "index": 51,
+                "crse_id": "125083",
+                "crse_offer_nbr": 1,
+                "class_section": "A1",
+                "start_dt": "01/21/2025",
+                "end_dt": "05/01/2025",
+                "campus_descr": "Boston University",
+                "class_nbr": 14502,
+                "component": "IND",
+                "subject": "ENGEC",
+                "subject_descr": "ENGEC Electrical & Comp Engr",
+                "catalog_nbr": "527",
+                "class_type": "E",
+                "schedule_print": "Y",
+                "acad_group": "ENG",
+                "acad_org": "ENG",
+                "descr": "High Performance Programming with Multicore and GPUs",
+                "instructors": [
+                    {
+                        "name": "Martin Herbordt",
+                        "email": ""
+                    }
+                ],
+                "section_type": "IND",
+                "meetings": [
+                    {
+                        "days": "MoWe",
+                        "start_time": "16.30.00.000000",
+                        "end_time": "18.15.00.000000",
+                        "start_dt": "01/21/2025",
+                        "end_dt": "05/01/2025",
+                        "bldg_cd": "PHO",
+                        "bldg_has_coordinates": false,
+                        "facility_descr": "8 St. Mary's St PHO 205",
+                        "room": "205",
+                        "facility_id": "PHO 205",
+                        "instructor": "Martin Herbordt"
+                    }
+                ]
+            },
+            {
+                "index": 52,
+                "crse_id": "125085",
+                "crse_offer_nbr": 1,
+                "class_section": "A1",
+                "start_dt": "01/21/2025",
+                "end_dt": "05/01/2025",
+                "campus_descr": "Boston University",
+                "class_nbr": 9730,
+                "component": "LEC",
+                "subject": "ENGEC",
+                "subject_descr": "ENGEC Electrical & Comp Engr",
+                "catalog_nbr": "530",
+                "class_type": "E",
+                "schedule_print": "Y",
+                "acad_group": "ENG",
+                "acad_org": "ENG",
+                "descr": "Software Engineering Principles",
+                "instructors": [
+                    {
+                        "name": "Osama Alshaykh",
+                        "email": ""
+                    }
+                ],
+                "section_type": "Lecture",
+                "meetings": [
+                    {
+                        "days": "TuTh",
+                        "start_time": "17.30.00.000000",
+                        "end_time": "19.15.00.000000",
+                        "start_dt": "01/21/2025",
+                        "end_dt": "05/01/2025",
+                        "bldg_cd": "PHO",
+                        "bldg_has_coordinates": false,
+                        "facility_descr": "8 St. Mary's St PHO 205",
+                        "room": "205",
+                        "facility_id": "PHO 205",
+                        "instructor": "Osama Alshaykh"
+                    }
+                ]
+            },
+            {
+                "index": 53,
+                "crse_id": "125085",
+                "crse_offer_nbr": 1,
+                "class_section": "C1",
+                "start_dt": "01/21/2025",
+                "end_dt": "05/01/2025",
+                "campus_descr": "Boston University",
+                "class_nbr": 9731,
+                "component": "LAB",
+                "subject": "ENGEC",
+                "subject_descr": "ENGEC Electrical & Comp Engr",
+                "catalog_nbr": "530",
+                "class_type": "N",
+                "schedule_print": "Y",
+                "acad_group": "ENG",
+                "acad_org": "ENG",
+                "descr": "Software Engineering Principles",
+                "instructors": [
+                    {
+                        "name": "Osama Alshaykh",
+                        "email": ""
+                    }
+                ],
+                "section_type": "Laboratory",
+                "meetings": [
+                    {
+                        "days": "TBA",
+                        "start_time": "",
+                        "end_time": "",
+                        "start_dt": "01/21/2025",
+                        "end_dt": "05/01/2025",
+                        "facility_id": "TBA",
+                        "facility_descr": "TBA",
+                        "instructor": "Osama Alshaykh"
+                    }
+                ]
+            },
+            {
+                "index": 54,
+                "crse_id": "221382",
+                "crse_offer_nbr": 1,
+                "class_section": "A1",
+                "start_dt": "01/21/2025",
+                "end_dt": "05/01/2025",
+                "campus_descr": "Boston University",
+                "class_nbr": 14503,
+                "component": "IND",
+                "subject": "ENGEC",
+                "subject_descr": "ENGEC Electrical & Comp Engr",
+                "catalog_nbr": "531",
+                "class_type": "E",
+                "schedule_print": "Y",
+                "acad_group": "ENG",
+                "acad_org": "ENG",
+                "descr": "Full-Stack Software at Scale",
+                "instructors": [
+                    {
+                        "name": "Ari Trachtenberg",
+                        "email": ""
+                    }
+                ],
+                "section_type": "IND",
+                "meetings": [
+                    {
+                        "days": "TuTh",
+                        "start_time": "13.30.00.000000",
+                        "end_time": "15.15.00.000000",
+                        "start_dt": "01/21/2025",
+                        "end_dt": "05/01/2025",
+                        "bldg_cd": "CDS",
+                        "bldg_has_coordinates": false,
+                        "facility_descr": "665 Comm Ave CDS 264",
+                        "room": "264",
+                        "facility_id": "CDS 264",
+                        "instructor": "Ari Trachtenberg"
+                    }
+                ]
+            },
+            {
+                "index": 55,
+                "crse_id": "125088",
+                "crse_offer_nbr": 1,
+                "class_section": "A1",
+                "start_dt": "01/21/2025",
+                "end_dt": "05/01/2025",
+                "campus_descr": "Boston University",
+                "class_nbr": 9732,
+                "component": "IND",
+                "subject": "ENGEC",
+                "subject_descr": "ENGEC Electrical & Comp Engr",
+                "catalog_nbr": "534",
+                "class_type": "E",
+                "schedule_print": "Y",
+                "acad_group": "ENG",
+                "acad_org": "ENG",
+                "descr": "Discrete Stochastic Models",
+                "instructors": [
+                    {
+                        "name": "Lev Levitin",
+                        "email": ""
+                    }
+                ],
+                "section_type": "IND",
+                "meetings": [
+                    {
+                        "days": "MoWe",
+                        "start_time": "14.30.00.000000",
+                        "end_time": "16.15.00.000000",
+                        "start_dt": "01/21/2025",
+                        "end_dt": "05/01/2025",
+                        "bldg_cd": "PHO",
+                        "bldg_has_coordinates": false,
+                        "facility_descr": "8 St. Mary's St PHO 207",
+                        "room": "207",
+                        "facility_id": "PHO 207",
+                        "instructor": "Lev Levitin"
+                    }
+                ]
+            },
+            {
+                "index": 56,
+                "crse_id": "125090",
+                "crse_offer_nbr": 1,
+                "class_section": "A1",
+                "start_dt": "01/21/2025",
+                "end_dt": "05/01/2025",
+                "campus_descr": "Boston University",
+                "class_nbr": 9733,
+                "component": "LEC",
+                "subject": "ENGEC",
+                "subject_descr": "ENGEC Electrical & Comp Engr",
+                "catalog_nbr": "535",
+                "class_type": "E",
+                "schedule_print": "Y",
+                "acad_group": "ENG",
+                "acad_org": "ENG",
+                "descr": "Introduction to Embedded Systems",
+                "instructors": [
+                    {
+                        "name": "Eshed Ohn-Bar",
+                        "email": ""
+                    }
+                ],
+                "section_type": "Lecture",
+                "meetings": [
+                    {
+                        "days": "TuTh",
+                        "start_time": "09.00.00.000000",
+                        "end_time": "10.45.00.000000",
+                        "start_dt": "01/21/2025",
+                        "end_dt": "05/01/2025",
+                        "bldg_cd": "PHO",
+                        "bldg_has_coordinates": false,
+                        "facility_descr": "8 St. Mary's St PHO 307",
+                        "room": "307",
+                        "facility_id": "PHO 307",
+                        "instructor": "Eshed Ohn-Bar"
+                    }
+                ]
+            },
+            {
+                "index": 57,
+                "crse_id": "125090",
+                "crse_offer_nbr": 1,
+                "class_section": "C1",
+                "start_dt": "01/21/2025",
+                "end_dt": "05/01/2025",
+                "campus_descr": "Boston University",
+                "class_nbr": 9734,
+                "component": "LAB",
+                "subject": "ENGEC",
+                "subject_descr": "ENGEC Electrical & Comp Engr",
+                "catalog_nbr": "535",
+                "class_type": "N",
+                "schedule_print": "Y",
+                "acad_group": "ENG",
+                "acad_org": "ENG",
+                "descr": "Introduction to Embedded Systems",
+                "instructors": [
+                    {
+                        "name": "Eshed Ohn-Bar",
+                        "email": ""
+                    }
+                ],
+                "section_type": "Laboratory",
+                "meetings": [
+                    {
+                        "days": "Fr",
+                        "start_time": "10.10.00.000000",
+                        "end_time": "11.00.00.000000",
+                        "start_dt": "01/21/2025",
+                        "end_dt": "05/01/2025",
+                        "bldg_cd": "EPC",
+                        "bldg_has_coordinates": false,
+                        "facility_descr": "750 Commonwealth Ave EPC 209",
+                        "room": "209",
+                        "facility_id": "EPC 209",
+                        "instructor": "Eshed Ohn-Bar"
+                    }
+                ]
+            },
+            {
+                "index": 58,
+                "crse_id": "125091",
+                "crse_offer_nbr": 1,
+                "class_section": "A1",
+                "start_dt": "01/21/2025",
+                "end_dt": "05/01/2025",
+                "campus_descr": "Boston University",
+                "class_nbr": 9735,
+                "component": "IND",
+                "subject": "ENGEC",
+                "subject_descr": "ENGEC Electrical & Comp Engr",
+                "catalog_nbr": "541",
+                "class_type": "E",
+                "schedule_print": "Y",
+                "acad_group": "ENG",
+                "acad_org": "ENG",
+                "descr": "Computer Communication Networks",
+                "instructors": [
+                    {
+                        "name": "David Starobinski",
+                        "email": ""
+                    }
+                ],
+                "section_type": "IND",
+                "meetings": [
+                    {
+                        "days": "MoWe",
+                        "start_time": "14.30.00.000000",
+                        "end_time": "16.15.00.000000",
+                        "start_dt": "01/21/2025",
+                        "end_dt": "05/01/2025",
+                        "bldg_cd": "PHO",
+                        "bldg_has_coordinates": false,
+                        "facility_descr": "8 St. Mary's St PHO 201",
+                        "room": "201",
+                        "facility_id": "PHO 201",
+                        "instructor": "David Starobinski"
+                    }
+                ]
+            },
+            {
+                "index": 59,
+                "crse_id": "125098",
+                "crse_offer_nbr": 1,
+                "class_section": "A1",
+                "start_dt": "01/21/2025",
+                "end_dt": "05/01/2025",
+                "campus_descr": "Boston University",
+                "class_nbr": 19705,
+                "component": "IND",
+                "subject": "ENGEC",
+                "subject_descr": "ENGEC Electrical & Comp Engr",
+                "catalog_nbr": "556",
+                "class_type": "E",
+                "schedule_print": "Y",
+                "acad_group": "ENG",
+                "acad_org": "ENG",
+                "descr": "Optical Spectroscopic Imaging",
+                "combined_descr": "This is a combined section class",
+                "instructors": [
+                    {
+                        "name": "Ji-Xin Cheng",
+                        "email": ""
+                    }
+                ],
+                "section_type": "IND",
+                "meetings": [
+                    {
+                        "days": "TuTh",
+                        "start_time": "15.30.00.000000",
+                        "end_time": "17.15.00.000000",
+                        "start_dt": "01/21/2025",
+                        "end_dt": "05/01/2025",
+                        "bldg_cd": "PSY",
+                        "bldg_has_coordinates": false,
+                        "facility_descr": "64-86 Cummington Mall PSY B51",
+                        "room": "B51",
+                        "facility_id": "PSY B51",
+                        "instructor": "Ji-Xin Cheng"
+                    }
+                ],
+                "reserved_combined_info": {
+                    "class_enrl_cap": 20,
+                    "combined_enrl_cap": 40,
+                    "enrl_tot_other_combined": 18
+                }
+            },
+            {
+                "index": 60,
+                "crse_id": "125110",
+                "crse_offer_nbr": 1,
+                "class_section": "A1",
+                "start_dt": "01/21/2025",
+                "end_dt": "05/01/2025",
+                "campus_descr": "Boston University",
+                "class_nbr": 9737,
+                "component": "IND",
+                "subject": "ENGEC",
+                "subject_descr": "ENGEC Electrical & Comp Engr",
+                "catalog_nbr": "570",
+                "class_type": "E",
+                "schedule_print": "Y",
+                "acad_group": "ENG",
+                "acad_org": "ENG",
+                "descr": "Lasers and Applications",
+                "instructors": [
+                    {
+                        "name": "Michelle Sander",
+                        "email": ""
+                    }
+                ],
+                "section_type": "IND",
+                "meetings": [
+                    {
+                        "days": "MoWe",
+                        "start_time": "10.10.00.000000",
+                        "end_time": "11.55.00.000000",
+                        "start_dt": "01/21/2025",
+                        "end_dt": "05/01/2025",
+                        "bldg_cd": "CAS",
+                        "bldg_has_coordinates": false,
+                        "facility_descr": "685-725 Comm Ave CAS 218",
+                        "room": "218",
+                        "facility_id": "CAS 218",
+                        "instructor": "Michelle Sander"
+                    }
+                ]
+            },
+            {
+                "index": 61,
+                "crse_id": "125111",
+                "crse_offer_nbr": 1,
+                "class_section": "A1",
+                "start_dt": "01/21/2025",
+                "end_dt": "05/01/2025",
+                "campus_descr": "Boston University",
+                "class_nbr": 15037,
+                "component": "LEC",
+                "subject": "ENGEC",
+                "subject_descr": "ENGEC Electrical & Comp Engr",
+                "catalog_nbr": "571",
+                "class_type": "E",
+                "schedule_print": "Y",
+                "acad_group": "ENG",
+                "acad_org": "ENG",
+                "descr": "Digital VLSI Circuit Design",
+                "instructors": [
+                    {
+                        "name": "Rabia Yazicigil Kirby",
+                        "email": ""
+                    }
+                ],
+                "section_type": "Lecture",
+                "meetings": [
+                    {
+                        "days": "MoWe",
+                        "start_time": "12.20.00.000000",
+                        "end_time": "14.05.00.000000",
+                        "start_dt": "01/21/2025",
+                        "end_dt": "05/01/2025",
+                        "bldg_cd": "CDS",
+                        "bldg_has_coordinates": false,
+                        "facility_descr": "665 Comm Ave CDS 262",
+                        "room": "262",
+                        "facility_id": "CDS 262",
+                        "instructor": "Rabia Yazicigil Kirby"
+                    }
+                ]
+            },
+            {
+                "index": 62,
+                "crse_id": "125111",
+                "crse_offer_nbr": 1,
+                "class_section": "C1",
+                "start_dt": "01/21/2025",
+                "end_dt": "05/01/2025",
+                "campus_descr": "Boston University",
+                "class_nbr": 15038,
+                "component": "LAB",
+                "subject": "ENGEC",
+                "subject_descr": "ENGEC Electrical & Comp Engr",
+                "catalog_nbr": "571",
+                "class_type": "N",
+                "schedule_print": "Y",
+                "acad_group": "ENG",
+                "acad_org": "ENG",
+                "descr": "Digital VLSI Circuit Design",
+                "instructors": [
+                    {
+                        "name": "Rabia Yazicigil Kirby",
+                        "email": ""
+                    }
+                ],
+                "section_type": "Laboratory",
+                "meetings": [
+                    {
+                        "days": "Fr",
+                        "start_time": "14.30.00.000000",
+                        "end_time": "16.15.00.000000",
+                        "start_dt": "01/21/2025",
+                        "end_dt": "05/01/2025",
+                        "bldg_cd": "PHO",
+                        "bldg_has_coordinates": false,
+                        "facility_descr": "8 St. Mary's St PHO 305",
+                        "room": "305",
+                        "facility_id": "PHO 305",
+                        "instructor": "Rabia Yazicigil Kirby"
+                    }
+                ]
+            },
+            {
+                "index": 63,
+                "crse_id": "125116",
+                "crse_offer_nbr": 1,
+                "class_section": "A1",
+                "start_dt": "01/21/2025",
+                "end_dt": "05/01/2025",
+                "campus_descr": "Boston University",
+                "class_nbr": 9738,
+                "component": "IND",
+                "subject": "ENGEC",
+                "subject_descr": "ENGEC Electrical & Comp Engr",
+                "catalog_nbr": "575",
+                "class_type": "E",
+                "schedule_print": "Y",
+                "acad_group": "ENG",
+                "acad_org": "ENG",
+                "descr": "Semiconductor Devices",
+                "instructors": [
+                    {
+                        "name": "Enrico Bellotti",
+                        "email": ""
+                    }
+                ],
+                "section_type": "IND",
+                "meetings": [
+                    {
+                        "days": "MoWe",
+                        "start_time": "10.10.00.000000",
+                        "end_time": "11.55.00.000000",
+                        "start_dt": "01/21/2025",
+                        "end_dt": "05/01/2025",
+                        "bldg_cd": "PHO",
+                        "bldg_has_coordinates": false,
+                        "facility_descr": "8 St. Mary's St PHO 207",
+                        "room": "207",
+                        "facility_id": "PHO 207",
+                        "instructor": "Enrico Bellotti"
+                    }
+                ]
+            },
+            {
+                "index": 64,
+                "crse_id": "125129",
+                "crse_offer_nbr": 1,
+                "class_section": "A1",
+                "start_dt": "01/21/2025",
+                "end_dt": "05/01/2025",
+                "campus_descr": "Boston University",
+                "class_nbr": 9739,
+                "component": "LEC",
+                "subject": "ENGEC",
+                "subject_descr": "ENGEC Electrical & Comp Engr",
+                "catalog_nbr": "583",
+                "class_type": "E",
+                "schedule_print": "Y",
+                "acad_group": "ENG",
+                "acad_org": "ENG",
+                "descr": "Power Electronics for Energy systems",
+                "instructors": [
+                    {
+                        "name": "Min-Chang Lee",
+                        "email": ""
+                    }
+                ],
+                "section_type": "Lecture",
+                "meetings": [
+                    {
+                        "days": "TuTh",
+                        "start_time": "13.30.00.000000",
+                        "end_time": "15.15.00.000000",
+                        "start_dt": "01/21/2025",
+                        "end_dt": "05/01/2025",
+                        "bldg_cd": "EPC",
+                        "bldg_has_coordinates": false,
+                        "facility_descr": "750 Commonwealth Ave EPC 204",
+                        "room": "204",
+                        "facility_id": "EPC 204",
+                        "instructor": "Min-Chang Lee"
+                    }
+                ]
+            },
+            {
+                "index": 65,
+                "crse_id": "125129",
+                "crse_offer_nbr": 1,
+                "class_section": "C1",
+                "start_dt": "01/21/2025",
+                "end_dt": "05/01/2025",
+                "campus_descr": "Boston University",
+                "class_nbr": 14346,
+                "component": "LAB",
+                "subject": "ENGEC",
+                "subject_descr": "ENGEC Electrical & Comp Engr",
+                "catalog_nbr": "583",
+                "class_type": "N",
+                "schedule_print": "Y",
+                "acad_group": "ENG",
+                "acad_org": "ENG",
+                "descr": "Power Electronics for Energy systems",
+                "instructors": [
+                    {
+                        "name": "Min-Chang Lee",
+                        "email": ""
+                    }
+                ],
+                "section_type": "Laboratory",
+                "meetings": [
+                    {
+                        "days": "Th",
+                        "start_time": "09.00.00.000000",
+                        "end_time": "10.45.00.000000",
+                        "start_dt": "01/21/2025",
+                        "end_dt": "05/01/2025",
+                        "bldg_cd": "PHO",
+                        "bldg_has_coordinates": false,
+                        "facility_descr": "8 St. Mary's St PHO 105",
+                        "room": "105",
+                        "facility_id": "PHO 105",
+                        "instructor": "Min-Chang Lee"
+                    }
+                ]
+            },
+            {
+                "index": 66,
+                "crse_id": "125129",
+                "crse_offer_nbr": 1,
+                "class_section": "C2",
+                "start_dt": "01/21/2025",
+                "end_dt": "05/01/2025",
+                "campus_descr": "Boston University",
+                "class_nbr": 14347,
+                "component": "LAB",
+                "subject": "ENGEC",
+                "subject_descr": "ENGEC Electrical & Comp Engr",
+                "catalog_nbr": "583",
+                "class_type": "N",
+                "schedule_print": "Y",
+                "acad_group": "ENG",
+                "acad_org": "ENG",
+                "descr": "Power Electronics for Energy systems",
+                "instructors": [
+                    {
+                        "name": "Min-Chang Lee",
+                        "email": ""
+                    }
+                ],
+                "section_type": "Laboratory",
+                "meetings": [
+                    {
+                        "days": "We",
+                        "start_time": "10.10.00.000000",
+                        "end_time": "11.55.00.000000",
+                        "start_dt": "01/21/2025",
+                        "end_dt": "05/01/2025",
+                        "bldg_cd": "PHO",
+                        "bldg_has_coordinates": false,
+                        "facility_descr": "8 St. Mary's St PHO 105",
+                        "room": "105",
+                        "facility_id": "PHO 105",
+                        "instructor": "Min-Chang Lee"
+                    }
+                ]
+            },
+            {
+                "index": 67,
+                "crse_id": "180569",
+                "crse_offer_nbr": 1,
+                "class_section": "A1",
+                "start_dt": "01/21/2025",
+                "end_dt": "05/01/2025",
+                "campus_descr": "Boston University",
+                "class_nbr": 15039,
+                "component": "IND",
+                "subject": "ENGEC",
+                "subject_descr": "ENGEC Electrical & Comp Engr",
+                "catalog_nbr": "585",
+                "class_type": "E",
+                "schedule_print": "Y",
+                "acad_group": "ENG",
+                "acad_org": "ENG",
+                "descr": "Quantum Engineering & Technology (QET)",
+                "instructors": [
+                    {
+                        "name": "Luca Dal Negro",
+                        "email": ""
+                    }
+                ],
+                "section_type": "IND",
+                "meetings": [
+                    {
+                        "days": "MoWe",
+                        "start_time": "16.30.00.000000",
+                        "end_time": "18.15.00.000000",
+                        "start_dt": "01/21/2025",
+                        "end_dt": "05/01/2025",
+                        "bldg_cd": "PSY",
+                        "bldg_has_coordinates": false,
+                        "facility_descr": "64-86 Cummington Mall PSY B49",
+                        "room": "B49",
+                        "facility_id": "PSY B49",
+                        "instructor": "Luca Dal Negro"
+                    }
+                ]
+            },
+            {
+                "index": 68,
+                "crse_id": "125144",
+                "crse_offer_nbr": 1,
+                "class_section": "A1",
+                "start_dt": "01/21/2025",
+                "end_dt": "05/01/2025",
+                "campus_descr": "Boston University",
+                "class_nbr": 9740,
+                "component": "IND",
+                "subject": "ENGEC",
+                "subject_descr": "ENGEC Electrical & Comp Engr",
+                "catalog_nbr": "700",
+                "class_type": "E",
+                "schedule_print": "Y",
+                "acad_group": "ENG",
+                "acad_org": "ENG",
+                "descr": "Advanced Topics in Electrical and Computer Engineering",
+                "instructors": [
+                    {
+                        "name": "Ashok Cutkosky",
+                        "email": ""
+                    }
+                ],
+                "section_type": "IND",
+                "meetings": [
+                    {
+                        "days": "TuTh",
+                        "start_time": "15.30.00.000000",
+                        "end_time": "17.15.00.000000",
+                        "start_dt": "01/21/2025",
+                        "end_dt": "05/01/2025",
+                        "bldg_cd": "CAS",
+                        "bldg_has_coordinates": false,
+                        "facility_descr": "685-725 Comm Ave CAS 213",
+                        "room": "213",
+                        "facility_id": "CAS 213",
+                        "instructor": "Ashok Cutkosky"
+                    }
+                ]
+            },
+            {
+                "index": 69,
+                "crse_id": "125151",
+                "crse_offer_nbr": 1,
+                "class_section": "A1",
+                "start_dt": "01/21/2025",
+                "end_dt": "05/01/2025",
+                "campus_descr": "Boston University",
+                "class_nbr": 9741,
+                "component": "IND",
+                "subject": "ENGEC",
+                "subject_descr": "ENGEC Electrical & Comp Engr",
+                "catalog_nbr": "710",
+                "class_type": "E",
+                "schedule_print": "Y",
+                "acad_group": "ENG",
+                "acad_org": "ENG",
+                "descr": "Dynamic Programming and Reinforcement Learning",
+                "combined_descr": "This is a combined section class",
+                "instructors": [
+                    {
+                        "name": "Alexander Olshevsky",
+                        "email": ""
+                    }
+                ],
+                "section_type": "IND",
+                "meetings": [
+                    {
+                        "days": "MoWe",
+                        "start_time": "10.10.00.000000",
+                        "end_time": "11.55.00.000000",
+                        "start_dt": "01/21/2025",
+                        "end_dt": "05/01/2025",
+                        "bldg_cd": "EMB",
+                        "bldg_has_coordinates": false,
+                        "facility_descr": "15 St. Mary's St EMB 105",
+                        "room": "105",
+                        "facility_id": "EMB 105",
+                        "instructor": "Alexander Olshevsky"
+                    }
+                ],
+                "reserved_combined_info": {
+                    "class_enrl_cap": 15,
+                    "combined_enrl_cap": 30,
+                    "enrl_tot_other_combined": 8
+                }
+            },
+            {
+                "index": 70,
+                "crse_id": "125156",
+                "crse_offer_nbr": 1,
+                "class_section": "A1",
+                "start_dt": "01/21/2025",
+                "end_dt": "05/01/2025",
+                "campus_descr": "Boston University",
+                "class_nbr": 15040,
+                "component": "IND",
+                "subject": "ENGEC",
+                "subject_descr": "ENGEC Electrical & Comp Engr",
+                "catalog_nbr": "716",
+                "class_type": "E",
+                "schedule_print": "Y",
+                "acad_group": "ENG",
+                "acad_org": "ENG",
+                "descr": "Advanced Digital Signal Processing",
+                "instructors": [
+                    {
+                        "name": "Syed Nawab",
+                        "email": ""
+                    }
+                ],
+                "section_type": "IND",
+                "meetings": [
+                    {
+                        "days": "MoWe",
+                        "start_time": "10.10.00.000000",
+                        "end_time": "11.55.00.000000",
+                        "start_dt": "01/21/2025",
+                        "end_dt": "05/01/2025",
+                        "bldg_cd": "PHO",
+                        "bldg_has_coordinates": false,
+                        "facility_descr": "8 St. Mary's St PHO 201",
+                        "room": "201",
+                        "facility_id": "PHO 201",
+                        "instructor": "Syed Nawab"
+                    }
+                ]
+            },
+            {
+                "index": 71,
+                "crse_id": "125195",
+                "crse_offer_nbr": 1,
+                "class_section": "A1",
+                "start_dt": "01/21/2025",
+                "end_dt": "05/01/2025",
+                "campus_descr": "Boston University",
+                "class_nbr": 9747,
+                "component": "IND",
+                "subject": "ENGEC",
+                "subject_descr": "ENGEC Electrical & Comp Engr",
+                "catalog_nbr": "774",
+                "class_type": "E",
+                "schedule_print": "Y",
+                "acad_group": "ENG",
+                "acad_org": "ENG",
+                "descr": "Semiconductor Quantum Structures and Photonic Devices",
+                "combined_descr": "This is a combined section class",
+                "instructors": [
+                    {
+                        "name": "Roberto Paiella",
+                        "email": ""
+                    }
+                ],
+                "section_type": "IND",
+                "meetings": [
+                    {
+                        "days": "TuTh",
+                        "start_time": "13.30.00.000000",
+                        "end_time": "15.15.00.000000",
+                        "start_dt": "01/21/2025",
+                        "end_dt": "05/01/2025",
+                        "bldg_cd": "MCS",
+                        "bldg_has_coordinates": false,
+                        "facility_descr": "111 Cummington St MCS B37",
+                        "room": "B37",
+                        "facility_id": "MCS B37",
+                        "instructor": "Roberto Paiella"
+                    }
+                ],
+                "reserved_combined_info": {
+                    "class_enrl_cap": 20,
+                    "combined_enrl_cap": 35,
+                    "enrl_tot_other_combined": 4
+                }
+            },
+            {
+                "index": 72,
+                "crse_id": "184272",
+                "crse_offer_nbr": 1,
+                "class_section": "A1",
+                "start_dt": "01/21/2025",
+                "end_dt": "05/01/2025",
+                "campus_descr": "Boston University",
+                "class_nbr": 8513,
+                "component": "IND",
+                "subject": "ENGEC",
+                "subject_descr": "ENGEC Electrical & Comp Engr",
+                "catalog_nbr": "791",
+                "class_type": "E",
+                "schedule_print": "Y",
+                "acad_group": "ENG",
+                "acad_org": "ENG",
+                "descr": "Electrical and Computer Engineering PhD Research Placement",
+                "instructors": [
+                    {
+                        "name": "Manuel Egele",
+                        "email": ""
+                    }
+                ],
+                "section_type": "IND",
+                "meetings": [
+                    {
+                        "days": "TBA",
+                        "start_time": "",
+                        "end_time": "",
+                        "start_dt": "01/21/2025",
+                        "end_dt": "05/01/2025",
+                        "facility_id": "TBA",
+                        "facility_descr": "TBA",
+                        "instructor": "Manuel Egele"
+                    }
+                ]
+            },
+            {
+                "index": 73,
+                "crse_id": "125201",
+                "crse_offer_nbr": 1,
+                "class_section": "A1",
+                "start_dt": "01/21/2025",
+                "end_dt": "05/01/2025",
+                "campus_descr": "Boston University",
+                "class_nbr": 9749,
+                "component": "IND",
+                "subject": "ENGEC",
+                "subject_descr": "ENGEC Electrical & Comp Engr",
+                "catalog_nbr": "801",
+                "class_type": "E",
+                "schedule_print": "Y",
+                "acad_group": "ENG",
+                "acad_org": "ENG",
+                "descr": "Teaching Practicum 1",
+                "instructors": [
+                    {
+                        "name": "Manuel Egele",
+                        "email": ""
+                    }
+                ],
+                "section_type": "IND",
+                "meetings": [
+                    {
+                        "days": "TBA",
+                        "start_time": "",
+                        "end_time": "",
+                        "start_dt": "01/21/2025",
+                        "end_dt": "05/01/2025",
+                        "facility_id": "TBA",
+                        "facility_descr": "TBA",
+                        "instructor": "Manuel Egele"
+                    }
+                ]
+            },
+            {
+                "index": 74,
+                "crse_id": "125204",
+                "crse_offer_nbr": 1,
+                "class_section": "A1",
+                "start_dt": "01/21/2025",
+                "end_dt": "05/01/2025",
+                "campus_descr": "Boston University",
+                "class_nbr": 9750,
+                "component": "IND",
+                "subject": "ENGEC",
+                "subject_descr": "ENGEC Electrical & Comp Engr",
+                "catalog_nbr": "802",
+                "class_type": "E",
+                "schedule_print": "Y",
+                "acad_group": "ENG",
+                "acad_org": "ENG",
+                "descr": "Teaching Practicum 2",
+                "instructors": [
+                    {
+                        "name": "Manuel Egele",
+                        "email": ""
+                    }
+                ],
+                "section_type": "IND",
+                "meetings": [
+                    {
+                        "days": "TBA",
+                        "start_time": "",
+                        "end_time": "",
+                        "start_dt": "01/21/2025",
+                        "end_dt": "05/01/2025",
+                        "facility_id": "TBA",
+                        "facility_descr": "TBA",
+                        "instructor": "Manuel Egele"
+                    }
+                ]
+            },
+            {
+                "index": 75,
+                "crse_id": "125211",
+                "crse_offer_nbr": 1,
+                "class_section": "A1",
+                "start_dt": "01/21/2025",
+                "end_dt": "05/01/2025",
+                "campus_descr": "Boston University",
+                "class_nbr": 9751,
+                "component": "IND",
+                "subject": "ENGEC",
+                "subject_descr": "ENGEC Electrical & Comp Engr",
+                "catalog_nbr": "810",
+                "class_type": "E",
+                "schedule_print": "Y",
+                "acad_group": "ENG",
+                "acad_org": "ENG",
+                "descr": "PhD Internship in Electrical and Computer Engineering",
+                "instructors": [
+                    {
+                        "name": "Manuel Egele",
+                        "email": ""
+                    }
+                ],
+                "section_type": "IND",
+                "meetings": [
+                    {
+                        "days": "TBA",
+                        "start_time": "",
+                        "end_time": "",
+                        "start_dt": "01/21/2025",
+                        "end_dt": "05/01/2025",
+                        "facility_id": "TBA",
+                        "facility_descr": "TBA",
+                        "instructor": "Manuel Egele"
+                    }
+                ]
+            },
+            {
+                "index": 76,
+                "crse_id": "125215",
+                "crse_offer_nbr": 1,
+                "class_section": "A1",
+                "start_dt": "01/21/2025",
+                "end_dt": "05/01/2025",
+                "campus_descr": "Boston University",
+                "class_nbr": 9752,
+                "component": "IND",
+                "subject": "ENGEC",
+                "subject_descr": "ENGEC Electrical & Comp Engr",
+                "catalog_nbr": "891",
+                "class_type": "E",
+                "schedule_print": "Y",
+                "acad_group": "ENG",
+                "acad_org": "ENG",
+                "descr": "PhD Seminar 2",
+                "instructors": [
+                    {
+                        "name": "Manuel Egele",
+                        "email": ""
+                    }
+                ],
+                "section_type": "IND",
+                "meetings": [
+                    {
+                        "days": "Tu",
+                        "start_time": "11.00.00.000000",
+                        "end_time": "12.15.00.000000",
+                        "start_dt": "01/21/2025",
+                        "end_dt": "05/01/2025",
+                        "bldg_cd": "EPC",
+                        "bldg_has_coordinates": false,
+                        "facility_descr": "750 Commonwealth Ave EPC 208",
+                        "room": "208",
+                        "facility_id": "EPC 208",
+                        "instructor": "Manuel Egele"
+                    }
+                ]
+            },
+            {
+                "index": 77,
+                "crse_id": "125218",
+                "crse_offer_nbr": 1,
+                "class_section": "A5",
+                "start_dt": "01/21/2025",
+                "end_dt": "05/01/2025",
+                "campus_descr": "Boston University",
+                "class_nbr": 9753,
+                "component": "DRS",
+                "subject": "ENGEC",
+                "subject_descr": "ENGEC Electrical & Comp Engr",
+                "catalog_nbr": "900",
+                "class_type": "E",
+                "schedule_print": "Y",
+                "acad_group": "ENG",
+                "acad_org": "ENG",
+                "descr": "PhD Research",
+                "instructors": [
+                    {
+                        "name": "Hadi Nia",
+                        "email": ""
+                    }
+                ],
+                "section_type": "DRS",
+                "meetings": [
+                    {
+                        "days": "TBA",
+                        "start_time": "",
+                        "end_time": "",
+                        "start_dt": "01/21/2025",
+                        "end_dt": "05/01/2025",
+                        "facility_id": "TBA",
+                        "facility_descr": "TBA",
+                        "instructor": "Hadi Nia"
+                    }
+                ]
+            },
+            {
+                "index": 78,
+                "crse_id": "125218",
+                "crse_offer_nbr": 1,
+                "class_section": "B0",
+                "start_dt": "01/21/2025",
+                "end_dt": "05/01/2025",
+                "campus_descr": "Boston University",
+                "class_nbr": 9754,
+                "component": "DRS",
+                "subject": "ENGEC",
+                "subject_descr": "ENGEC Electrical & Comp Engr",
+                "catalog_nbr": "900",
+                "class_type": "E",
+                "schedule_print": "Y",
+                "acad_group": "ENG",
+                "acad_org": "ENG",
+                "descr": "PhD Research",
+                "instructors": [
+                    {
+                        "name": "David Boas",
+                        "email": ""
+                    }
+                ],
+                "section_type": "DRS",
+                "meetings": [
+                    {
+                        "days": "TBA",
+                        "start_time": "",
+                        "end_time": "",
+                        "start_dt": "01/21/2025",
+                        "end_dt": "05/01/2025",
+                        "facility_id": "TBA",
+                        "facility_descr": "TBA",
+                        "instructor": "David Boas"
+                    }
+                ]
+            },
+            {
+                "index": 79,
+                "crse_id": "125218",
+                "crse_offer_nbr": 1,
+                "class_section": "B1",
+                "start_dt": "01/21/2025",
+                "end_dt": "05/01/2025",
+                "campus_descr": "Boston University",
+                "class_nbr": 9755,
+                "component": "DRS",
+                "subject": "ENGEC",
+                "subject_descr": "ENGEC Electrical & Comp Engr",
+                "catalog_nbr": "900",
+                "class_type": "E",
+                "schedule_print": "Y",
+                "acad_group": "ENG",
+                "acad_org": "ENG",
+                "descr": "PhD Research",
+                "instructors": [
+                    {
+                        "name": "Kayhan Batmanghelich",
+                        "email": ""
+                    }
+                ],
+                "section_type": "DRS",
+                "meetings": [
+                    {
+                        "days": "TBA",
+                        "start_time": "",
+                        "end_time": "",
+                        "start_dt": "01/21/2025",
+                        "end_dt": "05/01/2025",
+                        "facility_id": "TBA",
+                        "facility_descr": "TBA",
+                        "instructor": "Kayhan Batmanghelich"
+                    }
+                ]
+            },
+            {
+                "index": 80,
+                "crse_id": "125218",
+                "crse_offer_nbr": 1,
+                "class_section": "B2",
+                "start_dt": "01/21/2025",
+                "end_dt": "05/01/2025",
+                "campus_descr": "Boston University",
+                "class_nbr": 9756,
+                "component": "DRS",
+                "subject": "ENGEC",
+                "subject_descr": "ENGEC Electrical & Comp Engr",
+                "catalog_nbr": "900",
+                "class_type": "E",
+                "schedule_print": "Y",
+                "acad_group": "ENG",
+                "acad_org": "ENG",
+                "descr": "PhD Research",
+                "instructors": [
+                    {
+                        "name": "Irving Bigio",
+                        "email": ""
+                    }
+                ],
+                "section_type": "DRS",
+                "meetings": [
+                    {
+                        "days": "TBA",
+                        "start_time": "",
+                        "end_time": "",
+                        "start_dt": "01/21/2025",
+                        "end_dt": "05/01/2025",
+                        "facility_id": "TBA",
+                        "facility_descr": "TBA",
+                        "instructor": "Irving Bigio"
+                    }
+                ]
+            },
+            {
+                "index": 81,
+                "crse_id": "125218",
+                "crse_offer_nbr": 1,
+                "class_section": "B3",
+                "start_dt": "01/21/2025",
+                "end_dt": "05/01/2025",
+                "campus_descr": "Boston University",
+                "class_nbr": 9757,
+                "component": "DRS",
+                "subject": "ENGEC",
+                "subject_descr": "ENGEC Electrical & Comp Engr",
+                "catalog_nbr": "900",
+                "class_type": "E",
+                "schedule_print": "Y",
+                "acad_group": "ENG",
+                "acad_org": "ENG",
+                "descr": "PhD Research",
+                "instructors": [
+                    {
+                        "name": "Enrico Bellotti",
+                        "email": ""
+                    }
+                ],
+                "section_type": "DRS",
+                "meetings": [
+                    {
+                        "days": "TBA",
+                        "start_time": "",
+                        "end_time": "",
+                        "start_dt": "01/21/2025",
+                        "end_dt": "05/01/2025",
+                        "facility_id": "TBA",
+                        "facility_descr": "TBA",
+                        "instructor": "Enrico Bellotti"
+                    }
+                ]
+            },
+            {
+                "index": 82,
+                "crse_id": "125218",
+                "crse_offer_nbr": 1,
+                "class_section": "B6",
+                "start_dt": "01/21/2025",
+                "end_dt": "05/01/2025",
+                "campus_descr": "Boston University",
+                "class_nbr": 9758,
+                "component": "DRS",
+                "subject": "ENGEC",
+                "subject_descr": "ENGEC Electrical & Comp Engr",
+                "catalog_nbr": "900",
+                "class_type": "E",
+                "schedule_print": "Y",
+                "acad_group": "ENG",
+                "acad_org": "ENG",
+                "descr": "PhD Research",
+                "instructors": [
+                    {
+                        "name": "Thomas Bifano",
+                        "email": ""
+                    }
+                ],
+                "section_type": "DRS",
+                "meetings": [
+                    {
+                        "days": "TBA",
+                        "start_time": "",
+                        "end_time": "",
+                        "start_dt": "01/21/2025",
+                        "end_dt": "05/01/2025",
+                        "facility_id": "TBA",
+                        "facility_descr": "TBA",
+                        "instructor": "Thomas Bifano"
+                    }
+                ]
+            },
+            {
+                "index": 83,
+                "crse_id": "125218",
+                "crse_offer_nbr": 1,
+                "class_section": "B7",
+                "start_dt": "01/21/2025",
+                "end_dt": "05/01/2025",
+                "campus_descr": "Boston University",
+                "class_nbr": 9759,
+                "component": "DRS",
+                "subject": "ENGEC",
+                "subject_descr": "ENGEC Electrical & Comp Engr",
+                "catalog_nbr": "900",
+                "class_type": "E",
+                "schedule_print": "Y",
+                "acad_group": "ENG",
+                "acad_org": "ENG",
+                "descr": "PhD Research",
+                "instructors": [
+                    {
+                        "name": "Joseph Bunch",
+                        "email": ""
+                    }
+                ],
+                "section_type": "DRS",
+                "meetings": [
+                    {
+                        "days": "TBA",
+                        "start_time": "",
+                        "end_time": "",
+                        "start_dt": "01/21/2025",
+                        "end_dt": "05/01/2025",
+                        "facility_id": "TBA",
+                        "facility_descr": "TBA",
+                        "instructor": "Joseph Bunch"
+                    }
+                ]
+            },
+            {
+                "index": 84,
+                "crse_id": "125218",
+                "crse_offer_nbr": 1,
+                "class_section": "B8",
+                "start_dt": "01/21/2025",
+                "end_dt": "05/01/2025",
+                "campus_descr": "Boston University",
+                "class_nbr": 9760,
+                "component": "DRS",
+                "subject": "ENGEC",
+                "subject_descr": "ENGEC Electrical & Comp Engr",
+                "catalog_nbr": "900",
+                "class_type": "E",
+                "schedule_print": "Y",
+                "acad_group": "ENG",
+                "acad_org": "ENG",
+                "descr": "PhD Research",
+                "instructors": [
+                    {
+                        "name": "Richard Brower",
+                        "email": ""
+                    }
+                ],
+                "section_type": "DRS",
+                "meetings": [
+                    {
+                        "days": "TBA",
+                        "start_time": "",
+                        "end_time": "",
+                        "start_dt": "01/21/2025",
+                        "end_dt": "05/01/2025",
+                        "facility_id": "TBA",
+                        "facility_descr": "TBA",
+                        "instructor": "Richard Brower"
+                    }
+                ]
+            },
+            {
+                "index": 85,
+                "crse_id": "125218",
+                "crse_offer_nbr": 1,
+                "class_section": "C2",
+                "start_dt": "01/21/2025",
+                "end_dt": "05/01/2025",
+                "campus_descr": "Boston University",
+                "class_nbr": 9761,
+                "component": "DRS",
+                "subject": "ENGEC",
+                "subject_descr": "ENGEC Electrical & Comp Engr",
+                "catalog_nbr": "900",
+                "class_type": "E",
+                "schedule_print": "Y",
+                "acad_group": "ENG",
+                "acad_org": "ENG",
+                "descr": "PhD Research",
+                "instructors": [
+                    {
+                        "name": "David Castanon",
+                        "email": ""
+                    }
+                ],
+                "section_type": "DRS",
+                "meetings": [
+                    {
+                        "days": "TBA",
+                        "start_time": "",
+                        "end_time": "",
+                        "start_dt": "01/21/2025",
+                        "end_dt": "05/01/2025",
+                        "facility_id": "TBA",
+                        "facility_descr": "TBA",
+                        "instructor": "David Castanon"
+                    }
+                ]
+            },
+            {
+                "index": 86,
+                "crse_id": "125218",
+                "crse_offer_nbr": 1,
+                "class_section": "C3",
+                "start_dt": "01/21/2025",
+                "end_dt": "05/01/2025",
+                "campus_descr": "Boston University",
+                "class_nbr": 9762,
+                "component": "DRS",
+                "subject": "ENGEC",
+                "subject_descr": "ENGEC Electrical & Comp Engr",
+                "catalog_nbr": "900",
+                "class_type": "E",
+                "schedule_print": "Y",
+                "acad_group": "ENG",
+                "acad_org": "ENG",
+                "descr": "PhD Research",
+                "instructors": [
+                    {
+                        "name": "Christos Cassandras",
+                        "email": ""
+                    }
+                ],
+                "section_type": "DRS",
+                "meetings": [
+                    {
+                        "days": "TBA",
+                        "start_time": "",
+                        "end_time": "",
+                        "start_dt": "01/21/2025",
+                        "end_dt": "05/01/2025",
+                        "facility_id": "TBA",
+                        "facility_descr": "TBA",
+                        "instructor": "Christos Cassandras"
+                    }
+                ]
+            },
+            {
+                "index": 87,
+                "crse_id": "125218",
+                "crse_offer_nbr": 1,
+                "class_section": "C6",
+                "start_dt": "01/21/2025",
+                "end_dt": "05/01/2025",
+                "campus_descr": "Boston University",
+                "class_nbr": 9763,
+                "component": "DRS",
+                "subject": "ENGEC",
+                "subject_descr": "ENGEC Electrical & Comp Engr",
+                "catalog_nbr": "900",
+                "class_type": "E",
+                "schedule_print": "Y",
+                "acad_group": "ENG",
+                "acad_org": "ENG",
+                "descr": "PhD Research",
+                "instructors": [
+                    {
+                        "name": "To Be Announced",
+                        "email": ""
+                    }
+                ],
+                "section_type": "DRS",
+                "meetings": [
+                    {
+                        "days": "TBA",
+                        "start_time": "",
+                        "end_time": "",
+                        "start_dt": "01/21/2025",
+                        "end_dt": "05/01/2025",
+                        "facility_id": "TBA",
+                        "facility_descr": "TBA",
+                        "instructor": "To Be Announced"
+                    }
+                ]
+            },
+            {
+                "index": 88,
+                "crse_id": "125218",
+                "crse_offer_nbr": 1,
+                "class_section": "C7",
+                "start_dt": "01/21/2025",
+                "end_dt": "05/01/2025",
+                "campus_descr": "Boston University",
+                "class_nbr": 9764,
+                "component": "DRS",
+                "subject": "ENGEC",
+                "subject_descr": "ENGEC Electrical & Comp Engr",
+                "catalog_nbr": "900",
+                "class_type": "E",
+                "schedule_print": "Y",
+                "acad_group": "ENG",
+                "acad_org": "ENG",
+                "descr": "PhD Research",
+                "instructors": [
+                    {
+                        "name": "Jeffrey Carruthers",
+                        "email": ""
+                    }
+                ],
+                "section_type": "DRS",
+                "meetings": [
+                    {
+                        "days": "TBA",
+                        "start_time": "",
+                        "end_time": "",
+                        "start_dt": "01/21/2025",
+                        "end_dt": "05/01/2025",
+                        "facility_id": "TBA",
+                        "facility_descr": "TBA",
+                        "instructor": "Jeffrey Carruthers"
+                    }
+                ]
+            },
+            {
+                "index": 89,
+                "crse_id": "125218",
+                "crse_offer_nbr": 1,
+                "class_section": "CA",
+                "start_dt": "01/21/2025",
+                "end_dt": "05/01/2025",
+                "campus_descr": "Boston University",
+                "class_nbr": 9765,
+                "component": "DRS",
+                "subject": "ENGEC",
+                "subject_descr": "ENGEC Electrical & Comp Engr",
+                "catalog_nbr": "900",
+                "class_type": "E",
+                "schedule_print": "Y",
+                "acad_group": "ENG",
+                "acad_org": "ENG",
+                "descr": "PhD Research",
+                "instructors": [
+                    {
+                        "name": "Ashok Cutkosky",
+                        "email": ""
+                    }
+                ],
+                "section_type": "DRS",
+                "meetings": [
+                    {
+                        "days": "TBA",
+                        "start_time": "",
+                        "end_time": "",
+                        "start_dt": "01/21/2025",
+                        "end_dt": "05/01/2025",
+                        "facility_id": "TBA",
+                        "facility_descr": "TBA",
+                        "instructor": "Ashok Cutkosky"
+                    }
+                ]
+            },
+            {
+                "index": 90,
+                "crse_id": "125218",
+                "crse_offer_nbr": 1,
+                "class_section": "D2",
+                "start_dt": "01/21/2025",
+                "end_dt": "05/01/2025",
+                "campus_descr": "Boston University",
+                "class_nbr": 9766,
+                "component": "DRS",
+                "subject": "ENGEC",
+                "subject_descr": "ENGEC Electrical & Comp Engr",
+                "catalog_nbr": "900",
+                "class_type": "E",
+                "schedule_print": "Y",
+                "acad_group": "ENG",
+                "acad_org": "ENG",
+                "descr": "PhD Research",
+                "instructors": [
+                    {
+                        "name": "Carlo De Luca",
+                        "email": ""
+                    }
+                ],
+                "section_type": "DRS",
+                "meetings": [
+                    {
+                        "days": "TBA",
+                        "start_time": "",
+                        "end_time": "",
+                        "start_dt": "01/21/2025",
+                        "end_dt": "05/01/2025",
+                        "facility_id": "TBA",
+                        "facility_descr": "TBA",
+                        "instructor": "Carlo De Luca"
+                    }
+                ]
+            },
+            {
+                "index": 91,
+                "crse_id": "125218",
+                "crse_offer_nbr": 1,
+                "class_section": "D4",
+                "start_dt": "01/21/2025",
+                "end_dt": "05/01/2025",
+                "campus_descr": "Boston University",
+                "class_nbr": 9767,
+                "component": "DRS",
+                "subject": "ENGEC",
+                "subject_descr": "ENGEC Electrical & Comp Engr",
+                "catalog_nbr": "900",
+                "class_type": "E",
+                "schedule_print": "Y",
+                "acad_group": "ENG",
+                "acad_org": "ENG",
+                "descr": "PhD Research",
+                "instructors": [
+                    {
+                        "name": "Douglas Densmore",
+                        "email": ""
+                    }
+                ],
+                "section_type": "DRS",
+                "meetings": [
+                    {
+                        "days": "TBA",
+                        "start_time": "",
+                        "end_time": "",
+                        "start_dt": "01/21/2025",
+                        "end_dt": "05/01/2025",
+                        "facility_id": "TBA",
+                        "facility_descr": "TBA",
+                        "instructor": "Douglas Densmore"
+                    }
+                ]
+            },
+            {
+                "index": 92,
+                "crse_id": "125218",
+                "crse_offer_nbr": 1,
+                "class_section": "D7",
+                "start_dt": "01/21/2025",
+                "end_dt": "05/01/2025",
+                "campus_descr": "Boston University",
+                "class_nbr": 9768,
+                "component": "DRS",
+                "subject": "ENGEC",
+                "subject_descr": "ENGEC Electrical & Comp Engr",
+                "catalog_nbr": "900",
+                "class_type": "E",
+                "schedule_print": "Y",
+                "acad_group": "ENG",
+                "acad_org": "ENG",
+                "descr": "PhD Research",
+                "instructors": [
+                    {
+                        "name": "Luca Dal Negro",
+                        "email": ""
+                    }
+                ],
+                "section_type": "DRS",
+                "meetings": [
+                    {
+                        "days": "TBA",
+                        "start_time": "",
+                        "end_time": "",
+                        "start_dt": "01/21/2025",
+                        "end_dt": "05/01/2025",
+                        "facility_id": "TBA",
+                        "facility_descr": "TBA",
+                        "instructor": "Luca Dal Negro"
+                    }
+                ]
+            },
+            {
+                "index": 93,
+                "crse_id": "125218",
+                "crse_offer_nbr": 1,
+                "class_section": "E3",
+                "start_dt": "01/21/2025",
+                "end_dt": "05/01/2025",
+                "campus_descr": "Boston University",
+                "class_nbr": 9769,
+                "component": "DRS",
+                "subject": "ENGEC",
+                "subject_descr": "ENGEC Electrical & Comp Engr",
+                "catalog_nbr": "900",
+                "class_type": "E",
+                "schedule_print": "Y",
+                "acad_group": "ENG",
+                "acad_org": "ENG",
+                "descr": "PhD Research",
+                "instructors": [
+                    {
+                        "name": "Kamil Ekinci",
+                        "email": ""
+                    }
+                ],
+                "section_type": "DRS",
+                "meetings": [
+                    {
+                        "days": "TBA",
+                        "start_time": "",
+                        "end_time": "",
+                        "start_dt": "01/21/2025",
+                        "end_dt": "05/01/2025",
+                        "facility_id": "TBA",
+                        "facility_descr": "TBA",
+                        "instructor": "Kamil Ekinci"
+                    }
+                ]
+            },
+            {
+                "index": 94,
+                "crse_id": "125218",
+                "crse_offer_nbr": 1,
+                "class_section": "E6",
+                "start_dt": "01/21/2025",
+                "end_dt": "05/01/2025",
+                "campus_descr": "Boston University",
+                "class_nbr": 9770,
+                "component": "DRS",
+                "subject": "ENGEC",
+                "subject_descr": "ENGEC Electrical & Comp Engr",
+                "catalog_nbr": "900",
+                "class_type": "E",
+                "schedule_print": "Y",
+                "acad_group": "ENG",
+                "acad_org": "ENG",
+                "descr": "PhD Research",
+                "instructors": [
+                    {
+                        "name": "Shyamsunder Erramilli",
+                        "email": ""
+                    }
+                ],
+                "section_type": "DRS",
+                "meetings": [
+                    {
+                        "days": "TBA",
+                        "start_time": "",
+                        "end_time": "",
+                        "start_dt": "01/21/2025",
+                        "end_dt": "05/01/2025",
+                        "facility_id": "TBA",
+                        "facility_descr": "TBA",
+                        "instructor": "Shyamsunder Erramilli"
+                    }
+                ]
+            },
+            {
+                "index": 95,
+                "crse_id": "125218",
+                "crse_offer_nbr": 1,
+                "class_section": "E7",
+                "start_dt": "01/21/2025",
+                "end_dt": "05/01/2025",
+                "campus_descr": "Boston University",
+                "class_nbr": 9771,
+                "component": "DRS",
+                "subject": "ENGEC",
+                "subject_descr": "ENGEC Electrical & Comp Engr",
+                "catalog_nbr": "900",
+                "class_type": "E",
+                "schedule_print": "Y",
+                "acad_group": "ENG",
+                "acad_org": "ENG",
+                "descr": "PhD Research",
+                "instructors": [
+                    {
+                        "name": "Manuel Egele",
+                        "email": ""
+                    }
+                ],
+                "section_type": "DRS",
+                "meetings": [
+                    {
+                        "days": "TBA",
+                        "start_time": "",
+                        "end_time": "",
+                        "start_dt": "01/21/2025",
+                        "end_dt": "05/01/2025",
+                        "facility_id": "TBA",
+                        "facility_descr": "TBA",
+                        "instructor": "Manuel Egele"
+                    }
+                ]
+            },
+            {
+                "index": 96,
+                "crse_id": "125218",
+                "crse_offer_nbr": 1,
+                "class_section": "F4",
+                "start_dt": "01/21/2025",
+                "end_dt": "05/01/2025",
+                "campus_descr": "Boston University",
+                "class_nbr": 9772,
+                "component": "DRS",
+                "subject": "ENGEC",
+                "subject_descr": "ENGEC Electrical & Comp Engr",
+                "catalog_nbr": "900",
+                "class_type": "E",
+                "schedule_print": "Y",
+                "acad_group": "ENG",
+                "acad_org": "ENG",
+                "descr": "PhD Research",
+                "instructors": [
+                    {
+                        "name": "Theodore Fritz",
+                        "email": ""
+                    }
+                ],
+                "section_type": "DRS",
+                "meetings": [
+                    {
+                        "days": "TBA",
+                        "start_time": "",
+                        "end_time": "",
+                        "start_dt": "01/21/2025",
+                        "end_dt": "05/01/2025",
+                        "facility_id": "TBA",
+                        "facility_descr": "TBA",
+                        "instructor": "Theodore Fritz"
+                    }
+                ]
+            },
+            {
+                "index": 97,
+                "crse_id": "125218",
+                "crse_offer_nbr": 1,
+                "class_section": "G4",
+                "start_dt": "01/21/2025",
+                "end_dt": "05/01/2025",
+                "campus_descr": "Boston University",
+                "class_nbr": 9773,
+                "component": "DRS",
+                "subject": "ENGEC",
+                "subject_descr": "ENGEC Electrical & Comp Engr",
+                "catalog_nbr": "900",
+                "class_type": "E",
+                "schedule_print": "Y",
+                "acad_group": "ENG",
+                "acad_org": "ENG",
+                "descr": "PhD Research",
+                "instructors": [
+                    {
+                        "name": "Roscoe Giles",
+                        "email": ""
+                    }
+                ],
+                "section_type": "DRS",
+                "meetings": [
+                    {
+                        "days": "TBA",
+                        "start_time": "",
+                        "end_time": "",
+                        "start_dt": "01/21/2025",
+                        "end_dt": "05/01/2025",
+                        "facility_id": "TBA",
+                        "facility_descr": "TBA",
+                        "instructor": "Roscoe Giles"
+                    }
+                ]
+            },
+            {
+                "index": 98,
+                "crse_id": "125218",
+                "crse_offer_nbr": 1,
+                "class_section": "G9",
+                "start_dt": "01/21/2025",
+                "end_dt": "05/01/2025",
+                "campus_descr": "Boston University",
+                "class_nbr": 9774,
+                "component": "DRS",
+                "subject": "ENGEC",
+                "subject_descr": "ENGEC Electrical & Comp Engr",
+                "catalog_nbr": "900",
+                "class_type": "E",
+                "schedule_print": "Y",
+                "acad_group": "ENG",
+                "acad_org": "ENG",
+                "descr": "PhD Research",
+                "instructors": [
+                    {
+                        "name": "Lee Goldstein",
+                        "email": ""
+                    }
+                ],
+                "section_type": "DRS",
+                "meetings": [
+                    {
+                        "days": "TBA",
+                        "start_time": "",
+                        "end_time": "",
+                        "start_dt": "01/21/2025",
+                        "end_dt": "05/01/2025",
+                        "facility_id": "TBA",
+                        "facility_descr": "TBA",
+                        "instructor": "Lee Goldstein"
+                    }
+                ]
+            },
+            {
+                "index": 99,
+                "crse_id": "125218",
+                "crse_offer_nbr": 1,
+                "class_section": "H2",
+                "start_dt": "01/21/2025",
+                "end_dt": "05/01/2025",
+                "campus_descr": "Boston University",
+                "class_nbr": 9775,
+                "component": "DRS",
+                "subject": "ENGEC",
+                "subject_descr": "ENGEC Electrical & Comp Engr",
+                "catalog_nbr": "900",
+                "class_type": "E",
+                "schedule_print": "Y",
+                "acad_group": "ENG",
+                "acad_org": "ENG",
+                "descr": "PhD Research",
+                "instructors": [
+                    {
+                        "name": "Floyd Humphrey",
+                        "email": ""
+                    }
+                ],
+                "section_type": "DRS",
+                "meetings": [
+                    {
+                        "days": "TBA",
+                        "start_time": "",
+                        "end_time": "",
+                        "start_dt": "01/21/2025",
+                        "end_dt": "05/01/2025",
+                        "facility_id": "TBA",
+                        "facility_descr": "TBA",
+                        "instructor": "Floyd Humphrey"
+                    }
+                ]
+            },
+            {
+                "index": 100,
+                "crse_id": "125218",
+                "crse_offer_nbr": 1,
+                "class_section": "H4",
+                "start_dt": "01/21/2025",
+                "end_dt": "05/01/2025",
+                "campus_descr": "Boston University",
+                "class_nbr": 9776,
+                "component": "DRS",
+                "subject": "ENGEC",
+                "subject_descr": "ENGEC Electrical & Comp Engr",
+                "catalog_nbr": "900",
+                "class_type": "E",
+                "schedule_print": "Y",
+                "acad_group": "ENG",
+                "acad_org": "ENG",
+                "descr": "PhD Research",
+                "instructors": [
+                    {
+                        "name": "Mark Horenstein",
+                        "email": ""
+                    }
+                ],
+                "section_type": "DRS",
+                "meetings": [
+                    {
+                        "days": "TBA",
+                        "start_time": "",
+                        "end_time": "",
+                        "start_dt": "01/21/2025",
+                        "end_dt": "05/01/2025",
+                        "facility_id": "TBA",
+                        "facility_descr": "TBA",
+                        "instructor": "Mark Horenstein"
+                    }
+                ]
+            }
+        ]
+    }
+}
