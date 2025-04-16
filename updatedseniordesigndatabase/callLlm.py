@@ -2,7 +2,7 @@ from openai import OpenAI
 import os
 
 # Initialize OpenAI client
-client = OpenAI(api_key="API KEY")
+client = OpenAI("api_key")
 
 
 def lastNames(prompt):
@@ -48,7 +48,7 @@ Course codes should be interpreted case-insensitively (e.g., 'ec330' and 'EC330'
 
 Examples:
 - Q: When is EC330?
-  A: SELECT days, time, room FROM classes WHERE subject = 'ENGEC' AND catalog_nbr = '330' AND component = 'LEC';
+  A: SELECT days, time, room FROM classes WHERE subject = 'ENGEC' AND catalog_nbr = '330' AND component = 'LEC' OR component = 'IND';
 
 - Q: What classes does Tali Moreshet teach?
   A: SELECT crse_id, descr FROM classes WHERE instructors LIKE '%Tali Moreshet%';
@@ -66,9 +66,9 @@ Examples:
   A: SELECT DISTINCT instructors FROM classes WHERE descr LIKE '%Physics of Semiconductor Devices%';
 
 - Q: What room is ENGEC 311 lecture in?
-  A: SELECT room FROM classes WHERE subject = 'ENGEC' AND catalog_nbr = '311' AND component = 'LEC';
+  A: SELECT room FROM classes WHERE subject = 'ENGEC' AND catalog_nbr = '311' AND (component = 'LEC' OR component = 'IND');
 
-If a user asks "when is [course]" or "what time is EC[xxx]", assume they are asking about the lecture unless they specifically mention discussion, lab, or another section type. In that case, filter by component accordingly (e.g., 'DIS' for discussion, 'LAB' for lab, etc).
+If a user asks "when is [course]" or "what time is EC[xxx]" or where is [course], assume they are asking about the lecture or IND unless they specifically mention discussion, lab, or another section type. In that case, filter by component accordingly (e.g., 'DIS' for discussion, 'LAB' for lab, etc).
 
 If the user refers to a course by its full name (from the 'descr' column), match it using:
 WHERE descr LIKE '%<course name>%'
@@ -115,3 +115,10 @@ Now return a natural-sounding answer in a full sentence that directly responds t
     except Exception as e:
         print(f"Error calling OpenAI: {e}")
         return None
+# userResponse = "what classes does professor pifano teach"
+# userResponse2 = lastNames(userResponse)
+# result = generateSql(userResponse2)
+# print(result)
+# sayOut = respondToUser(userResponse2, result)
+# print(sayOut)
+
