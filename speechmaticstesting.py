@@ -45,23 +45,63 @@ def print_partial(msg):
 
 def print_full(msg):
     text = msg['metadata']['transcript'].strip()
-    print(f"[  FULL ] {text}")
+    #print(f"[  FULL ] {text}")
     if text:
         full_transcript.append(text)
 
-ws.add_event_handler(ServerMessageType.AddPartialTranscript, print_partial)
+def expand_course_vocab(codes):
+    vocab = []
+    for code in codes:
+        letters = ''.join([c for c in code if c.isalpha()])
+        numbers = ''.join([c for c in code if c.isdigit()])
+        if not letters or not numbers:
+            continue
+
+        # Breakdown numbers
+        digits = ' '.join(numbers)
+        alt = []
+        if len(numbers) == 3:
+            alt.append(f"{numbers[0]} {numbers[1]} {numbers[2]}")
+            alt.append(f"{numbers[0]} {numbers[1:]}")  # e.g. four twelve
+            alt.append(f"{letters.lower()} {numbers[0]} {numbers[1:]}")  # e.g. easy 4 12
+        alt.append(f"{letters} {digits}")
+        alt.append(f"{letters.lower()} {digits}")
+        alt.append(f"{letters.upper()} {digits}")
+        alt.append(f"{letters} {numbers}")
+        alt.append(f"{letters.lower()} {numbers}")
+        alt.append(f"{letters.upper()} {numbers}")
+        alt.append(f"{' '.join(letters)} {digits}")  # E C 4 1 3
+        alt.append(f"{' '.join(letters)} {numbers}")  # E C 413
+
+        vocab.append({
+            "content": code,
+            "sounds_like": list(set(alt))  # unique
+        })
+    return vocab
+
+
+#ws.add_event_handler(ServerMessageType.AddPartialTranscript, print_partial)
 ws.add_event_handler(ServerMessageType.AddTranscript, print_full)
 
 settings = AudioSettings(sample_rate=SAMPLE_RATE)
 
+# conf = TranscriptionConfig(
+#     language=LANGUAGE,
+#     additional_vocab=[
+#         {"content": "EC413", "sounds_like": ["E C four one three", "E C four thirteen", "EC for 13", "easy for 13"]},
+#         {"content": "EC412", "sounds_like": ["E C four one two", "E C four twelve", "EC for 12", "easy for 12"]},
+#         {"content": "CAS212", "sounds_like": ["C A S two one two", "C A S two twelve", "Cass for 12"]},
+#         {"content": "EC471", "sounds_like": ["E C four seven one"]}  # Added from your EC 471 context
+#     ],
+#     enable_partials=True,
+#     max_delay=2,
+#     audio_format="wav"
+# )
+
+course_codes = ["EC413", "EC412", "CAS212", "EC471", "ECE201", "MA123", "EC402", "EC512"]
 conf = TranscriptionConfig(
     language=LANGUAGE,
-    additional_vocab=[
-        {"content": "EC413", "sounds_like": ["E C four one three", "E C four thirteen", "EC for 13", "easy for 13"]},
-        {"content": "EC412", "sounds_like": ["E C four one two", "E C four twelve", "EC for 12", "easy for 12"]},
-        {"content": "CAS212", "sounds_like": ["C A S two one two", "C A S two twelve", "Cass for 12"]},
-        {"content": "EC471", "sounds_like": ["E C four seven one"]}  # Added from your EC 471 context
-    ],
+    additional_vocab=expand_course_vocab(course_codes),
     enable_partials=True,
     max_delay=2,
     audio_format="wav"
