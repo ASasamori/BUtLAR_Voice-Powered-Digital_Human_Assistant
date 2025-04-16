@@ -56,6 +56,12 @@ settings = AudioSettings(sample_rate=SAMPLE_RATE)
 
 conf = TranscriptionConfig(
     language=LANGUAGE,
+    additional_vocab=[
+        {"content": "EC413", "sounds_like": ["E C four one three", "E C four thirteen", "EC for 13", "easy for 13"]},
+        {"content": "EC412", "sounds_like": ["E C four one two", "E C four twelve", "EC for 12", "easy for 12"]},
+        {"content": "CAS212", "sounds_like": ["C A S two one two", "C A S two twelve", "Cass for 12"]},
+        {"content": "EC471", "sounds_like": ["E C four seven one"]}  # Added from your EC 471 context
+    ],
     enable_partials=True,
     max_delay=2,
     audio_format="wav"
