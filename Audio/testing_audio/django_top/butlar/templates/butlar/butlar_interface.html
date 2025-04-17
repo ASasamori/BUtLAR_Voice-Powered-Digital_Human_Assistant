@@ -8,45 +8,10 @@
   <title>Talk to BUtLAR</title>
   <link rel="stylesheet" href="{% static 'styles-butlar.css' %}">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <style>
-    /* Add styles for the status bar */
-    #status-bar {
-      position: sticky;
-      top: 0;
-      width: 100%;
-      background-color: #f0f0f0;
-      padding: 10px;
-      text-align: center;
-      font-weight: bold;
-      border-bottom: 1px solid #ccc;
-      z-index: 100;
-      margin-bottom: 20px;
-    }
-    
-    .listening {
-      background-color: #d4edda;
-      color: #155724;
-    }
-    
-    .processing {
-      background-color: #fff3cd;
-      color: #856404;
-    }
-    
-    /* Adjust chat window to account for status bar */
-    #chat-window {
-      margin-top: 10px;
-      height: calc(100vh - 150px);
-      overflow-y: auto;
-    }
-  </style>
 </head>
 <body>
   <h1>BUtLAR Voice Assistant</h1>
-  
-  <!-- Status bar at the top -->
-  <div id="status-bar">Ready to start</div>
-  
+
   <button onclick="start()">Start</button>
 
   <!-- Chat-style transcript window -->
