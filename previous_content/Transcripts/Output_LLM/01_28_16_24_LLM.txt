@@ -1,0 +1,5 @@
+"Google ASL" typically refers to American Sign Language, but in the context of "normalized peak to peak," it seems you may be asking about a technical or engineering concept. 
+
+Normalized peak-to-peak value often refers to the measurement of the difference between the maximum and minimum values of a signal, typically used in contexts such as signal processing. Normalization is a process that adjusts values in a dataset to a common scale, which can help in comparing the peaks in different datasets or signals.
+
+If you have a specific application in mind or need further information about how to calculate or apply this concept, please provide more details!

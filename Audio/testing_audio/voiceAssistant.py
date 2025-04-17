@@ -8,9 +8,10 @@ from google.cloud.speech_v1 import RecognitionConfig, StreamingRecognitionConfig
 import pandas as pd
 import sqlite3
 from fullDatabaseRetrieval import answer_course_question_new, answer_course_question
-from Vanna_in_audio.test import interpret_vanna_msg
+from test import interpret_vanna_msg
 import threading, queue
 from pathlib import Path
+from sql_database.txtToLLM import text_to_llm
 
 
 def process_audio_stream():
@@ -38,7 +39,7 @@ def process_audio_stream():
     streaming_config = StreamingRecognitionConfig(config=config, interim_results=True)
     
     # moved to display right at the start
-    print("Response: Hi! I'm BUtLAR\n")
+    print("Response: Hi! I'm BUtLAR, here to answer any of your BU-related questions. I'm listening...")
     sys.stdout.flush() # Ensure startup message displays immediately
     
     # Clear the responding flag after greeting
@@ -66,31 +67,91 @@ def process_audio_stream():
     timeout_thread.start()
 
     def audio_generator():
+        was_paused = False
+        duration_file = Path(flag_file.parent) / "tts_duration.flag"
+        chunk_rate_per_second = 16000 * 2  # bytes/sec = 16kHz * 2 bytes/sample
+
         while True:
-             # Check flag before processing audio
+            flag = "resume"
             if os.path.exists(flag_file):
                 with open(flag_file, "r") as f:
                     flag = f.read().strip()
-                    if flag == "responding":
-                        # Skip reading audio while system is responding
-                        time.sleep(0.1)
-                        continue
-            
+
+            if flag == "responding":
+                if not was_paused:
+                    print("🛑 Audio paused (TTS responding)...", file=sys.stderr)
+                    sys.stderr.flush()
+                    was_paused = True
+                time.sleep(0.1)
+                # Generate a silent audio chunk (zeros) instead of pausing
+                silent_chunk = bytes(4096)  # 4096 bytes of zeros
+                yield StreamingRecognizeRequest(audio_content=silent_chunk)
+                time.sleep(0.1)  # Control the rate of silent chunks
+                continue
+
+
+            if was_paused:
+                # Add a slight delay to wait for audio to finish entering stdin buffer
+                time.sleep(1.1)  # <-- small grace period after TTS finishes
+
+                flush_chunks = 20  # safe default
+                try:
+                    if duration_file.exists():
+                        with open(duration_file, "r") as f:
+                            duration = float(f.read().strip())
+                            # Slightly over-flush (1.2x) to guarantee silence
+                            bytes_to_discard = int(duration * 1.4 * chunk_rate_per_second)
+                            flush_chunks = max(50, bytes_to_discard // 4096)
+                    if flush_chunks is not None:
+                        print(f"🔄 Resumed. Flushing {flush_chunks} chunks (~{flush_chunks * 4096 / 32000:.2f}s audio)...", file=sys.stderr)
+                        sys.stderr.flush()
+
+                        for _ in range(flush_chunks):
+                            _ = sys.stdin.buffer.read(4096)
+
+                        print("Flushed: ✅ Mic buffer flushed. Now capturing fresh audio.", file=sys.stderr)
+                        sys.stderr.flush()
+                except Exception as e:
+                    print(f"⚠️ Error flushing audio: {e}", file=sys.stderr)
+
+                was_paused = False
+
             chunk = sys.stdin.buffer.read(4096)
             if not chunk:
                 break
             yield StreamingRecognizeRequest(audio_content=chunk)
 
-    requests = audio_generator()
-    responses = client.streaming_recognize(config=streaming_config, requests=requests)
+    # requests = audio_generator()
+    # responses = client.streaming_recognize(config=streaming_config, requests=requests)
 
     full_question = ""
     last_final_time = time.time()
     processed = False
 
+    # FIXME: shIt works here:
+    # llm_response = interpret_vanna_msg("Who teaches Computer Organization?")
+
     try:
+
+        requests = audio_generator()
+        print(f"The type of requests is {type(requests)}")
+        responses = client.streaming_recognize(config=streaming_config, requests=requests)
+
         for response in responses:
-            if not response.results:
+             # Allow mid-stream pause detection
+            current_flag = "resume"
+            if os.path.exists(flag_file):
+                with open(flag_file, "r") as f:
+                    current_flag = f.read().strip()
+            # if current_flag != "resume":
+            #     print("⏸️ Detected flag change mid-stream — breaking Google stream", file=sys.stderr)
+            #     sys.stderr.flush()
+            #     break  # break inner loop and start fresh next time
+
+            # Works here:
+            # llm_response = interpret_vanna_msg("Who teaches Computer Organization?")
+
+            if not response.results: 
                 continue
 
             result = response.results[0]
@@ -115,6 +176,9 @@ def process_audio_stream():
                 except:
                     pass
                 return
+            
+            # TODO: why tf is this 400 code popping up before this. idk if this works or not
+            # llm_response = interpret_vanna_msg("Who teaches Computer Organization?")
 
             if result.is_final:
                 
@@ -139,7 +203,17 @@ def process_audio_stream():
                     sys.stdout.flush()  # Flush to show processing start
 
                     # # Generate and print response immediately
-                    llm_response = answer_course_question(full_question.strip())
+
+
+                    # FIXME: why the fuck shit not working?
+                    # I keep getting this stupid ERROR 400 google asr code because I'm not trying to talk rn
+
+                    # llm_response = answer_course_question(full_question.strip())
+
+                    llm_response = text_to_llm(full_question.strip())
+
+                    # llm_response = interpret_vanna_msg(full_question.strip())
+                    # llm_response = interpret_vanna_msg("Who teaches computer organization?")
 
                     os.write(1, f"Response: {llm_response}\n".encode())  # Print immediately with os.write
 
@@ -161,6 +235,16 @@ def process_audio_stream():
 
     except Exception as e:
         print(f"Error occurred: {str(e)}", file=sys.stderr)
+        # if it's a 400 error, redirect it back to capture audio
+        # if "400" in str(e):
+        #     print("⚠️ 400 Error: Redirecting to audio capture...", file=sys.stderr)
+        #     sys.stdout.flush()
+        #     # Reset the timeout start time
+        #     timeout_start_time[0] = time.time()
+            
+        # else:
+        #     print(f"⚠️ Error: {e}", file=sys.stderr)
+
         sys.stdout.flush()
     finally:
         sys.stdout.flush()

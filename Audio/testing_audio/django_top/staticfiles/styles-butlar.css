@@ -1,87 +1,129 @@
+/* File: static/styles-voters.css
+Author: Suhani Mitra (suhanim@bu.edu), 3/29/2025
+Description: Running .css file for Django project HTML files */
+
 body {
-    background: #f5f5dc;
-    font-family: 'Cambria', serif;
-    color: #1a1a1a;
-    padding: 2rem;
-    display: flex;
-    flex-direction: column;
+    background-color: #e1edfa;
+    font-family:Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    /* margins kind of ... */
+    padding: 20px;
+}
+
+h1, h2, h3, p {
+    color: darkslategray;
+    text-align: center;
+}
+
+h1 {
+    font-size: 2.5em;
+}
+
+h2 {
+    font-size: 2em;
+}
+
+h3 {
+    font-size: 1.25em;
+    /* make this one unbolded */
+    font-weight: normal;
+}
+
+p {
+    font-size: 1em;
+}
+
+/* link color */
+a {
+    color: darkslategray;
+}
+
+/* use both of the below for plain black border */
+table, th, td {
+    /* black lines */
+    /* border: 1px solid; */
+    width: 100%;
+    text-align: center;
+    padding: 10px;
+  }
+
+table {
+    /* sets the lines to be one */
+    border-collapse: collapse;
+    color: darkslategray;
+    /* center it */
+    margin: 0 auto;
+    table-layout: fixed;
+    /* make table not too wide */
+    width: 90%;
+    justify-content: center;
     align-items: center;
-    min-height: 100vh;
-  }
-  
-  h1 {
-    font-size: 2rem;
-    margin-bottom: 1.5rem;
-    color: #1a1a1a;
-    text-transform: uppercase;
-    letter-spacing: 2px;
-  }
-  
-  button {
-    background: #993333;
-    font-family: 'Cambria', serif;
-    color: #f5f5dc;
-    border: none;
-    border-radius: 20px;
-    padding: 0.7rem 1.5rem;
-    font-size: 1rem;
-    font-weight: 600;
-    cursor: pointer;
-    transition: background 0.2s ease;
-    margin-bottom: 2rem;
-  }
-  
-  button:hover {
-    background: #b74c4c;
-  }
-  
-  #chat-window {
-    background-color: #2b2b2b;
-    border: 1px solid #444;
-    border-radius: 12px;
-    padding: 1rem;
+}
+
+
+/* Navigation bar styles */
+.navbar {
+    background-color: darkslategray;
+    padding: 10px 0;
+    text-align: center;
+    position: fixed;
+    width: 100%;
+    top: 0;
+    left: 0;
+    z-index: 1000;
+}
+
+.navbar-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+}
+
+.navbar-liste li {
+    display: inline;
+}
+
+.navbar-list a {
+    text-decoration: none;
+    color: #e1edfa;
+    font-size: 1.2em;
+    padding: 10px 15px;
+    border-radius: 5px;
+}
+
+/* move content below nav bar so we can see it */
+.content {
+    margin-top: 70px;
+}
+
+.footer{
+    /* smaller size font */
+    font-size: 0.8em;
+}
+
+.voter-table {
+    width: 60%;
+}
+
+.to-center {
+    text-align: center;
+    align-items: center;
+    margin: 0 auto;
+}
+
+.search-container {
+    align-items: center;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.graph-container {
+    justify-content: center;
+    align-items: center;
+    margin: 20px auto;
     width: 80%;
-    max-width: 800px;
-    height: 500px;
-    overflow-y: auto;
-    box-shadow: 0 0 10px rgba(255, 200, 200, 0.2);
-  }
-  
-  .message {
-    margin: 1rem 0;
-    padding: 0.75rem 1rem;
-    border-radius: 10px;
-    max-width: 80%;
-    line-height: 1.5;
-    word-wrap: break-word;
-  }
-  
-  .user-message {
-    background-color: #804040;
-    color: #fff;
-    align-self: flex-end;
-    margin-left: auto;
-  }
-  
-  .bot-message {
-    background-color: #f5f5dc;
-    color: #111;
-    align-self: flex-start;
-    margin-right: auto;
-  }
-  
-  #logs {
-    margin-top: 2rem;
-    width: 80%;
-    max-width: 800px;
-    font-size: 0.85rem;
-    color: #ccc;
-    background: #111;
-    padding: 1rem;
-    border-radius: 10px;
-    height: 150px;
-    overflow-y: scroll;
-    font-family: monospace;
-    border: 1px solid #333;
-  }
-  
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}

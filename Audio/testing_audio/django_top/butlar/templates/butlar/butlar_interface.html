@@ -8,57 +8,85 @@
   <title>Talk to BUtLAR</title>
   <link rel="stylesheet" href="{% static 'styles-butlar.css' %}">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    /* Add styles for the status bar */
+    #status-bar {
+      position: sticky;
+      top: 0;
+      width: 100%;
+      background-color: #f0f0f0;
+      padding: 10px;
+      text-align: center;
+      font-weight: bold;
+      border-bottom: 1px solid #ccc;
+      z-index: 100;
+      margin-bottom: 20px;
+    }
+    
+    .listening {
+      background-color: #d4edda;
+      color: #155724;
+    }
+    
+    .processing {
+      background-color: #fff3cd;
+      color: #856404;
+    }
+    
+    /* Adjust chat window to account for status bar */
+    #chat-window {
+      margin-top: 10px;
+      height: calc(100vh - 150px);
+      overflow-y: auto;
+    }
+  </style>
 </head>
 <body>
-  <h1>🎙️ BUtLAR Voice Assistant</h1>
-  <button onclick="start()">Start BUtLAR</button>
+  <h1>BUtLAR Voice Assistant</h1>
+  
+  <!-- Status bar at the top -->
+  <div id="status-bar">Ready to start</div>
+  
+  <button onclick="start()">Start</button>
 
   <!-- Chat-style transcript window -->
   <div id="chat-window"></div>
 
-  <!-- Logs for backend info -->
-  <div id="logs">
-    <strong>Logs:</strong><br>
-    <pre id="console"></pre>
-  </div>
-
   <script>
-
     let preferredVoice = null;
 
     window.speechSynthesis.onvoiceschanged = () => {
       const voices = speechSynthesis.getVoices();
-      // print the available voices
-      // const consoleDiv = document.getElementById("console");
-      // consoleDiv.innerHTML += "<em>Available voices:</em><br>";
-      // voices.forEach(voice => {
-      //   consoleDiv.innerHTML += voice.name + "<br>";
-      // });
-      // consoleDiv.innerHTML += "<br>";
       preferredVoice = voices[1];
     };
 
     function start() {
       const socket = new WebSocket("ws://" + window.location.host + "/ws/butlar/");
       const chatWindow = document.getElementById("chat-window");
-      const consoleDiv = document.getElementById("console");
+      const statusBar = document.getElementById("status-bar");
+      
+      // Update status bar on start
+      statusBar.textContent = "Please wait to speak. BUtLAR is thinking...";
+      statusBar.className = "processing";
 
       socket.onmessage = function(event) {
         const data = JSON.parse(event.data);
-        const messageDiv = document.createElement("div");
-        messageDiv.classList.add("message");
-
+        
         if (data.type === "transcript") {
-          messageDiv.classList.add("user-message");
+          const messageDiv = document.createElement("div");
+          messageDiv.classList.add("message", "user-message");
           messageDiv.textContent = data.text;
           chatWindow.appendChild(messageDiv);
+          
+          // Update status when user is speaking
+          statusBar.textContent = "Processing your request...";
+          statusBar.className = "processing";
+          
         } else if (data.type === "response") {
-          messageDiv.classList.add("bot-message");
+          const messageDiv = document.createElement("div");
+          messageDiv.classList.add("message", "bot-message");
           messageDiv.textContent = data.text;
           chatWindow.appendChild(messageDiv);
-
-          // Send PAUSE signal to backend before speaking
-          // socket.send(JSON.stringify({ type: "pause" }));
 
           const utterance = new SpeechSynthesisUtterance(data.text);
           utterance.voice = preferredVoice;
@@ -69,25 +97,38 @@
           utterance.onstart = () => {
             const estimatedDurationSec = data.text.split(' ').length / 2.5;  // rough estimate: 2.5 wps
             socket.send(JSON.stringify({ type: "pause", duration: estimatedDurationSec }));
+            statusBar.textContent = "BUtLAR is speaking...";
+            statusBar.className = "processing";
           };
 
           // When done speaking, tell backend to resume
           utterance.onend = () => {
             socket.send(JSON.stringify({ type: "resume" }));
+            statusBar.textContent = "Please wait to speak. BUtLAR is thinking...";
+            statusBar.className = "processing";
           };
 
           speechSynthesis.speak(utterance);
 
-        } else {
-          consoleDiv.innerHTML += data.text + "\n";
-          consoleDiv.scrollTop = consoleDiv.scrollHeight;
+        } else if (data.type === "status") {
+          // Update the status bar with status messages
+          statusBar.textContent = data.text;
+          
+          // Set appropriate class based on status message content
+          if (data.text.includes("listening") || data.text.includes("ready")) {
+            statusBar.className = "listening";
+          } else {
+            statusBar.className = "processing";
+          }
         }
 
         chatWindow.scrollTop = chatWindow.scrollHeight;
       };
 
       socket.onclose = function() {
-        consoleDiv.innerHTML += "\n<em>Connection closed.</em>\n";
+        statusBar.textContent = "Connection closed";
+        statusBar.style.backgroundColor = "#f8d7da";
+        statusBar.style.color = "#721c24";
       };
     }
   </script>
