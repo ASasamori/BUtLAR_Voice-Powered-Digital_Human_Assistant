@@ -1,99 +1,114 @@
-# voice_assistant.py
-import os
-import sys
 import time
+import pyaudio
 from google.cloud import speech
-from pathlib import Path
-from google.cloud.speech_v1 import RecognitionConfig, StreamingRecognitionConfig, StreamingRecognizeRequest
+from google.cloud.speech_v1 import StreamingRecognizeRequest, StreamingRecognitionConfig, RecognitionConfig
+from six.moves import queue
 from test import interpret_vanna_msg
 
-def process_audio_stream():
-    script_dir = Path(__file__).resolve().parent
+RATE = 16000
+CHUNK = int(RATE / 10)  # 100ms
 
-    client = speech.SpeechClient()
-    config = RecognitionConfig(
-        encoding=speech.RecognitionConfig.AudioEncoding.LINEAR16,
-        sample_rate_hertz=16000,
-        language_code="en-US",
-        enable_automatic_punctuation=True
-    )
-    streaming_config = StreamingRecognitionConfig(config=config, interim_results=True)
+class MicrophoneStream:
+    def __init__(self, rate, chunk, device_index=None):
+        self._rate = rate
+        self._chunk = chunk
+        self._buff = queue.Queue()
+        self.closed = True
+        self.device_index = device_index
 
-    print("Response: Hi! I'm BUtLAR, here to answer any of your BU-related questions. I'll listen for 30 seconds then respond.")
-    print("Say 'Goodbye, BUtLAR!' to stop at any time.")
-    sys.stdout.flush()
+    def __enter__(self):
+        self._audio_interface = pyaudio.PyAudio()
 
-    def audio_generator():
-        while True:
-            chunk = sys.stdin.buffer.read(4096)
-            if not chunk:
-                break
+        # Retrieves the default connection according to your device. Run test3.py to see
+        if self.device_index is None:
+            self.device_index = self._audio_interface.get_default_input_device_info()["index"]
+
+        self._audio_stream = self._audio_interface.open(
+            format=pyaudio.paInt16,
+            channels=1,
+            rate=self._rate,
+            input=True,
+            input_device_index=self.device_index,
+            frames_per_buffer=self._chunk,
+            stream_callback=self._fill_buffer,
+        )
+
+        self.closed = False
+        return self
+
+    def __exit__(self, type, value, traceback):
+        self._audio_stream.stop_stream()
+        self._audio_stream.close()
+        self.closed = True
+        self._buff.put(None)
+        self._audio_interface.terminate()
+
+    def _fill_buffer(self, in_data, frame_count, time_info, status_flags):
+        self._buff.put(in_data)
+        return None, pyaudio.paContinue
+
+    def generator(self):
+        while not self.closed:
+            chunk = self._buff.get()
+            if chunk is None:
+                return
             yield StreamingRecognizeRequest(audio_content=chunk)
 
-    requests = audio_generator()
-    responses = client.streaming_recognize(config=streaming_config, requests=requests)
-
+def listen_print_loop(responses, timeout=3):
     full_transcript = ""
     start_time = time.time()
-    
-    try:
-        for response in responses:
-            if not response.results:
-                continue
 
-            result = response.results[0]
-            if not result.alternatives:
-                continue
+    for response in responses:
+        if time.time() - start_time > timeout:
+            print("\n10 seconds passed. Stopping live transcription...")
+            break
 
-            transcript = result.alternatives[0].transcript
-            transcript_lower = transcript.strip().lower()
+        if not response.results:
+            continue
 
-            # Check if user wants to exit
-            if "goodbye" in transcript_lower:
-                print("Response: I hope I answered your questions. Goodbye!")
-                sys.stdout.flush()
-                try:
-                    sys.stdin.close()
-                except:
-                    pass
-                return
+        result = response.results[0]
+        if not result.alternatives:
+            continue
 
-            # Display interim results
-            if result.is_final:
-                print(f"Transcript: '{transcript}'")
-                full_transcript += transcript + " "
-                sys.stdout.flush()
-            
-            # Check if 30 seconds have passed
-            current_time = time.time()
-            if current_time - start_time >= 30:
-                print("\nFinished listening. Processing your question...")
-                sys.stdout.flush()
-                
-                # Process the collected transcript
-                if full_transcript:
-                    # llm_response = answer_course_question(full_transcript.strip())
-                    llm_response = interpret_vanna_msg("Who teaches Computer Organization?")
-                    print(f"Response: {llm_response}")
-                    print("Say 'Goodbye, BUtLAR!' to exit or ask another question for 30 seconds.")
-                else:
-                    print("Response: I didn't hear any question. Please try again.")
-                
-                sys.stdout.flush()
-                
-                # Reset for the next 30-second session
-                full_transcript = ""
-                start_time = current_time
-                
-    except Exception as e:
-        print(f"Error occurred: {str(e)}", file=sys.stderr)
-        sys.stdout.flush()
-    finally:
-        sys.stdout.flush()
-        try:
-            sys.stdin.close()
-        except:
-            pass
+        transcript = result.alternatives[0].transcript
+
+        if result.is_final:
+            print(f"Final: {transcript}")
+            full_transcript += transcript + " "
+        else:
+            print(f"Interim: {transcript}", end="\r")
+
+    return full_transcript.strip()
+
+def main():
+    client = speech.SpeechClient()
+
+    config = RecognitionConfig(
+        encoding=speech.RecognitionConfig.AudioEncoding.LINEAR16,
+        sample_rate_hertz=RATE,
+        language_code="en-US",
+        enable_automatic_punctuation=True,
+    )
+    streaming_config = StreamingRecognitionConfig(
+        config=config,
+        interim_results=True,
+    )
+
+    # Optional: Set device_index to AirPods if needed
+    device_index = None
+
+    with MicrophoneStream(RATE, CHUNK, device_index=device_index) as stream:
+        print("Listening... speak into the mic (10 seconds)...")
+        audio_generator = stream.generator()
+        requests = audio_generator
+
+        responses = client.streaming_recognize(config=streaming_config, requests=requests)
+        transcript = listen_print_loop(responses)
+
+    print(f"\nFinal Transcript: {transcript}")
+    print("\nCalling interpret_vanna_msg...")
+    llm_response = interpret_vanna_msg(transcript)
+    print(f"LLM Response: {llm_response}")
 
 if __name__ == "__main__":
-    process_audio_stream()
+    main()
