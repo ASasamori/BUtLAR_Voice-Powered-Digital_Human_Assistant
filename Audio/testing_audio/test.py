@@ -11,6 +11,7 @@ import io
 load_dotenv()
 api_key = os.getenv('NEW_OPENAI_API_KEY')
 
+# print(f"The value of the api_key is {api_key}")
 # To avoid warning?
 os.environ["TOKENIZERS_PARALLELISM"] = "false"
 
@@ -24,8 +25,9 @@ def answer_course_question_new(question: str):
     vn.connect_to_postgres(host='34.60.28.103', dbname='tutorialDB', user='postgres', password='butlar', port='5432')
     
     ### To make sure that the training data is being inherited properly:
-    # training_data = vn.get_training_data()
-    # print(f"The value of training_data is {training_data}")
+    training_data = vn.get_training_data()
+    print(f"The value of training_data is {training_data}")
+
 
     try:
         # Redirects all outputs into this standard output
@@ -39,6 +41,7 @@ def answer_course_question_new(question: str):
         
         if "Couldn't" in dummy_output.getvalue():
             # Add someway for the user to add input to retrain the information to ask again
+            print(f"The value of response is: {response}")
             raise ValueError(f"The question of \"{question}\" was asked incorrectly or the answer does not exist in the database. Please ask again.")
         
         if len(response) < 2:
@@ -75,8 +78,9 @@ def interpret_vanna_msg(my_question):
     if "Error" in vanna_ans_tables:
         return vanna_ans_tables
 
-    client = OpenAI()
-    client.api_key = api_key
+    # Not sure why I had to do this change but I did
+    client = OpenAI(api_key=api_key)
+    # client.api_key = api_key
 
     completion = client.chat.completions.create(
     model="gpt-3.5-turbo",
