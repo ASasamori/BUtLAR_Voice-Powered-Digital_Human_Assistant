@@ -8,46 +8,14 @@
   <title>Talk to BUtLAR</title>
   <link rel="stylesheet" href="{% static 'styles-butlar.css' %}">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <style>
-    /* Add styles for the status bar */
-    #status-bar {
-      position: sticky;
-      top: 0;
-      width: 100%;
-      background-color: #f0f0f0;
-      padding: 10px;
-      text-align: center;
-      font-weight: bold;
-      border-bottom: 1px solid #ccc;
-      z-index: 100;
-      margin-bottom: 20px;
-    }
-    
-    .listening {
-      background-color: #d4edda;
-      color: #155724;
-    }
-    
-    .processing {
-      background-color: #fff3cd;
-      color: #856404;
-    }
-    
-    /* Adjust chat window to account for status bar */
-    #chat-window {
-      margin-top: 10px;
-      height: calc(100vh - 150px);
-      overflow-y: auto;
-    }
-  </style>
 </head>
 <body>
   <h1>BUtLAR Voice Assistant</h1>
   
-  <!-- Status bar at the top -->
-  <div id="status-bar">Ready to start</div>
-  
   <button onclick="start()">Start</button>
+
+  <!-- Status bar at the top -->
+  <div id="status-bar" class="status-bar">Ready to start</div>
 
   <!-- Chat-style transcript window -->
   <div id="chat-window"></div>
@@ -67,7 +35,8 @@
       
       // Update status bar on start
       statusBar.textContent = "Please wait to speak. BUtLAR is thinking...";
-      statusBar.className = "processing";
+      statusBar.classList.remove("processing", "listening", "error");
+      statusBar.classList.add("processing"); 
 
       socket.onmessage = function(event) {
         const data = JSON.parse(event.data);
@@ -80,7 +49,8 @@
           
           // Update status when user is speaking
           statusBar.textContent = "Processing your request...";
-          statusBar.className = "processing";
+          statusBar.classList.remove("processing", "listening", "error");
+          statusBar.classList.add("processing"); 
           
         } else if (data.type === "response") {
           const messageDiv = document.createElement("div");
@@ -98,14 +68,16 @@
             const estimatedDurationSec = data.text.split(' ').length / 2.5;  // rough estimate: 2.5 wps
             socket.send(JSON.stringify({ type: "pause", duration: estimatedDurationSec }));
             statusBar.textContent = "BUtLAR is speaking...";
-            statusBar.className = "processing";
+            statusBar.classList.remove("processing", "listening", "error");
+            statusBar.classList.add("processing"); 
           };
 
           // When done speaking, tell backend to resume
           utterance.onend = () => {
             socket.send(JSON.stringify({ type: "resume" }));
             statusBar.textContent = "Please wait to speak. BUtLAR is thinking...";
-            statusBar.className = "processing";
+            statusBar.classList.remove("processing", "listening", "error");
+            statusBar.classList.add("processing"); 
           };
 
           speechSynthesis.speak(utterance);
@@ -115,10 +87,12 @@
           statusBar.textContent = data.text;
           
           // Set appropriate class based on status message content
-          if (data.text.includes("listening") || data.text.includes("ready")) {
-            statusBar.className = "listening";
+          if (data.text.includes("listening") || data.text.includes("ready") || data.text.includes("thinking") || data.text.includes("Thinking")) {
+            statusBar.classList.remove("processing", "listening", "error");
+            statusBar.classList.add("listening"); 
           } else {
-            statusBar.className = "processing";
+            statusBar.classList.remove("processing", "listening", "error");
+            statusBar.classList.add("processing"); 
           }
         }
 
@@ -127,8 +101,8 @@
 
       socket.onclose = function() {
         statusBar.textContent = "Connection closed";
-        statusBar.style.backgroundColor = "#f8d7da";
-        statusBar.style.color = "#721c24";
+        statusBar.classList.remove("processing", "listening");
+        statusBar.classList.add("error");
       };
     }
   </script>

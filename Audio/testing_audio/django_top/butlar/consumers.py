@@ -47,7 +47,7 @@ class BUtlARConsumer(AsyncWebsocketConsumer):
                 elif text.startswith("Flushed:"):
                     payload = {
                         "type": "status",
-                        "text": "BUtLAR is now listening again."
+                        "text": "BUtLAR is listening again..."
                     }
                 else:
                     payload = {

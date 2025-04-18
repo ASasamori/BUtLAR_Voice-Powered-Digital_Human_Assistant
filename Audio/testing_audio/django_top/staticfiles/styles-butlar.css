@@ -124,33 +124,8 @@ body {
     border-bottom-right-radius: 20px;
     border-left: 3px solid #8df2ff;
   }
+
   
-  #logs {
-    margin-top: 2rem;
-    width: 85%;
-    max-width: 800px;
-    font-size: 0.9rem;
-    color: #7eccff;
-    background: rgba(10, 10, 25, 0.8);
-    padding: 1.2rem;
-    border-radius: 10px;
-    height: 150px;
-    overflow-y: scroll;
-    font-family: 'JetBrains Mono', monospace;
-    border: 1px solid #2a2a4a;
-    position: relative;
-    box-shadow: 0 0 15px rgba(0, 0, 0, 0.3), inset 0 0 10px rgba(0, 0, 20, 0.5);
-  }
-  
-  #logs::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 2px;
-    background: linear-gradient(90deg, transparent, #446688, transparent);
-  }
   
   ::-webkit-scrollbar {
     width: 8px;
@@ -187,4 +162,49 @@ body {
     .message {
       max-width: 90%;
     }
+  }
+
+
+  .status-bar {
+    position: sticky;
+    top: 0;
+    width: fit-content;
+    max-width: 90%;
+    padding: 0.75rem 1.5rem;
+    text-align: center;
+    font-family: 'Rajdhani', sans-serif;
+    font-weight: bold;
+    font-size: 1rem;
+    border-radius: 30px;
+    border: none;
+    z-index: 100;
+    margin-bottom: 20px;
+    box-shadow: 0 0 15px rgba(76, 175, 80, 0.3);
+    background: linear-gradient(90deg, #b6f2c4, #a2e6b3);
+    color: #0b4525;
+    cursor: default;
+    user-select: none;
+  }
+  
+  
+  .listening {
+    background: linear-gradient(90deg, #b6f2c4, #a2e6b3);
+    color: #0b4525;
+    box-shadow: 0 0 15px rgba(76, 175, 80, 0.3);
+  }
+  
+  .processing {
+    background: linear-gradient(90deg, #ffe082, #ffcc80);
+    color: #7f4f00;
+    box-shadow: 0 0 15px rgba(255, 204, 0, 0.3);
+  }
+  
+  .error {
+    background: linear-gradient(90deg, #f4b4b4, #f8cccc);
+    color: #721c24;
+    box-shadow: 0 0 15px rgba(220, 53, 69, 0.3);
+  }
+  
+  h1, button, #status-bar, #chat-window {
+    margin: 8px;
   }
