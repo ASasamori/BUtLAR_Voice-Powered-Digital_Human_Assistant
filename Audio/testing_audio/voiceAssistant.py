@@ -12,6 +12,68 @@ from test import interpret_vanna_msg
 import threading, queue
 from pathlib import Path
 from sql_database.txtToLLM import text_to_llm
+import sounddevice as sd
+import soundfile as sf
+from dotenv import load_dotenv
+import numpy as np
+from speechmatics.client import WebsocketClient
+from speechmatics.models import (
+    ConnectionSettings,
+    AudioSettings,
+    TranscriptionConfig,
+    ServerMessageType
+)
+from httpx import HTTPStatusError
+import tempfile
+
+# PATH SETUP: Get the directory of this script
+script_dir = Path(__file__).resolve().parent
+
+# get API key
+dotenv_path = script_dir / '../../.env'  # Adjust path to match your structure
+load_dotenv(dotenv_path=dotenv_path)
+speechmatics_key = os.getenv("SPEECHMATICS_KEY")
+if not speechmatics_key:
+    raise ValueError("Speechmatics API key not found in .env file")
+
+
+# 🔐 Your Speechmatics real-time API key
+API_KEY = speechmatics_key  
+LANGUAGE = "en"
+SAMPLE_RATE = 16000
+CHANNELS = 1
+RECORD_SECONDS = 5
+DTYPE = "int16"
+
+def expand_course_vocab(codes):
+    vocab = []
+    for code in codes:
+        letters = ''.join([c for c in code if c.isalpha()])
+        numbers = ''.join([c for c in code if c.isdigit()])
+        if not letters or not numbers:
+            continue
+
+        # Breakdown numbers
+        digits = ' '.join(numbers)
+        alt = []
+        if len(numbers) == 3:
+            alt.append(f"{numbers[0]} {numbers[1]} {numbers[2]}")
+            alt.append(f"{numbers[0]} {numbers[1:]}")  # e.g. four twelve
+            alt.append(f"{letters.lower()} {numbers[0]} {numbers[1:]}")  # e.g. easy 4 12
+        alt.append(f"{letters} {digits}")
+        alt.append(f"{letters.lower()} {digits}")
+        alt.append(f"{letters.upper()} {digits}")
+        alt.append(f"{letters} {numbers}")
+        alt.append(f"{letters.lower()} {numbers}")
+        alt.append(f"{letters.upper()} {numbers}")
+        alt.append(f"{' '.join(letters)} {digits}")  # E C 4 1 3
+        alt.append(f"{' '.join(letters)} {numbers}")  # E C 413
+
+        vocab.append({
+            "content": code,
+            "sounds_like": list(set(alt))  # unique
+        })
+    return vocab
 
 
 def process_audio_stream():
@@ -121,18 +183,11 @@ def process_audio_stream():
                 break
             yield StreamingRecognizeRequest(audio_content=chunk)
 
-    # requests = audio_generator()
-    # responses = client.streaming_recognize(config=streaming_config, requests=requests)
-
     full_question = ""
     last_final_time = time.time()
     processed = False
 
-    # FIXME: shIt works here:
-    # llm_response = interpret_vanna_msg("Who teaches Computer Organization?")
-
     try:
-
         requests = audio_generator()
         print(f"The type of requests is {type(requests)}")
         responses = client.streaming_recognize(config=streaming_config, requests=requests)
@@ -143,13 +198,6 @@ def process_audio_stream():
             if os.path.exists(flag_file):
                 with open(flag_file, "r") as f:
                     current_flag = f.read().strip()
-            # if current_flag != "resume":
-            #     print("⏸️ Detected flag change mid-stream — breaking Google stream", file=sys.stderr)
-            #     sys.stderr.flush()
-            #     break  # break inner loop and start fresh next time
-
-            # Works here:
-            # llm_response = interpret_vanna_msg("Who teaches Computer Organization?")
 
             if not response.results: 
                 continue
@@ -176,9 +224,6 @@ def process_audio_stream():
                 except:
                     pass
                 return
-            
-            # TODO: why tf is this 400 code popping up before this. idk if this works or not
-            # llm_response = interpret_vanna_msg("Who teaches Computer Organization?")
 
             if result.is_final:
                 
@@ -202,27 +247,14 @@ def process_audio_stream():
                     is_in_LLM = True
                     sys.stdout.flush()  # Flush to show processing start
 
-                    # # Generate and print response immediately
-
-
-                    # FIXME: why the fuck shit not working?
-                    # I keep getting this stupid ERROR 400 google asr code because I'm not trying to talk rn
-
-                    # llm_response = answer_course_question(full_question.strip())
+                    # Generate and print response immediately
 
                     llm_response = text_to_llm(full_question.strip())
-
-                    # llm_response = interpret_vanna_msg(full_question.strip())
-                    # llm_response = interpret_vanna_msg("Who teaches computer organization?")
 
                     os.write(1, f"Response: {llm_response}\n".encode())  # Print immediately with os.write
 
                     os.write(1, b"Ready for next question...\n")  # Immediate prompt
                     sys.stdout.flush()  # Additional flush for safety
-
-                    # Latency check after processing the question
-                    # question_end_time = time.time()
-                    # print(f"Question processing time: {question_end_time - question_start_time} seconds")
 
                     full_question = ""
                     processed = True                    
@@ -235,16 +267,6 @@ def process_audio_stream():
 
     except Exception as e:
         print(f"Error occurred: {str(e)}", file=sys.stderr)
-        # if it's a 400 error, redirect it back to capture audio
-        # if "400" in str(e):
-        #     print("⚠️ 400 Error: Redirecting to audio capture...", file=sys.stderr)
-        #     sys.stdout.flush()
-        #     # Reset the timeout start time
-        #     timeout_start_time[0] = time.time()
-            
-        # else:
-        #     print(f"⚠️ Error: {e}", file=sys.stderr)
-
         sys.stdout.flush()
     finally:
         sys.stdout.flush()
