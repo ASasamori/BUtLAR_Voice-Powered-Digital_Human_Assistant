@@ -26,7 +26,7 @@ def answer_course_question_new(question: str):
     
     ### To make sure that the training data is being inherited properly:
     training_data = vn.get_training_data()
-    print(f"The value of training_data is {training_data}")
+    # print(f"The value of training_data is {training_data}")
 
 
     try:
