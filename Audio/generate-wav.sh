@@ -20,7 +20,7 @@ CHANNELS=2
 FORMAT="s16le"
 BUFFER_SIZE=32000  # This should match the buffer size used in your C++ code
 
-# pw-record -r $SAMPLE_RATE -c $CHANNELS -f $FORMAT -t raw | ./audio_stream_processor $AUDIO_FILES_PATH $INIT_DATA
+pw-record -r $SAMPLE_RATE -c $CHANNELS -f $FORMAT -t raw | ./audio_stream_processor $AUDIO_FILES_PATH $INIT_DATA
 
 # wav -d {number_of_seconds}; 10 seconds right now
 # arecord -D plughw:2,0 -f S16_LE -r 16000 -c 2 -t wav -d 10 "$YOBE_SDK/samples/audio_files/IDListener/${RAW_OUTPUT}.wav"
