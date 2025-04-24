@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+
+{% load static %}
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calm Volume-Based Audio Visualizer</title>
+    <link rel="stylesheet" href="{% static 'styles-visualizer.css' %}">
+</head>
+<body>
+    <div class="container">
+        <canvas id="visualizer"></canvas>
+        <div class="glow"></div>
+        <div class="status-label" id="status-label">Click anywhere to start</div>
+        
+        <!-- Hidden file input (for optional file upload) -->
+        <label for="audio-input" class="file-label" id="file-label">Select Audio File</label>
+        <input type="file" id="audio-input" accept="audio/*">
+        
+        <!-- Hidden audio element for playback -->
+        <audio id="audio-element" style="display:none"></audio>
+    </div>
+
+    <script>
+        // DOM Elements
+        const canvas = document.getElementById('visualizer');
+        const ctx = canvas.getContext('2d');
+        const statusLabel = document.getElementById('status-label');
+        const audioElement = document.getElementById('audio-element');
+        const audioInput = document.getElementById('audio-input');
+        const fileLabel = document.getElementById('file-label');
+        
+        // Audio context and analysis variables
+        let audioContext, analyser, source;
+        let frequencyData;
+        let animationId;
+        let audioReady = false;
+        
+        // Smoothing for volume - longer for more stability
+        const volumeHistory = new Array(5).fill(0);
+        
+        // Set canvas size
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+        resizeCanvas();
+        window.addEventListener('resize', resizeCanvas);
+        
+        // Initialize on first user interaction
+        document.addEventListener('click', function() {
+            if (!audioReady) {
+                initAudio();
+            }
+        }, { once: true });
+        
+        // Initialize audio context and analyzer
+        function initAudio() {
+            try {
+                // Create audio context
+                audioContext = new (window.AudioContext || window.webkitAudioContext)();
+                
+                // Create analyzer
+                analyser = audioContext.createAnalyser();
+                analyser.fftSize = 1024; 
+                analyser.smoothingTimeConstant = 0.8; // Smoother response
+                analyser.minDecibels = -70; 
+                analyser.maxDecibels = -10;
+                
+                // Create data arrays for analysis
+                frequencyData = new Uint8Array(analyser.frequencyBinCount);
+                
+                // Set up microphone input by default
+                setupMicrophone()
+                    .then(() => {
+                        // Show file input option after mic is set up
+                        fileLabel.style.display = 'block';
+                        startVisualization();
+                    })
+                    .catch(error => {
+                        statusLabel.textContent = `Microphone error: ${error.message}. Try uploading a file.`;
+                        fileLabel.style.display = 'block';
+                    });
+                
+                // Setup file input listener
+                audioInput.addEventListener('change', handleFileInput);
+                
+                // Flag audio as ready
+                audioReady = true;
+            } catch (error) {
+                statusLabel.textContent = `Error initializing audio: ${error.message}`;
+                console.error('Audio initialization error:', error);
+            }
+        }
+        
+        // Set up microphone input
+        async function setupMicrophone() {
+            try {
+                statusLabel.textContent = 'Requesting microphone access...';
+                
+                // Get microphone stream with noise suppression for better quality
+                const stream = await navigator.mediaDevices.getUserMedia({ 
+                    audio: {
+                        echoCancellation: true,
+                        noiseSuppression: true,
+                        autoGainControl: true
+                    }
+                });
+                
+                // Disconnect any existing sources
+                if (source) {
+                    source.disconnect();
+                }
+                
+                // Create source from microphone stream
+                source = audioContext.createMediaStreamSource(stream);
+                
+                // Connect source to analyzer (but not to destination to avoid feedback)
+                source.connect(analyser);
+                
+                statusLabel.textContent = 'Visualizing microphone input';
+                return true;
+            } catch (error) {
+                console.error('Microphone access error:', error);
+                throw error;
+            }
+        }
+        
+        // Handle file input
+        function handleFileInput(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+            
+            statusLabel.textContent = `Loading file: ${file.name}`;
+            
+            // Create object URL for the file
+            const fileURL = URL.createObjectURL(file);
+            
+            // Set audio source
+            audioElement.src = fileURL;
+            
+            // When audio is loaded
+            audioElement.onloadedmetadata = function() {
+                // Disconnect any existing sources
+                if (source) {
+                    source.disconnect();
+                }
+                
+                // Create media element source
+                source = audioContext.createMediaElementSource(audioElement);
+                
+                // Connect source to analyzer and destination
+                source.connect(analyser);
+                analyser.connect(audioContext.destination);
+                
+                // Play the audio
+                audioElement.play()
+                    .then(() => {
+                        statusLabel.textContent = `Visualizing: ${file.name}`;
+                    })
+                    .catch(error => {
+                        statusLabel.textContent = `Playback error: ${error.message}`;
+                    });
+            };
+            
+            // Handle errors
+            audioElement.onerror = function() {
+                statusLabel.textContent = 'Error loading audio file';
+            };
+        }
+        
+        // Start visualization loop
+        function startVisualization() {
+            // Cancel any existing animation
+            if (animationId) {
+                cancelAnimationFrame(animationId);
+            }
+            
+            // Animation function
+            function animate() {
+                // Get audio data
+                analyser.getByteFrequencyData(frequencyData);
+                
+                // Clear canvas
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                
+                // Draw calmer circles based on volume
+                drawCalmCircles();
+                
+                // Continue animation
+                animationId = requestAnimationFrame(animate);
+            }
+            
+            // Start animation
+            animate();
+        }
+        
+        // Simple circular visualization based on volume
+        function drawCalmCircles() {
+            const width = canvas.width;
+            const height = canvas.height;
+            const centerX = width / 2;
+            const centerY = height / 2;
+            const maxRadius = Math.min(width, height) * 0.4;
+            
+            // Get overall volume level (average of all frequencies)
+            let volume = getAverageFrequency(20, 20000) * 2.5; // Boost gain slightly
+            
+            // Clamp to 0-1 range
+            volume = Math.min(1, volume);
+            
+            // Apply noise gate to prevent small random movements
+            const noiseThreshold = 0.02;
+            if (volume < noiseThreshold) volume = 0;
+            
+            // Update history and calculate smooth volume
+            volumeHistory.push(volume);
+            volumeHistory.shift();
+            
+            // Calculate average volume for stability
+            const smoothVolume = volumeHistory.reduce((a, b) => a + b, 0) / volumeHistory.length;
+            
+            // Calculate radius for each circle based on volume only
+            const bassRadius = maxRadius * 0.15 + maxRadius * 0.85 * smoothVolume;
+            const midRadius = maxRadius * 0.10 + maxRadius * 0.6 * smoothVolume;
+            const trebleRadius = maxRadius * 0.05 + maxRadius * 0.35 * smoothVolume;
+            
+            // Draw bass circle
+            drawCircle(centerX, centerY, bassRadius, 'rgb(0, 191, 255)', 4);
+            
+            // Draw mid circle
+            drawCircle(centerX, centerY, midRadius, 'rgb(128, 0, 255)', 3);
+            
+            // Draw treble circle
+            drawCircle(centerX, centerY, trebleRadius, 'rgb(255, 0, 128)', 2);
+        }
+        
+        function drawCircle(x, y, radius, color, lineWidth) {
+            ctx.beginPath();
+            ctx.arc(x, y, radius, 0, Math.PI * 2);
+            ctx.strokeStyle = color;
+            ctx.lineWidth = lineWidth;
+            ctx.shadowBlur = 15;
+            ctx.shadowColor = color;
+            ctx.stroke();
+            ctx.shadowBlur = 0;
+        }
+        
+        // Helper function to get average frequency in a range
+        function getAverageFrequency(startFreq, endFreq) {
+            // Map frequencies to indices in the frequency data array
+            const nyquist = audioContext ? audioContext.sampleRate / 2 : 22050;
+            const startIndex = Math.floor(startFreq / nyquist * frequencyData.length);
+            const endIndex = Math.floor(endFreq / nyquist * frequencyData.length);
+            
+            let sum = 0;
+            let count = 0;
+            
+            // Sum values in the range
+            for (let i = startIndex; i <= endIndex && i < frequencyData.length; i++) {
+                sum += frequencyData[i];
+                count++;
+            }
+            
+            // Return normalized average (0-1)
+            return count > 0 ? sum / (count * 255) : 0;
+        }
+        
+        // Add gentle glow effect
+        function updateGlow() {
+            const glow = document.querySelector('.glow');
+            const hue = (performance.now() / 50) % 360;
+            glow.style.background = `radial-gradient(ellipse at center, hsla(${hue}, 100%, 60%, 0.3) 0%, rgba(0, 0, 0, 0) 70%)`;
+            requestAnimationFrame(updateGlow);
+        }
+        updateGlow();
+    </script>
+</body>
+</html>

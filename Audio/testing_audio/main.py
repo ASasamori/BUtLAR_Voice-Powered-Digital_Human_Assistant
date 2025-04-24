@@ -1,4 +1,4 @@
-import voiceAssistant
+import voiceAssistant as voiceAssistant
 
 def main():
     # Simply call the voice assistant function

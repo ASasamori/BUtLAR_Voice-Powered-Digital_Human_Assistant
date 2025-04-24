@@ -18,7 +18,6 @@ from channels.auth import AuthMiddlewareStack
 from django_top.routing import websocket_urlpatterns
 
 
-
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "django_top.settings")
 django.setup()
 # application = get_default_application()

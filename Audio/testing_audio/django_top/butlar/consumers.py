@@ -1,7 +1,7 @@
 import asyncio
 import subprocess
 import json
-import time
+import time, os
 from threading import Thread
 from channels.generic.websocket import AsyncWebsocketConsumer
 
@@ -44,6 +44,11 @@ class BUtlARConsumer(AsyncWebsocketConsumer):
                         "type": "response",
                         "text": text.replace("Response:", "").strip()
                     }
+                elif text.startswith("Flushed:"):
+                    payload = {
+                        "type": "status",
+                        "text": "BUtLAR is listening again..."
+                    }
                 else:
                     payload = {
                         "type": "log",
@@ -65,3 +70,24 @@ class BUtlARConsumer(AsyncWebsocketConsumer):
 
     async def disconnect(self, close_code):
         print("🔴 WebSocket disconnected.")
+
+    async def receive(self, text_data):
+        data = json.loads(text_data)
+        msg_type = data.get("type", "")
+        flag_dir = "/home/yobe/BUtLAR_Voice-Powered-Digital_Human_Assistant/Audio/testing_audio/django_top/butlar/flag"
+        flag_file = os.path.join(flag_dir, "responding.flag")
+        duration_file = os.path.join(flag_dir, "tts_duration.flag")
+
+        if msg_type == "pause":
+            os.makedirs(flag_dir, exist_ok=True)
+            with open(flag_file, "w") as f:
+                f.write("responding")
+            if "duration" in data:
+                with open(duration_file, "w") as f:
+                    f.write(str(data["duration"]))
+            print("🛑 Received 'pause' → flag and duration written.")
+
+        elif msg_type == "resume":
+            with open(flag_file, "w") as f:
+                f.write("resume")
+            print("▶️ Received 'resume' → flag written.")

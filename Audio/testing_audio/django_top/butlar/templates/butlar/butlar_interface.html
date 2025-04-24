@@ -10,73 +10,99 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 <body>
-  <h1>🎙️ BUtLAR Voice Assistant</h1>
-  <button onclick="start()">Start BUtLAR</button>
+  <h1>BUtLAR Voice Assistant</h1>
+  
+  <button onclick="start()">Start</button>
+
+  <!-- Status bar at the top -->
+  <div id="status-bar" class="status-bar">Ready to start</div>
 
   <!-- Chat-style transcript window -->
   <div id="chat-window"></div>
 
-  <!-- Logs for backend info -->
-  <div id="logs">
-    <strong>Logs:</strong><br>
-    <pre id="console"></pre>
-  </div>
-
   <script>
+    let preferredVoice = null;
+
+    window.speechSynthesis.onvoiceschanged = () => {
+      const voices = speechSynthesis.getVoices();
+      preferredVoice = voices[1];
+    };
+
     function start() {
       const socket = new WebSocket("ws://" + window.location.host + "/ws/butlar/");
       const chatWindow = document.getElementById("chat-window");
-      const consoleDiv = document.getElementById("console");
+      const statusBar = document.getElementById("status-bar");
+      
+      // Update status bar on start
+      statusBar.textContent = "Please wait to speak. BUtLAR is thinking...";
+      statusBar.classList.remove("processing", "listening", "error");
+      statusBar.classList.add("processing"); 
 
       socket.onmessage = function(event) {
         const data = JSON.parse(event.data);
-        const messageDiv = document.createElement("div");
-        messageDiv.classList.add("message");
-
+        
         if (data.type === "transcript") {
-          messageDiv.classList.add("user-message");
+          const messageDiv = document.createElement("div");
+          messageDiv.classList.add("message", "user-message");
           messageDiv.textContent = data.text;
           chatWindow.appendChild(messageDiv);
+          
+          // Update status when user is speaking
+          statusBar.textContent = "Processing your request...";
+          statusBar.classList.remove("processing", "listening", "error");
+          statusBar.classList.add("processing"); 
+          
         } else if (data.type === "response") {
-          messageDiv.classList.add("bot-message");
+          const messageDiv = document.createElement("div");
+          messageDiv.classList.add("message", "bot-message");
           messageDiv.textContent = data.text;
           chatWindow.appendChild(messageDiv);
-
-
-          // better voice synthesis
-          const voices = speechSynthesis.getVoices();
-          const preferredVoice = voices.find(v =>
-            v.name.includes("Google UK English Female") || 
-            v.name.includes("Google US English") ||
-            v.name.includes("Samantha") // Fallback
-          );
-
-          // Send PAUSE signal to backend before speaking
-          socket.send(JSON.stringify({ type: "pause" }));
 
           const utterance = new SpeechSynthesisUtterance(data.text);
-          utterance.voice = preferredVoice || voices[0];
+          utterance.voice = preferredVoice;
           utterance.lang = 'en-US';
           utterance.pitch = 1.0;
-          utterance.rate = 1.15;
+          utterance.rate = 1.10;
+
+          utterance.onstart = () => {
+            const estimatedDurationSec = data.text.split(' ').length / 2.5;  // rough estimate: 2.5 wps
+            socket.send(JSON.stringify({ type: "pause", duration: estimatedDurationSec }));
+            statusBar.textContent = "BUtLAR is speaking...";
+            statusBar.classList.remove("processing", "listening", "error");
+            statusBar.classList.add("processing"); 
+          };
 
           // When done speaking, tell backend to resume
           utterance.onend = () => {
             socket.send(JSON.stringify({ type: "resume" }));
+            statusBar.textContent = "Please wait to speak. BUtLAR is thinking...";
+            statusBar.classList.remove("processing", "listening", "error");
+            statusBar.classList.add("processing"); 
           };
 
           speechSynthesis.speak(utterance);
 
-        } else {
-          consoleDiv.innerHTML += data.text + "\n";
-          consoleDiv.scrollTop = consoleDiv.scrollHeight;
+        } else if (data.type === "status") {
+          // Update the status bar with status messages
+          statusBar.textContent = data.text;
+          
+          // Set appropriate class based on status message content
+          if (data.text.includes("listening") || data.text.includes("ready") || data.text.includes("thinking") || data.text.includes("Thinking")) {
+            statusBar.classList.remove("processing", "listening", "error");
+            statusBar.classList.add("listening"); 
+          } else {
+            statusBar.classList.remove("processing", "listening", "error");
+            statusBar.classList.add("processing"); 
+          }
         }
 
         chatWindow.scrollTop = chatWindow.scrollHeight;
       };
 
       socket.onclose = function() {
-        consoleDiv.innerHTML += "\n<em>Connection closed.</em>\n";
+        statusBar.textContent = "Connection closed";
+        statusBar.classList.remove("processing", "listening");
+        statusBar.classList.add("error");
       };
     }
   </script>
