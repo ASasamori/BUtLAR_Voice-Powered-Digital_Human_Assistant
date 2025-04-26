@@ -60,7 +60,7 @@ def listen_print_loop(responses, timeout=3):
 
     for response in responses:
         if time.time() - start_time > timeout:
-            print("\n10 seconds passed. Stopping live transcription...")
+            print("\n3 seconds passed. Stopping live transcription...")
             break
 
         if not response.results:
@@ -98,7 +98,7 @@ def main():
     device_index = None
 
     with MicrophoneStream(RATE, CHUNK, device_index=device_index) as stream:
-        print("Listening... speak into the mic (10 seconds)...")
+        print("Listening... speak into the mic (3 seconds)...")
         audio_generator = stream.generator()
         requests = audio_generator
 
