@@ -1,0 +1,10 @@
+Hamid Nawab teaches the following courses: 
+
+- EK103 Computational Linear Algebra
+- EK130 Introduction to Engineering
+- EC401 Signals and Systems
+- EC416 Introduction to Digital Signal Processing
+- EC516 Digital Signal Processing
+- EC716 Advanced Digital Signal Processing
+- EC760 Advanced Topics in Photonics
+- EC850 Graduate Teaching Seminar.

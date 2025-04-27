@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BUtLAR Voice Assistant</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f4f4f4;
+        }
+        #status-label {
+            margin-bottom: 20px;
+            text-align: center;
+            color: #333;
+        }
+        #record-btn {
+            display: block;
+            width: 200px;
+            margin: 20px auto;
+            padding: 10px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        #record-btn.recording {
+            background-color: #F44336;
+        }
+        #transcript, #response {
+            background-color: white;
+            border: 1px solid #ddd;
+            padding: 10px;
+            margin: 10px 0;
+            min-height: 50px;
+        }
+        #transcript {
+            color: #333;
+        }
+        #response {
+            color: #0066cc;
+        }
+        .interim {
+            color: #999;
+            font-style: italic;
+        }
+    </style>
+</head>
+<body>
+    <div id="status-label">Click "Start Recording" to begin</div>
+    <button id="record-btn">Start Recording</button>
+    
+    <div>
+        <h3>Transcript</h3>
+        <div id="transcript"></div>
+    </div>
+    
+    <div>
+        <h3>Response</h3>
+        <div id="response"></div>
+    </div>
+
+    <script>
+    class VoiceAssistant {
+        constructor() {
+            // WebSocket URL - replace with your Raspberry Pi's IP
+            this.wsUrl = 'ws://128.197.180.176:5000';
+
+            this.recordBtn = document.getElementById('record-btn');
+            this.statusLabel = document.getElementById('status-label');
+            this.transcriptDiv = document.getElementById('transcript');
+            this.responseDiv = document.getElementById('response');
+            
+            this.mediaRecorder = null;
+            this.websocket = null;
+            this.audioContext = null;
+            this.audioStream = null;
+            this.scriptProcessor = null;
+            this.isRecording = false;
+            
+            this.bindEvents();
+        }
+        
+        bindEvents() {
+            this.recordBtn.addEventListener('click', () => {
+                this.isRecording ? this.stopRecording() : this.startRecording();
+            });
+        }
+        
+        async startRecording() {
+            try {
+                // Reset previous state if not first time
+                if (this.websocket) {
+                    this.stopRecording();
+                }
+                
+                this.transcriptDiv.innerHTML = '';
+                this.responseDiv.innerHTML = '';
+                
+                // Establish WebSocket connection
+                this.websocket = new WebSocket(this.wsUrl);
+                
+                this.websocket.onopen = async () => {
+                    // Get microphone access
+                    this.audioStream = await navigator.mediaDevices.getUserMedia({ 
+                        audio: {
+                            echoCancellation: true,
+                            noiseSuppression: true,
+                            autoGainControl: true
+                        }
+                    });
+                    
+                    // Setup audio context for continuous streaming
+                    this.audioContext = new AudioContext({ sampleRate: 16000 });
+                    const source = this.audioContext.createMediaStreamSource(this.audioStream);
+                    
+                    // Create script processor for audio processing
+                    this.scriptProcessor = this.audioContext.createScriptProcessor(4096, 1, 1);
+                    source.connect(this.scriptProcessor);
+                    this.scriptProcessor.connect(this.audioContext.destination);
+                    
+                    // Handle audio data
+                    this.scriptProcessor.onaudioprocess = (event) => {
+                        if (!this.isRecording) return;
+                        
+                        const audioBuffer = event.inputBuffer;
+                        const audioData = audioBuffer.getChannelData(0);
+                        
+                        // Convert float32 to int16
+                        const int16Data = new Int16Array(audioData.length);
+                        for (let i = 0; i < audioData.length; i++) {
+                            // Normalize and convert to Int16
+                            int16Data[i] = Math.max(-1, Math.min(1, audioData[i])) * 32767;
+                        }
+                        
+                        // Send raw audio data via WebSocket
+                        if (this.websocket && this.websocket.readyState === WebSocket.OPEN) {
+                            this.websocket.send(int16Data.buffer);
+                        }
+                    };
+                    
+                    // Update UI
+                    this.isRecording = true;
+                    this.recordBtn.textContent = 'Stop Recording';
+                    this.recordBtn.classList.add('recording');
+                    this.statusLabel.textContent = 'Recording...';
+                };
+                
+                // Handle WebSocket messages
+                this.websocket.onmessage = (event) => {
+                    const data = JSON.parse(event.data);
+                    
+                    // Handle greeting
+                    if (data.greeting) {
+                        this.statusLabel.textContent = data.greeting;
+                    }
+                    
+                    // Handle interim transcript for real-time display
+                    if (data.interim_transcript !== undefined) {
+                        if (data.is_final) {
+                            // Final result - add it as regular text
+                            this.transcriptDiv.innerHTML = data.interim_transcript;
+                        } else {
+                            // Interim result - show as in-progress
+                            this.transcriptDiv.innerHTML = `<span class="interim">${data.interim_transcript}</span>`;
+                        }
+                    }
+                    
+                    // Handle final transcript
+                    if (data.transcript) {
+                        this.transcriptDiv.innerHTML = data.transcript;
+                    }
+                    
+                    // Handle response text
+                    if (data.response) {
+                        this.responseDiv.textContent = data.response;
+                    }
+                    
+                    // Handle audio response
+                    if (data.audio) {
+                        // Create and play audio from base64
+                        const audio = new Audio(`data:audio/mp3;base64,${data.audio}`);
+                        audio.play();
+                    }
+                    
+                    // Handle exit command
+                    if (data.command === 'exit') {
+                        this.stopRecording();
+                    }
+                    
+                    // Handle errors
+                    if (data.error) {
+                        this.statusLabel.textContent = `Error: ${data.error}`;
+                        console.error('Server error:', data.error);
+                    }
+                };
+                
+                this.websocket.onerror = (error) => {
+                    console.error('WebSocket error:', error);
+                    this.statusLabel.textContent = 'WebSocket Error';
+                };
+                
+                this.websocket.onclose = () => {
+                    console.log('WebSocket connection closed');
+                    // Only reset UI if we didn't already do it in stopRecording
+                    if (this.isRecording) {
+                        this.stopRecording(false); // Don't close connection again
+                    }
+                };
+                
+            } catch (error) {
+                console.error('Recording error:', error);
+                this.statusLabel.textContent = `Error: ${error.message}`;
+            }
+        }
+        
+        stopRecording(closeWebSocket = true) {
+            // Send stop command
+            if (closeWebSocket && this.websocket && this.websocket.readyState === WebSocket.OPEN) {
+                this.websocket.send(JSON.stringify({ command: 'stop' }));
+            }
+            
+            // Stop audio processing
+            if (this.scriptProcessor) {
+                this.scriptProcessor.disconnect();
+                this.scriptProcessor = null;
+            }
+            
+            // Stop audio context
+            if (this.audioContext) {
+                this.audioContext.close().then(() => {
+                    this.audioContext = null;
+                });
+            }
+            
+            // Stop audio stream
+            if (this.audioStream) {
+                this.audioStream.getTracks().forEach(track => track.stop());
+                this.audioStream = null;
+            }
+            
+            // Close WebSocket
+            if (closeWebSocket && this.websocket) {
+                this.websocket.close();
+                this.websocket = null;
+            }
+            
+            // Reset UI
+            this.isRecording = false;
+            this.recordBtn.textContent = 'Start Recording';
+            this.recordBtn.classList.remove('recording');
+            this.statusLabel.textContent = 'Recording stopped';
+        }
+    }
+
+    // Initialize voice assistant
+    document.addEventListener('DOMContentLoaded', () => {
+        new VoiceAssistant();
+    });
+    </script>
+</body>
+</html>

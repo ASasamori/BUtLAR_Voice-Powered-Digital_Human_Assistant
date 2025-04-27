@@ -1,0 +1,210 @@
+body {
+    background: linear-gradient(135deg, #050520, #101035);
+    font-family: 'Rajdhani', 'Arial', sans-serif;
+    color: #e0e0ff;
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 100vh;
+    margin: 0;
+    overflow-x: hidden;
+  }
+  
+  h1 {
+    font-size: 2.5rem;
+    margin-bottom: 1.5rem;
+    color: #8df2ff;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    text-shadow: 0 0 10px rgba(141, 242, 255, 0.5);
+    position: relative;
+  }
+  
+  h1::after {
+    content: '';
+    position: absolute;
+    bottom: -10px;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, #8df2ff, transparent);
+  }
+  
+  button {
+    background: linear-gradient(90deg, #993333, #cc3366);
+    font-family: 'Rajdhani', sans-serif;
+    color: #f0f0ff;
+    border: none;
+    border-radius: 50px;
+    padding: 0.8rem 2rem;
+    font-size: 1.1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-bottom: 2rem;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 0 15px rgba(153, 51, 51, 0.5);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+  
+  button:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 0 25px rgba(204, 51, 102, 0.7);
+  }
+  
+  button:active {
+    transform: translateY(1px);
+  }
+  
+  button::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+    transition: all 0.6s ease;
+  }
+  
+  button:hover::before {
+    left: 100%;
+  }
+  
+  #chat-window {
+    background-color: rgba(20, 20, 40, 0.7);
+    border: 1px solid #3a3a5e;
+    border-radius: 15px;
+    padding: 1.2rem;
+    width: 85%;
+    max-width: 800px;
+    height: 500px;
+    overflow-y: auto;
+    box-shadow: 0 0 20px rgba(141, 242, 255, 0.15), inset 0 0 15px rgba(30, 30, 60, 0.5);
+    backdrop-filter: blur(5px);
+    display: flex;
+    flex-direction: column;
+    scroll-behavior: smooth;
+  }
+  
+  .message {
+    margin: 1rem 0;
+    padding: 1rem 1.2rem;
+    border-radius: 12px;
+    max-width: 80%;
+    line-height: 1.6;
+    word-wrap: break-word;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
+    animation: fadeIn 0.3s ease-out;
+  }
+  
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  
+  .user-message {
+    background: linear-gradient(135deg, #804040, #a04d65);
+    color: #fff;
+    align-self: flex-end;
+    margin-left: auto;
+    border-top-right-radius: 2px;
+    border-bottom-left-radius: 20px;
+  }
+  
+  .bot-message {
+    background: linear-gradient(135deg, #192835, #2a3f50);
+    color: #c5e2ff;
+    align-self: flex-start;
+    margin-right: auto;
+    border-top-left-radius: 2px;
+    border-bottom-right-radius: 20px;
+    border-left: 3px solid #8df2ff;
+  }
+
+  
+  
+  ::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+  
+  ::-webkit-scrollbar-track {
+    background: rgba(30, 30, 50, 0.5);
+    border-radius: 10px;
+  }
+  
+  ::-webkit-scrollbar-thumb {
+    background: linear-gradient(180deg, #993333, #552233);
+    border-radius: 10px;
+  }
+  
+  ::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(180deg, #b74c4c, #773355);
+  }
+  
+  @media (max-width: 768px) {
+    body {
+      padding: 1rem;
+    }
+    
+    h1 {
+      font-size: 1.8rem;
+    }
+    
+    #chat-window, #logs {
+      width: 95%;
+    }
+    
+    .message {
+      max-width: 90%;
+    }
+  }
+
+
+  .status-bar {
+    position: sticky;
+    top: 0;
+    width: fit-content;
+    max-width: 90%;
+    padding: 0.75rem 1.5rem;
+    text-align: center;
+    font-family: 'Rajdhani', sans-serif;
+    font-weight: bold;
+    font-size: 1rem;
+    border-radius: 30px;
+    border: none;
+    z-index: 100;
+    margin-bottom: 20px;
+    box-shadow: 0 0 15px rgba(76, 175, 80, 0.3);
+    background: linear-gradient(90deg, #b6f2c4, #a2e6b3);
+    color: #0b4525;
+    cursor: default;
+    user-select: none;
+  }
+  
+  
+  .listening {
+    background: linear-gradient(90deg, #b6f2c4, #a2e6b3);
+    color: #0b4525;
+    box-shadow: 0 0 15px rgba(76, 175, 80, 0.3);
+  }
+  
+  .processing {
+    background: linear-gradient(90deg, #ffe082, #ffcc80);
+    color: #7f4f00;
+    box-shadow: 0 0 15px rgba(255, 204, 0, 0.3);
+  }
+  
+  .error {
+    background: linear-gradient(90deg, #f4b4b4, #f8cccc);
+    color: #721c24;
+    box-shadow: 0 0 15px rgba(220, 53, 69, 0.3);
+  }
+  
+  h1, button, #status-bar, #chat-window {
+    margin: 8px;
+  }

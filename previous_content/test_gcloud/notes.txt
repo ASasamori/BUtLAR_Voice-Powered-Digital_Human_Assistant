@@ -1,0 +1,8 @@
+https://codelabs.developers.google.com/codelabs/cloud-db-retrieval-app#3
+
+gcloud auth application-default login
+gcloud auth login
+gcloud config set project sample-retrieval-proj
+gcloud projects list
+
+echo $CLOUDSQL_PASSWORD # Password is butlar

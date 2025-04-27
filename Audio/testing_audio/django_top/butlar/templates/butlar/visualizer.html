@@ -1,0 +1,529 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BUtLAR Voice Assistant Visualizer</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            overflow: hidden;
+            font-family: 'Arial', sans-serif;
+            color: white;
+        }
+
+        .container {
+            width: 100%;
+            height: 100%;
+            position: relative;
+        }
+
+        canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+
+        .status-label {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 14px;
+            z-index: 10;
+            text-align: center;
+            background-color: rgba(0, 0, 0, 0.5);
+            padding: 8px 15px;
+            border-radius: 20px;
+            backdrop-filter: blur(5px);
+        }
+
+        .glow {
+            position: absolute;
+            bottom: -150px;
+            width: 100%;
+            height: 300px;
+            background: radial-gradient(ellipse at center, rgba(0, 183, 255, 0.3) 0%, rgba(0, 0, 0, 0) 70%);
+            z-index: 5;
+            filter: blur(20px);
+        }
+
+        .message-container {
+            position: absolute;
+            width: 80%;
+            max-width: 600px;
+            top: 20%;
+            left: 50%;
+            transform: translateX(-50%);
+            text-align: center;
+            z-index: 20;
+            opacity: 0;
+            transition: opacity 0.5s ease;
+        }
+
+        .message {
+            background-color: rgba(0, 0, 0, 0.6);
+            color: white;
+            padding: 15px 20px;
+            border-radius: 10px;
+            backdrop-filter: blur(10px);
+            margin-bottom: 15px;
+            box-shadow: 0 0 20px rgba(0, 183, 255, 0.3);
+            text-align: left;
+        }
+
+        .start-button {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            padding: 15px 30px;
+            background-color: rgba(0, 183, 255, 0.8);
+            color: white;
+            border: none;
+            border-radius: 30px;
+            font-size: 18px;
+            cursor: pointer;
+            z-index: 30;
+            box-shadow: 0 0 20px rgba(0, 183, 255, 0.5);
+            transition: all 0.3s ease;
+        }
+
+        .start-button:hover {
+            background-color: rgba(0, 183, 255, 1);
+            box-shadow: 0 0 30px rgba(0, 183, 255, 0.7);
+        }
+
+        #logs {
+            position: absolute;
+            bottom: 60px;
+            right: 20px;
+            width: 300px;
+            max-height: 150px;
+            overflow-y: auto;
+            background-color: rgba(0, 0, 0, 0.7);
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 12px;
+            padding: 10px;
+            border-radius: 10px;
+            z-index: 15;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <canvas id="visualizer"></canvas>
+        <div class="glow"></div>
+        <div class="status-label" id="status-label">Click to start BUtLAR</div>
+        
+        <div class="message-container" id="message-container">
+            <div class="message" id="current-message"></div>
+        </div>
+        
+        <button class="start-button" id="start-button">Start BUtLAR</button>
+        
+        <div id="logs">
+            <strong>Logs:</strong><br>
+            <pre id="console"></pre>
+        </div>
+    </div>
+
+    <script>
+        // DOM Elements
+        const canvas = document.getElementById('visualizer');
+        const ctx = canvas.getContext('2d');
+        const statusLabel = document.getElementById('status-label');
+        const startButton = document.getElementById('start-button');
+        const messageContainer = document.getElementById('message-container');
+        const currentMessage = document.getElementById('current-message');
+        const consoleDiv = document.getElementById('console');
+        const logsDiv = document.getElementById('logs');
+        
+        // Config
+        let debugMode = false; // Set to true to show logs
+        
+        // Audio context and analysis variables
+        let audioContext, analyser, source;
+        let frequencyData;
+        let animationId;
+        let audioReady = false;
+        
+        // Bot state tracking
+        let botState = 'idle'; // idle, listening, processing, responding
+        
+        // WebSocket connection
+        let socket = null;
+        
+        // Voice setup for speech synthesis
+        let preferredVoice = null;
+        
+        // Smoothing for volume
+        const volumeHistory = new Array(5).fill(0);
+        
+        // Set canvas size
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+        resizeCanvas();
+        window.addEventListener('resize', resizeCanvas);
+        
+        // Speech synthesis setup
+        window.speechSynthesis.onvoiceschanged = () => {
+            const voices = speechSynthesis.getVoices();
+            preferredVoice = voices[1]; // Use second voice or adjust as needed
+        };
+        
+        // Initialize on button click
+        startButton.addEventListener('click', function() {
+            startButton.style.display = 'none';
+            if (debugMode) {
+                logsDiv.style.display = 'block';
+            }
+            
+            initAudio();
+            connectWebSocket();
+        });
+        
+        // Connect to WebSocket
+        function connectWebSocket() {
+            socket = new WebSocket("ws://" + window.location.host + "/ws/butlar/");
+            
+            socket.onopen = function() {
+                logMessage('WebSocket connected');
+                updateState('listening');
+            };
+            
+            socket.onmessage = function(event) {
+                const data = JSON.parse(event.data);
+                
+                if (data.type === "transcript") {
+                    // User speech transcript
+                    showMessage(data.text);
+                    updateState('processing');
+                    
+                } else if (data.type === "response") {
+                    // Bot response
+                    showMessage(data.text);
+                    updateState('responding');
+                    
+                    // Text-to-speech
+                    const utterance = new SpeechSynthesisUtterance(data.text);
+                    utterance.voice = preferredVoice;
+                    utterance.lang = 'en-US';
+                    utterance.pitch = 1.0;
+                    utterance.rate = 1.10;
+                    
+                    utterance.onstart = () => {
+                        const estimatedDurationSec = data.text.split(' ').length / 2.5; // rough estimate: 2.5 wps
+                        socket.send(JSON.stringify({ type: "pause", duration: estimatedDurationSec }));
+                    };
+                    
+                    utterance.onend = () => {
+                        socket.send(JSON.stringify({ type: "resume" }));
+                        updateState('listening');
+                    };
+                    
+                    speechSynthesis.speak(utterance);
+                    
+                } else {
+                    // Log other messages
+                    logMessage(data.text);
+                }
+            };
+            
+            socket.onclose = function() {
+                logMessage('WebSocket connection closed');
+                updateState('idle');
+            };
+        }
+        
+        // Show message in UI
+        function showMessage(text) {
+            currentMessage.textContent = text;
+            messageContainer.style.opacity = '1';
+            
+            // Hide message after delay
+            setTimeout(() => {
+                messageContainer.style.opacity = '0';
+            }, 5000);
+        }
+        
+        // Log message to console div
+        function logMessage(text) {
+            if (debugMode) {
+                consoleDiv.innerHTML += text + '\n';
+                consoleDiv.scrollTop = consoleDiv.scrollHeight;
+            }
+        }
+        
+        // Update bot state and visuals
+        function updateState(newState) {
+            botState = newState;
+            
+            switch(botState) {
+                case 'idle':
+                    statusLabel.textContent = 'BUtLAR is idle';
+                    break;
+                case 'listening':
+                    statusLabel.textContent = 'BUtLAR is listening...';
+                    break;
+                case 'processing':
+                    statusLabel.textContent = 'BUtLAR is processing...';
+                    break;
+                case 'responding':
+                    statusLabel.textContent = 'BUtLAR is responding...';
+                    break;
+            }
+        }
+        
+        // Initialize audio context and analyzer
+        function initAudio() {
+            try {
+                // Create audio context
+                audioContext = new (window.AudioContext || window.webkitAudioContext)();
+                
+                // Create analyzer
+                analyser = audioContext.createAnalyser();
+                analyser.fftSize = 1024; 
+                analyser.smoothingTimeConstant = 0.8; // Smoother response
+                analyser.minDecibels = -70; 
+                analyser.maxDecibels = -10;
+                
+                // Create data arrays for analysis
+                frequencyData = new Uint8Array(analyser.frequencyBinCount);
+                
+                // Set up microphone input
+                setupMicrophone()
+                    .then(() => {
+                        startVisualization();
+                    })
+                    .catch(error => {
+                        statusLabel.textContent = `Microphone error: ${error.message}`;
+                        logMessage(`Microphone error: ${error.message}`);
+                    });
+                
+                // Flag audio as ready
+                audioReady = true;
+            } catch (error) {
+                statusLabel.textContent = `Error initializing audio: ${error.message}`;
+                logMessage(`Audio initialization error: ${error}`);
+            }
+        }
+        
+        // Set up microphone input
+        async function setupMicrophone() {
+            try {
+                statusLabel.textContent = 'Requesting microphone access...';
+                
+                // Get microphone stream with noise suppression for better quality
+                const stream = await navigator.mediaDevices.getUserMedia({ 
+                    audio: {
+                        echoCancellation: true,
+                        noiseSuppression: true,
+                        autoGainControl: true
+                    }
+                });
+                
+                // Disconnect any existing sources
+                if (source) {
+                    source.disconnect();
+                }
+                
+                // Create source from microphone stream
+                source = audioContext.createMediaStreamSource(stream);
+                
+                // Connect source to analyzer (but not to destination to avoid feedback)
+                source.connect(analyser);
+                
+                statusLabel.textContent = 'Microphone connected';
+                return true;
+            } catch (error) {
+                console.error('Microphone access error:', error);
+                throw error;
+            }
+        }
+        
+        // Start visualization loop
+        function startVisualization() {
+            // Cancel any existing animation
+            if (animationId) {
+                cancelAnimationFrame(animationId);
+            }
+            
+            // Animation function
+            function animate() {
+                // Get audio data
+                analyser.getByteFrequencyData(frequencyData);
+                
+                // Clear canvas
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                
+                // Draw circles based on state and volume
+                drawStateBasedCircles();
+                
+                // Continue animation
+                animationId = requestAnimationFrame(animate);
+            }
+            
+            // Start animation
+            animate();
+        }
+        
+        // Draw circles based on current state
+        function drawStateBasedCircles() {
+            const width = canvas.width;
+            const height = canvas.height;
+            const centerX = width / 2;
+            const centerY = height / 2;
+            const maxRadius = Math.min(width, height) * 0.4;
+            
+            // Get overall volume level (average of all frequencies)
+            let volume = getAverageFrequency(20, 20000) * 2.5; // Boost gain slightly
+            
+            // Clamp to 0-1 range and apply noise gate
+            volume = Math.min(1, volume);
+            const noiseThreshold = 0.02;
+            if (volume < noiseThreshold) volume = 0;
+            
+            // Update history and calculate smooth volume
+            volumeHistory.push(volume);
+            volumeHistory.shift();
+            const smoothVolume = volumeHistory.reduce((a, b) => a + b, 0) / volumeHistory.length;
+            
+            // Visualization parameters based on state
+            let baseRadius, radiusMultiplier, colorScheme, pulseSpeed;
+            
+            switch(botState) {
+                case 'listening':
+                    // Larger, more energetic circles with warmer colors
+                    baseRadius = 0.15;
+                    radiusMultiplier = 0.85;
+                    colorScheme = ['rgb(255, 100, 50)', 'rgb(255, 160, 0)', 'rgb(255, 220, 50)'];
+                    pulseSpeed = performance.now() / 30;
+                    break;
+                    
+                case 'processing':
+                    // Medium, controlled movements with transitional colors
+                    baseRadius = 0.12;
+                    radiusMultiplier = 0.65;
+                    colorScheme = ['rgb(50, 150, 255)', 'rgb(100, 120, 255)', 'rgb(150, 100, 255)'];
+                    pulseSpeed = performance.now() / 60;
+                    break;
+                    
+                case 'responding':
+                    // Smooth, rhythmic expansions with cool color indicators
+                    baseRadius = 0.10;
+                    radiusMultiplier = 0.75;
+                    colorScheme = ['rgb(0, 191, 255)', 'rgb(50, 200, 200)', 'rgb(100, 210, 150)'];
+                    pulseSpeed = performance.now() / 45;
+                    break;
+                    
+                default: // idle
+                    // Subtle, passive movements
+                    baseRadius = 0.08;
+                    radiusMultiplier = 0.4;
+                    colorScheme = ['rgb(100, 100, 255)', 'rgb(80, 80, 200)', 'rgb(60, 60, 150)'];
+                    pulseSpeed = performance.now() / 80;
+                    break;
+            }
+            
+            // Add pulsing effect
+            const pulse = (Math.sin(pulseSpeed % (Math.PI * 2)) + 1) * 0.15;
+            
+            // Calculate radius for each circle
+            let bassRadius, midRadius, trebleRadius;
+            
+            if (botState === 'listening') {
+                // In listening mode, circles respond directly to audio volume
+                bassRadius = maxRadius * (baseRadius + radiusMultiplier * smoothVolume + pulse * 0.5);
+                midRadius = maxRadius * (baseRadius * 0.8 + radiusMultiplier * 0.7 * smoothVolume + pulse * 0.3);
+                trebleRadius = maxRadius * (baseRadius * 0.6 + radiusMultiplier * 0.4 * smoothVolume + pulse * 0.2);
+            } else {
+                // In other modes, circles animate more independently of actual audio
+                bassRadius = maxRadius * (baseRadius + radiusMultiplier * 0.4 + pulse);
+                midRadius = maxRadius * (baseRadius * 0.8 + radiusMultiplier * 0.3 + pulse * 0.7);
+                trebleRadius = maxRadius * (baseRadius * 0.6 + radiusMultiplier * 0.2 + pulse * 0.5);
+            }
+            
+            // Draw circles
+            drawCircle(centerX, centerY, bassRadius, colorScheme[0], 4);
+            drawCircle(centerX, centerY, midRadius, colorScheme[1], 3);
+            drawCircle(centerX, centerY, trebleRadius, colorScheme[2], 2);
+        }
+        
+        // Draw a single circle
+        function drawCircle(x, y, radius, color, lineWidth) {
+            ctx.beginPath();
+            ctx.arc(x, y, radius, 0, Math.PI * 2);
+            ctx.strokeStyle = color;
+            ctx.lineWidth = lineWidth;
+            ctx.shadowBlur = 15;
+            ctx.shadowColor = color;
+            ctx.stroke();
+            ctx.shadowBlur = 0;
+        }
+        
+        // Helper function to get average frequency in a range
+        function getAverageFrequency(startFreq, endFreq) {
+            if (!audioContext || !analyser || !frequencyData) return 0;
+            
+            // Map frequencies to indices in the frequency data array
+            const nyquist = audioContext.sampleRate / 2;
+            const startIndex = Math.floor(startFreq / nyquist * frequencyData.length);
+            const endIndex = Math.floor(endFreq / nyquist * frequencyData.length);
+            
+            let sum = 0;
+            let count = 0;
+            
+            // Sum values in the range
+            for (let i = startIndex; i <= endIndex && i < frequencyData.length; i++) {
+                sum += frequencyData[i];
+                count++;
+            }
+            
+            // Return normalized average (0-1)
+            return count > 0 ? sum / (count * 255) : 0;
+        }
+        
+        // Add gentle glow effect with color matching current state
+        function updateGlow() {
+            const glow = document.querySelector('.glow');
+            let hue;
+            
+            switch(botState) {
+                case 'listening':
+                    hue = 30; // Orange/yellow
+                    break;
+                case 'processing':
+                    hue = 260; // Purple
+                    break;
+                case 'responding':
+                    hue = 180; // Cyan
+                    break;
+                default:
+                    hue = 220; // Blue
+                    break;
+            }
+            
+            // Add subtle movement to the hue
+            const hueVariation = Math.sin(performance.now() / 2000) * 20;
+            hue = (hue + hueVariation) % 360;
+            
+            glow.style.background = `radial-gradient(ellipse at center, hsla(${hue}, 100%, 60%, 0.3) 0%, rgba(0, 0, 0, 0) 70%)`;
+            requestAnimationFrame(updateGlow);
+        }
+        updateGlow();
+    </script>
+</body>
+</html>
