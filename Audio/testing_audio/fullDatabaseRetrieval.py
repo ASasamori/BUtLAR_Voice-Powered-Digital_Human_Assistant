@@ -1,3 +1,10 @@
+# File: Audio/testing_audio/fullDatabaseRetrieval.py
+# Project: BUtLAR_Voice-Powered-Digital_Human_Assistant
+
+# This file contains code relevant to the LLM and database retrieval portion of the project.
+# It is responsible for querying the database and returning the relevant information to the user.
+# It also includes functions for name correction and formatting of course information.
+
 import json
 from openai import OpenAI
 from textwrap import shorten
@@ -8,6 +15,12 @@ from pathlib import Path
 import pandas as pd
 import os
 import re
+
+# imports for Vanna
+from vanna.openai import OpenAI_Chat
+from vanna.chromadb import ChromaDB_VectorStore
+import io
+from contextlib import redirect_stdout
 
 # PATH SETUP: Get the directory of this script
 script_dir = Path(__file__).resolve().parent
@@ -24,7 +37,6 @@ client = OpenAI(api_key=open_ai_api_key)
 
 # File path for course data
 COURSE_DATA_FILE = "/home/yobe/BUtLAR_Voice-Powered-Digital_Human_Assistant/Audio/testing_audio/database/BUECEClasses_SP2025.json"
-
 
 day_lookup = {
     "Mo": "Mondays", "Tu": "Tuesdays", "We": "Wednesdays",
@@ -76,27 +88,7 @@ def is_professor_question(question):
         "professor", "dr.", "instructor", "taught by"
     ])
 
-
-def text_to_speech(text, output_file="text_to_speech_output.mp3"):
-    """
-    Convert text to speech using OpenAI's Text-to-Speech API
-    """
-    try:
-        response = client.audio.speech.create(
-            model="tts-1",  # You can also use "tts-1-hd" for higher quality
-            voice="onyx", 
-            input=text,
-        )
-        
-        # Save the audio file
-        output_path = script_dir / output_file
-        response.stream_to_file(output_path)
-        return output_path
-    except Exception as e:
-        print(f"Error in text-to-speech conversion: {e}")
-        return None
-
-
+# Function to correct last names in the question based on instructor names
 def correct_last_name(question):
     # Load instructor names database
     df = pd.read_csv(script_dir / "database/instructorNames.csv")
@@ -195,7 +187,6 @@ def summarize_course_for_question(question, courses):
     summary = []
     requested_type = get_requested_section_type(question)
 
-
      # Handle case: "what courses does [professor] teach?"
     if is_professor_question(question):
         professor_courses = []
@@ -217,7 +208,7 @@ def summarize_course_for_question(question, courses):
         if professor_courses:
             return [f"This professor teaches:\n" + "\n".join(professor_courses)]
             
-
+    # Check if the question is about a specific course
     for section_list in course_groups.values():
         subject = section_list[0]["subject"]
         if subject.startswith("ENG"):
@@ -233,6 +224,7 @@ def summarize_course_for_question(question, courses):
         if normalized_course_code not in normalized_question and course_title.lower() not in user_question:
             continue
 
+        # Check if the question is about a specific professor
         if is_professor_question(question):
             for sec in section_list:
                 instructor = ", ".join(i['name'] for i in sec.get("instructors", [])) or "TBA"
@@ -296,6 +288,7 @@ def summarize_course_for_question(question, courses):
 
     return summary
 
+# Function to ask a question and get a response from OpenAI
 def ask_question(question):
     """Loads course data, processes it, and queries OpenAI."""
     with open(COURSE_DATA_FILE) as f:
@@ -321,6 +314,7 @@ def ask_question(question):
     )
     return response.choices[0].message.content
 
+
 def answer_course_question(question):
     """Single function to call when importing this file elsewhere."""
     corrected_question = correct_last_name(question)
@@ -328,39 +322,24 @@ def answer_course_question(question):
 
     response_text = ask_question(corrected_question)
 
-    # Text to Speech Conversion
-    # print("Converting response to speech...")
-    # audio_file = text_to_speech(response_text)
-    # print(f"Audio file saved to: {audio_file}")
-    # os.write(1, f"Audio: {audio_file}\n".encode())
+    # Consider adding different TTS model here
 
     return response_text
 
-from vanna.openai import OpenAI_Chat
-from vanna.chromadb import ChromaDB_VectorStore
-from openai import OpenAI
-import os
-from dotenv import load_dotenv
-import io
-from contextlib import redirect_stdout
-
-
+# ******* Vanna Class *******
 class MyVanna(ChromaDB_VectorStore, OpenAI_Chat):
     def __init__(self, config=None):
         ChromaDB_VectorStore.__init__(self, config=config)
         OpenAI_Chat.__init__(self, config=config)
-
 
 # Load the .env file
 load_dotenv()
 
 # Retrieve the values using os.environ
 api_key = os.getenv('open_ai_api_key')
-# print(f"The variable is {api_key}")
 
+# New function to answer course questions using Vanna
 def answer_course_question_new(question: str):
-
-
     vn = MyVanna(config={'api_key': api_key, 'model': 'gpt-3.5-turbo'})
     vn.connect_to_postgres(host='34.134.126.254', dbname='tutorialDB', user='postgres', password='butlar', port='5432')
 

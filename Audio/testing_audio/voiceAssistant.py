@@ -1,7 +1,5 @@
 # voice_assistant.py
-import os
-import sys
-import time, audioop
+import os, sys, time
 from google.cloud import speech
 from pathlib import Path
 from google.cloud.speech_v1 import RecognitionConfig, StreamingRecognitionConfig, StreamingRecognizeRequest
@@ -12,18 +10,8 @@ from test import interpret_vanna_msg
 import threading, queue
 from pathlib import Path
 from sql_database.txtToLLM import text_to_llm
-import sounddevice as sd
-import soundfile as sf
 from dotenv import load_dotenv
 import numpy as np
-from speechmatics.client import WebsocketClient
-from speechmatics.models import (
-    ConnectionSettings,
-    AudioSettings,
-    TranscriptionConfig,
-    ServerMessageType
-)
-from httpx import HTTPStatusError
 import tempfile
 
 # PATH SETUP: Get the directory of this script
@@ -35,7 +23,6 @@ load_dotenv(dotenv_path=dotenv_path)
 speechmatics_key = os.getenv("SPEECHMATICS_KEY")
 if not speechmatics_key:
     raise ValueError("Speechmatics API key not found in .env file")
-
 
 # 🔐 Your Speechmatics real-time API key
 API_KEY = speechmatics_key  
@@ -128,6 +115,7 @@ def process_audio_stream():
     timeout_thread = threading.Thread(target=timeout_check, daemon=True)
     timeout_thread.start()
 
+    # Function to handle audio streaming
     def audio_generator():
         was_paused = False
         duration_file = Path(flag_file.parent) / "tts_duration.flag"
@@ -141,7 +129,7 @@ def process_audio_stream():
 
             if flag == "responding":
                 if not was_paused:
-                    print("🛑 Audio paused (TTS responding)...", file=sys.stderr)
+                    print("Audio paused (TTS responding)...", file=sys.stderr)
                     sys.stderr.flush()
                     was_paused = True
                 time.sleep(0.1)
@@ -181,6 +169,7 @@ def process_audio_stream():
             chunk = sys.stdin.buffer.read(4096)
             if not chunk:
                 break
+            # This is where we yield the audio chunk to the API
             yield StreamingRecognizeRequest(audio_content=chunk)
 
     full_question = ""
@@ -226,7 +215,6 @@ def process_audio_stream():
                 return
 
             if result.is_final:
-                
                 full_question += transcript + " "
                 last_final_time = time.time()
                 processed = False
@@ -253,7 +241,7 @@ def process_audio_stream():
 
                     os.write(1, f"Response: {llm_response}\n".encode())  # Print immediately with os.write
 
-                    os.write(1, b"Ready for next question...\n")  # Immediate prompt
+                    os.write(1, b"Ready for next question...\n")  # Immediate prompt for next question
                     sys.stdout.flush()  # Additional flush for safety
 
                     full_question = ""
