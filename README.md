@@ -20,7 +20,7 @@ While working with real-time streaming with the Yobe SDK, please keep the follow
 
 **Future Advancements:**
 ----------------------------------------------------------------------------------------------------
-The main advancement our product would benefit from invovled integrating the new BioPSI Yobe SDK. To fully complete the product, future teams should focus on implementing the templating stage for the new SDK and configuring it to support both denoising and biometric tracking capabilities. The foundation We've established this semester provides a foundation for these features, which will further improve BUtLAR's ability to function in noisy environments and personalize responses based on speaker identification.
+The main advancement our product would benefit from involves integrating the new BioPSI Yobe SDK. To fully complete the product, future teams should focus on implementing the templating stage for the new SDK and configuring it to support both denoising and biometric tracking capabilities. The foundation we've established this semester provides a foundation for these features, which will further improve BUtLAR's ability to function in noisy environments and personalize responses based on speaker identification.
 
 Our ASR processing does not transcribe with high accuracy. Future groups can consider other providers (other than Google) to boost this.
 
