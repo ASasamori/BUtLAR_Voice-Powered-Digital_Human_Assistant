@@ -14,6 +14,7 @@ Our design integrates Yobe’s Audio Processing SDK, OpenAI’s LLM, Google ASR,
 While working with real-time streaming with the Yobe SDK, please keep the following in mind:
 * It is important to understand how splitting buffers would affect subsequent steps in our pipeline (i.e., if a word gets split, how the ASR would process this)
 * Keep in mind the Yobe SDK uses 4096-sized buffers; subsequent processing must match this size to ensure compatibility.
+* Please update the Google ASR account and OpenAI API key. We have terminated our temporary Google Cloud account. We stored confidential keys in our .env folder.
 * We encountered challenges with the Raspberry Pi's local file handling for audio output (text-to-speech). To address this limitation, we implemented a Web Speech API text-to-speech (TTS) solution instead of continuing with OpenAI's TTS, which had been saving each response as an MP3 file. This approach created issues where each new response would overwrite the previous file and remain inaccessible for playback from the Pi. If future groups want to change this API, this is an important consideration to keep in mind.
 * Future groups should modify the database to their use-case-specific scenario. Our current database pertains to Spring 2025 courses at Boston University.
 
