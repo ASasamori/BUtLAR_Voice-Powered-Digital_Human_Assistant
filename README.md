@@ -18,7 +18,9 @@ While working with real-time streaming with the Yobe SDK, please keep the follow
 For other components of our pipeline, please keep the following in mind:
 * Our framework is intended to be context-dependent. This means that you may replace our database with a database of your choice to enable BUtLAR to curate answers pertinent to the content of your choice. Essentially, future groups should modify the database to their use-case-specific scenario. Our current database pertains to Spring 2025 courses at Boston University.
 * Please update the Google ASR account and OpenAI API key. We have terminated our temporary Google Cloud account. We stored confidential keys in our .env folder.
-* We ran into issues where the responder was stuck in a feedback loop — that is, the responder would capture its own Text-To-Speech (TTS) output as input, thinking it was a query from the user. To address this, we had to employ audio flushing based on the length of the TTS output. This is important to keep in mind when understanding the audio capture processes, especially when supporting looping conversations. It’s also worthwhile to note that this sometimes triggered an error in the Google ASR capture, specifically an Error 400 message. The ASR expects constant audio streaming, so flushing the audio disrupted this. Our system also uses a flag-based mechanism to manage conversation flow, pausing audio capture during system responses. 
+* We ran into issues where the responder was stuck in a feedback loop — that is, the responder would capture its own Text-To-Speech (TTS) output as input, thinking it was a query from the user. To address this, we had to employ audio flushing based on the length of the TTS output. This is important to keep in mind when understanding the audio capture processes, especially when supporting looping conversations.
+    * It is also worthwhile to note that this sometimes triggered an error in the Google ASR capture, specifically an Error 400 message. The ASR expects constant audio streaming, so flushing the audio disrupted this.
+    * Our system also uses a flag-based mechanism to manage conversation flow, pausing audio capture during system responses. 
 * We encountered challenges with the Raspberry Pi's local file handling for audio output (text-to-speech). To address this limitation, we implemented a Web Speech API text-to-speech (TTS) solution instead of continuing with OpenAI's TTS, which had been saving each response as an MP3 file. This approach created issues where each new response would overwrite the previous file and remain inaccessible for playback from the Pi. If future groups want to change this API, this is an important consideration to keep in mind. 
 
 
@@ -40,16 +42,21 @@ ssh yobe@128.197.180.176
 
 Navigate to the appropriate directory:
 cd BUtLAR_Voice-Powered-Digital_Human_Assistant/Audio/testing_audio/django_top
-```bash
-Running the Session
+
+**Running the Session:**
 1. Activate the GCloud virtual environment:
-<br/>source ~/gcloudenv/bin/activate
-2. Start the server:
-<br/>daphne -b 127.0.0.1 -p 8000 django_top.asgi:application
-3. Access the BUtLAR interface by navigating to:
-<br/>http://127.0.0.1:8000/butlar/interface/
-4. Press Enter to begin the session.
+```bash
+source ~/gcloudenv/bin/activate
 ```
+2. Start the server:
+```bash
+daphne -b 127.0.0.1 -p 8000 django_top.asgi:application
+```
+3. Access the BUtLAR interface by navigating to:
+```bash
+http://127.0.0.1:8000/butlar/interface/
+```
+4. Press Enter to begin the session.
 
 ## Contributors
 
