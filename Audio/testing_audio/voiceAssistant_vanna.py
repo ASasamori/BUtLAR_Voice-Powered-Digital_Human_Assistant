@@ -3,7 +3,7 @@ import pyaudio
 from google.cloud import speech
 from google.cloud.speech_v1 import StreamingRecognizeRequest, StreamingRecognitionConfig, RecognitionConfig
 from six.moves import queue
-from test import interpret_vanna_msg
+from call_vanna import interpret_vanna_msg
 import re
 
 RATE = 16000

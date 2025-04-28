@@ -1,4 +1,4 @@
-from test import interpret_vanna_msg
+from call_vanna import interpret_vanna_msg
 
 
 def help_world():

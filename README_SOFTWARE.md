@@ -157,75 +157,59 @@ if "goodbye" in transcript_lower and ("butlar" in transcript_lower or "butler" i
 ![](images/school_db.png)
 
 # Flowchart
-![](images/Flowchart.png)
+![alt text](images/chart.png)
 
-### *Green indicates a user, blue indicates frontend, purple indicates backend and database*
+### *Green indicates a user, blue indicates frontend, purple indicates backend, and brown is the database*
 
 # Future Work (Using BUtLAR across other datasets)
 [![VannaAI](https://img.shields.io/badge/VannaAI-Database_QA-skyblue)](https://vanna.ai/)
 
 "[Vanna](https://github.com/vanna-ai/vanna)
  is an MIT-licensed open-source Python RAG (Retrieval-Augmented Generation) framework for SQL generation and related functionality." - 
-, a sample one was created on Google Cloud following this 
-[guide](https://medium.com/@harits.muhammad.only/how-to-deploy-free-postgresql-database-server-on-google-cloud-vm-instance-7dc0c8999a12). It was accomplished using a ```e2-micro``` VM.
+
+A Google Cloud hosted VM was created for this project to host a Postgres database. It was made following this
+[guide](https://medium.com/@harits.muhammad.only/how-to-deploy-free-postgresql-database-server-on-google-cloud-vm-instance-7dc0c8999a12). We use a ```e2-micro``` VM since it was the cheapest option.
 ![](images/VM_costs.png)
 
+VannaAI was adopted since it's usability across different platforms. You will need to assign a database, LLM, and metadata storage. Here are the options that you can choose from:
 
-# Customer usage:
-To utilize this software project and to achieve everything that we have accomplished you will need to follow the steps below:
+#### Database:
+``` 
+Postgres, Microsoft SQL Server, MySQL, DuckDB, Snowflake, BigQuery, SQLite, Oracle, or any other SQL-baseed database
+```
 
-1. Create a virtual environment based on the [requirements.txt](requirements.txt) file. **You do not need any other downloads other than having Python 3.12 and the Python packages specified by the requirements.txt**
-2. Create a Google Cloud project and make sure your terminal session connects to your service account. You can find a more detailed explanation on this link:
-https://cloud.google.com/resource-manager/docs/creating-managing-projects
-You can follow these instructions in [google_cloud_instructions.txt](requirements.txt)
-3. Run the server via 
+#### LLM:
+``` 
+OpenAI, Azure OpenAI, Anthropic, Ollama, Gemini, Mistral, or other LLM model
+```
 
-```daphne -b 127.0.0.1 -p 8000 django_top.asgi:application```
+#### Metadata storage:
+```
+ChromaDB, Qdrant, Marqo, or any other vector database (this requires much more setup)
+```
 
-4. Enter the url in the web browser of your choosing:
+Use the [intialize_database.ipynb](/Audio/testing_audio/intialize_database.ipynb) file to configure the appropriate API key and LLM.
 
-```http://127.0.0.1:8000/butlar/interface/```
+Note that the following configurations are for OpenAI as the LLM, Postgres as the database, and ChromaDB as the vector field.
 
-    
+```python
+vn = MyVanna(config={'api_key': api_key, 'model': 'gpt-3.5-turbo'})
+vn.connect_to_postgres(host=, dbname=, user=, password=, port=)
+```
 
+Add documentation from Vanna or other information that is easily parsable by the database. *You can follow the VannaAI documentation for more thorough explaination*
 
-
-Databases: Postgres, Microsoft SQL Server, MySQL, DuckDB, Snowflake, BigQuery, SQLite, Oracle, other SQL generated database
-LLM: OpenAI, Ollama, Azure OpenAI, Google Gemini, Anthropic, Mistral via Mistral API
-Metadata Storage: ChromaDB, Qdrant, Marquo, or other VectorDBs (requires additional setup)
-Use OpenAI API key, and add to environment variable.
-Initalize Google Cloud environment to your machine, via this:
-Use the intialize_database.ipynb file to configure API key and model
-
-Note that the information only applies to the PostGres database. There was not enough time/information to the other methods. Additionally, just using ChromaDB for metadata storage. 
-
-Change the information so that the host is available.
-<!-- vn.connect_to_postgres(host='35.226.19.55', dbname='ece_day_db', user='postgres', password='butlar', port='5432') -->
-
-Add documentation from Vanna or other information that is easily parsable by the database
-
-Use information such as:
-
-
-
-
-
-<!-- 
-
+```python
 # The information schema query may need some tweaking depending on your database. This is a good starting point.
 df_information_schema = vn.run_sql("SELECT * FROM INFORMATION_SCHEMA.COLUMNS")
 
 # This will break up the information schema into bite-sized chunks that can be referenced by the LLM
 plan = vn.get_training_plan_generic(df_information_schema)
-plan
+```
 
-# If you like the plan, then uncomment this and run it to train
-# vn.train(plan=plan)
+The next portion of code is for training your data against your database. You can modify it slightly with the following methods. In testing with the ECE day dataset and the BU college courses, ```vn.train()``` was used the most extensively.
 
-
-
-# The following are methods for adding training data. Make sure you modify the examples to match your database.
-
+```python
 # DDL statements are powerful because they specify table names, colume names, types, and potentially relationships
 vn.train(ddl="""
     CREATE TABLE IF NOT EXISTS my-table (
@@ -239,11 +223,30 @@ vn.train(ddl="""
 vn.train(documentation="Our business defines OTIF score as the percentage of orders that are delivered on time and in full")
 
 # You can also add SQL queries to your training data. This is useful if you have some queries already laying around. You can just copy and paste those from your editor to begin generating new SQL.
-vn.train(sql="SELECT * FROM my-table WHERE name = 'John Doe'") -->
+vn.train(sql="SELECT * FROM my-table WHERE name = 'John Doe'")
+```
 
-<!-- vn = MyVanna(config={'api_key': api_key, 'model': 'gpt-3.5-turbo'})
+After initializing your code up to this point, you can run it alongside  [voiceAssistant_vanna.py](voiceAssistant_vanna.py) that uses code from [call_vanna.py](call_vanna.py). You will need to change the details about the database in voiceAssistant, again.
 
-# FIXME: The dbname is always dynamic!
-vn.connect_to_postgres(host='35.226.19.55', dbname='ece_day_db', user='postgres', password='butlar', port='5432') -->
+```python
+vn.connect_to_postgres(host=, dbname=, user, password=, port=)
+```
 
-<!-- Our database is running on a simple Postgres server hosted by Google Cloud Compute Engine. The chepaest option is being used, which is **e2-micro instance**. -->
+
+# Customer usage:
+To utilize this software project and to achieve everything that we have accomplished you will need to follow the steps below:
+
+1. Create a virtual environment based on the [requirements.txt](requirements.txt) file. **You do not need any other downloads other than having Python 3.12 and the Python packages specified by the requirements.txt**
+2. Create a Google Cloud project and make sure your terminal session connects to your service account. You can find a more detailed explanation on this link:
+https://cloud.google.com/resource-manager/docs/creating-managing-projects
+You can follow these instructions in [google_cloud_instructions.txt](requirements.txt)
+
+3. Create an API key for OpenAI and name it as ```SPEECHMATICS_KEY``` in the [.env](.env) file.
+
+4. Run the server via 
+
+```daphne -b 127.0.0.1 -p 8000 django_top.asgi:application```
+
+5. Enter the url in the web browser of your choosing:
+
+```http://127.0.0.1:8000/butlar/interface/```

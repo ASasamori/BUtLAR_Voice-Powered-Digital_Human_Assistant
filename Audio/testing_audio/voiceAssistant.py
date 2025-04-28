@@ -37,7 +37,7 @@ if not speechmatics_key:
     raise ValueError("Speechmatics API key not found in .env file")
 
 
-# 🔐 Your Speechmatics real-time API key
+
 API_KEY = speechmatics_key  
 LANGUAGE = "en"
 SAMPLE_RATE = 16000
