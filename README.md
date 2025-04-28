@@ -26,7 +26,7 @@ For other components of our pipeline, please keep the following in mind:
 
 **Future Advancements:**
 ----------------------------------------------------------------------------------------------------
-The main advancement our product would benefit from involves integrating the new BioPSI Yobe SDK. To fully complete the product, future teams should focus on implementing the templating stage for the new SDK and configuring it to support both denoising and biometric tracking capabilities. The foundation we've established this semester provides a foundation for these features, which will further improve BUtLAR's ability to function in noisy environments and personalize responses based on speaker identification. With this new SDK, groups can reconsider the need for a Raspberry-Pi. BioPSI is mac-based so keeping the implementation local is another approach to perhaps test.
+The main advancement our product would benefit from involves integrating the new BioPSI Yobe SDK. To fully complete the product, future teams should focus on implementing the templating stage for the new SDK and configuring it to support both denoising and biometric tracking capabilities. The foundation we've established this semester provides a foundation for these features, which will further improve BUtLAR's ability to function in noisy environments and personalize responses based on speaker identification. With this new SDK, groups can reconsider the need for a Raspberry Pi. BioPSI is Mac-based, so keeping the implementation local is another approach to perhaps test.
 
 Our ASR processing does not transcribe with high accuracy. Future groups can consider other providers (other than Google) to boost this.
 
@@ -58,7 +58,7 @@ http://127.0.0.1:8000/butlar/interface/
 ```
 4. Press Enter to begin the session.
 
-## Contributors
+## Contributors:
 
 **Noa Margolin¹**, **Suhani Mitra²**, **Jackie Salamy³**, **Andrew Sasamori⁴**
 
