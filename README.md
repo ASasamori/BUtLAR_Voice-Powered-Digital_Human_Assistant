@@ -1,11 +1,10 @@
 # BUtLAR: Voice-Powered Digital Human Assistant
 # Engineering Addendum for Future Groups
 
-
 **Introduction:**
 ----------------------------------------------------------------------------------------------------
 
-Meet BUtLAR! BUtLAR is an innovative audio responder capable of natural, voice-based conversations, offering users a more personalized and accurate experience across diverse categories. The responder is voice-activated and uses voice recognition to interact exclusively with authorized users. One of Yobe’s key features, speaker identification, ensures that if unrecognized voices are speaking, or if there is ambient noise, BUtLAR will not respond to those outside the recognition system. Additionally, users can specify when multiple speakers are present, allowing Yobe’s audio processing to focus solely on their unique targets. The overall design of BUtLAR emphasizes natural conversation and provides accurate responses to user queries. These components offer a cohesive product that highlights the powerful features of Yobe’s product.
+Meet BUtLAR! BUtLAR is an innovative audio responder capable of natural, voice-based conversations, offering users a more personalized and accurate experience across diverse categories. The responder is voice-activated and uses voice recognition to interact exclusively with authorized users. One of the Yobe SDK's key features, speaker identification, ensures that if unrecognized voices are speaking, or if there is ambient noise, BUtLAR will not respond to those outside the recognition system. Additionally, users can specify when multiple speakers are present, allowing Yobe’s audio processing to focus solely on their unique targets. The overall design of BUtLAR emphasizes natural conversation and provides accurate responses to user queries. These components offer a cohesive product that highlights the powerful features of Yobe’s product.
 
 Our design integrates Yobe’s Audio Processing SDK, OpenAI’s LLM, Google ASR, and a streamlined, minimalistic hardware setup to bring all components together. When a user asks a question, BUtLAR will retrieve a query from audio processed by Yobe’s SDK (“listen”), process the data with LLMs to formulate a correct response (“think”), and then relay this information to the user (“speak”). 
 
@@ -13,7 +12,7 @@ Our design integrates Yobe’s Audio Processing SDK, OpenAI’s LLM, Google ASR,
 ----------------------------------------------------------------------------------------------------
 While working with real-time streaming with the Yobe SDK, please keep the following in mind:
 * It is important to understand how splitting buffers would affect subsequent steps in our pipeline (i.e., if a word gets split, how the ASR would process this)
-* Keep in mind the Yobe SDK uses 4096-sized buffers; subsequent processing must match this size to ensure compatibility.
+* Please keep in mind the Yobe SDK uses 4096-sized buffers; subsequent processing must match this size to ensure compatibility.
 For other components of our pipeline, please keep the following in mind:
 * Our framework is intended to be context-dependent. This means that you may replace our database with a database of your choice to enable BUtLAR to curate answers pertinent to the content of your choice. Essentially, future groups should modify the database to their use-case-specific scenario. Our current database pertains to Spring 2025 courses at Boston University.
 * Please update the Google ASR account and OpenAI API key. We have terminated our temporary Google Cloud account. We stored confidential keys in our .env folder.
@@ -23,7 +22,7 @@ For other components of our pipeline, please keep the following in mind:
 
 **Future Advancements:**
 ----------------------------------------------------------------------------------------------------
-The main advancement our product would benefit from involves integrating the new BioPSI Yobe SDK. To fully complete the product, future teams should focus on implementing the templating stage for the new SDK and configuring it to support both denoising and biometric tracking capabilities. The foundation we've established this semester provides a foundation for these features, which will further improve BUtLAR's ability to function in noisy environments and personalize responses based on speaker identification.
+The main advancement our product would benefit from involves integrating the new BioPSI Yobe SDK. To fully complete the product, future teams should focus on implementing the templating stage for the new SDK and configuring it to support both denoising and biometric tracking capabilities. The foundation we've established this semester provides a foundation for these features, which will further improve BUtLAR's ability to function in noisy environments and personalize responses based on speaker identification. With this new SDK, groups can reconsider the need for a Raspberry-Pi. BioPSI is mac-based so keeping the implementation local is another approach to perhaps test.
 
 Our ASR processing does not transcribe with high accuracy. Future groups can consider other providers (other than Google) to boost this.
 
