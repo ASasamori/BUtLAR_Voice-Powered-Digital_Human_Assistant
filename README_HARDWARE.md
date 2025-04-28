@@ -12,7 +12,7 @@ BUtLAR is simple to set up, requiring minimal hardware.
 
 
 ## BUtLAR Hardware Block Diagram 
-BUtLAR's hardware block diagram follows as everything connected to the Raspberry Pi including the Rode microphones which are housed on the laptop.
+BUtLAR's hardware block diagram follows as everything connected to the Raspberry Pi including the Rode microphones which are housed on the microphone housing which is attached to the laptop.
 
 <img src="images/BUtLAR_Setup.png" width=50%>
 

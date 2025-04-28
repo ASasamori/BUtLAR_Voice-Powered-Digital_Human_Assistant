@@ -1,5 +1,7 @@
 # voice_assistant.py
-import os, sys, time
+import os
+import sys
+import time, audioop
 from google.cloud import speech
 from pathlib import Path
 from google.cloud.speech_v1 import RecognitionConfig, StreamingRecognitionConfig, StreamingRecognizeRequest
@@ -10,57 +12,6 @@ from test import interpret_vanna_msg
 import threading, queue
 from pathlib import Path
 from sql_database.txtToLLM import text_to_llm
-from dotenv import load_dotenv
-import numpy as np
-import tempfile
-
-# PATH SETUP: Get the directory of this script
-script_dir = Path(__file__).resolve().parent
-
-# get API key
-dotenv_path = script_dir / '../../.env'  # Adjust path to match your structure
-load_dotenv(dotenv_path=dotenv_path)
-speechmatics_key = os.getenv("SPEECHMATICS_KEY")
-if not speechmatics_key:
-    raise ValueError("Speechmatics API key not found in .env file")
-
-# 🔐 Your Speechmatics real-time API key
-API_KEY = speechmatics_key  
-LANGUAGE = "en"
-SAMPLE_RATE = 16000
-CHANNELS = 1
-RECORD_SECONDS = 5
-DTYPE = "int16"
-
-def expand_course_vocab(codes):
-    vocab = []
-    for code in codes:
-        letters = ''.join([c for c in code if c.isalpha()])
-        numbers = ''.join([c for c in code if c.isdigit()])
-        if not letters or not numbers:
-            continue
-
-        # Breakdown numbers
-        digits = ' '.join(numbers)
-        alt = []
-        if len(numbers) == 3:
-            alt.append(f"{numbers[0]} {numbers[1]} {numbers[2]}")
-            alt.append(f"{numbers[0]} {numbers[1:]}")  # e.g. four twelve
-            alt.append(f"{letters.lower()} {numbers[0]} {numbers[1:]}")  # e.g. easy 4 12
-        alt.append(f"{letters} {digits}")
-        alt.append(f"{letters.lower()} {digits}")
-        alt.append(f"{letters.upper()} {digits}")
-        alt.append(f"{letters} {numbers}")
-        alt.append(f"{letters.lower()} {numbers}")
-        alt.append(f"{letters.upper()} {numbers}")
-        alt.append(f"{' '.join(letters)} {digits}")  # E C 4 1 3
-        alt.append(f"{' '.join(letters)} {numbers}")  # E C 413
-
-        vocab.append({
-            "content": code,
-            "sounds_like": list(set(alt))  # unique
-        })
-    return vocab
 
 
 def process_audio_stream():
@@ -87,7 +38,6 @@ def process_audio_stream():
     )
     streaming_config = StreamingRecognitionConfig(config=config, interim_results=True)
     
-    # moved to display right at the start
     print("Response: Hi! I'm BUtLAR, here to answer any of your BU-related questions. I'm listening...")
     sys.stdout.flush() # Ensure startup message displays immediately
     
@@ -101,7 +51,6 @@ def process_audio_stream():
     def timeout_check():
         while True:
             elapsed_time = time.time() - timeout_start_time[0]
-            # print(f"time is {elapsed_time}")
             if elapsed_time > 45:
                 with open(flag_file, "w") as f:
                     f.write("responding")
@@ -115,7 +64,6 @@ def process_audio_stream():
     timeout_thread = threading.Thread(target=timeout_check, daemon=True)
     timeout_thread.start()
 
-    # Function to handle audio streaming
     def audio_generator():
         was_paused = False
         duration_file = Path(flag_file.parent) / "tts_duration.flag"
@@ -129,7 +77,7 @@ def process_audio_stream():
 
             if flag == "responding":
                 if not was_paused:
-                    print("Audio paused (TTS responding)...", file=sys.stderr)
+                    print("🛑 Audio paused (TTS responding)...", file=sys.stderr)
                     sys.stderr.flush()
                     was_paused = True
                 time.sleep(0.1)
@@ -150,6 +98,7 @@ def process_audio_stream():
                         with open(duration_file, "r") as f:
                             duration = float(f.read().strip())
                             # Slightly over-flush (1.2x) to guarantee silence
+                            # ADDRESSES FEEDBACK LOOP ISSUE
                             bytes_to_discard = int(duration * 1.4 * chunk_rate_per_second)
                             flush_chunks = max(50, bytes_to_discard // 4096)
                     if flush_chunks is not None:
@@ -169,7 +118,7 @@ def process_audio_stream():
             chunk = sys.stdin.buffer.read(4096)
             if not chunk:
                 break
-            # This is where we yield the audio chunk to the API
+            # Perform Google ASR transcription on the chunk
             yield StreamingRecognizeRequest(audio_content=chunk)
 
     full_question = ""
@@ -177,6 +126,7 @@ def process_audio_stream():
     processed = False
 
     try:
+
         requests = audio_generator()
         print(f"The type of requests is {type(requests)}")
         responses = client.streaming_recognize(config=streaming_config, requests=requests)
@@ -215,6 +165,7 @@ def process_audio_stream():
                 return
 
             if result.is_final:
+                
                 full_question += transcript + " "
                 last_final_time = time.time()
                 processed = False
@@ -227,27 +178,22 @@ def process_audio_stream():
                     with open(flag_file, "w") as f:
                         f.write("responding")
                     sys.stdout.flush()  # Ensure the flag is written
-                    # print(f"Processing question: '{full_question.strip()}'")
 
-                    # Latency check before processing the question
-                    question_start_time = time.time()
+                    question_start_time = time.time() # Latency check before processing the question
 
                     is_in_LLM = True
                     sys.stdout.flush()  # Flush to show processing start
 
                     # Generate and print response immediately
-
                     llm_response = text_to_llm(full_question.strip())
-
                     os.write(1, f"Response: {llm_response}\n".encode())  # Print immediately with os.write
 
-                    os.write(1, b"Ready for next question...\n")  # Immediate prompt for next question
+                    os.write(1, b"Ready for next question...\n")  # Immediate prompt
                     sys.stdout.flush()  # Additional flush for safety
 
                     full_question = ""
-                    processed = True                    
-                    # RESET the timeout start time after processing
-                    timeout_start_time[0] = time.time()
+                    processed = True                   
+                    timeout_start_time[0] = time.time() # RESET the timeout start time after processing
 
                     # Latency check after processing the full question
                     end_time = time.time()
@@ -256,6 +202,7 @@ def process_audio_stream():
     except Exception as e:
         print(f"Error occurred: {str(e)}", file=sys.stderr)
         sys.stdout.flush()
+
     finally:
         sys.stdout.flush()
         try:

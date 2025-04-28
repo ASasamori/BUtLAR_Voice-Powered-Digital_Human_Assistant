@@ -4,7 +4,9 @@
 **Introduction:**
 ----------------------------------------------------------------------------------------------------
 
-Meet BUtLAR! BUtLAR is an innovative audio responder capable of natural, voice-based conversations, offering users a more personalized and accurate experience across diverse categories. The responder is voice-activated and uses voice recognition to interact exclusively with authorized users. One of the Yobe SDK's key features, speaker identification, ensures that if unrecognized voices are speaking, or if there is ambient noise, BUtLAR will not respond to those outside the recognition system. Additionally, users can specify when multiple speakers are present, allowing Yobe’s audio processing to focus solely on their unique targets. The overall design of BUtLAR emphasizes natural conversation and provides accurate responses to user queries. These components offer a cohesive product that highlights the powerful features of Yobe’s product.
+Meet BUtLAR! BUtLAR is an innovative audio responder capable of natural, voice-based conversations, offering users a more personalized and accurate experience across diverse categories. The responder is voice-activated and aims to highlight the advanced audio processing that Yobe, our client, offers. BUtLAR has capabilities to seamlessly integrate features from Yobe Inc. that personalize audio processing through speaker identification, noise immunity, and answer generation in real-time. The overall design of BUtLAR emphasizes natural conversation and provides accurate responses to user queries. These components offer a cohesive product that highlights the powerful features of Yobe’s product.
+
+Our current implementation does not include Yobe's SDK. The SDK release we had access to was far more compatible with a one-query model, which we previously implemented. We wanted to emphasize the conversational aspect of BUtLAR, and therefore do not utilize the previous SDK. However, Yobe's new SDK has extensive potential for integrating a real-time audio capture. This repository serves as the groundwork for implementing the new SDK, called BioPSI.
 
 Our design integrates Yobe’s Audio Processing SDK, OpenAI’s LLM, Google ASR, and a streamlined, minimalistic hardware setup to bring all components together. When a user asks a question, BUtLAR will retrieve a query from audio processed by Yobe’s SDK (“listen”), process the data with LLMs to formulate a correct response (“think”), and then relay this information to the user (“speak”). 
 
@@ -16,7 +18,7 @@ While working with real-time streaming with the Yobe SDK, please keep the follow
 For other components of our pipeline, please keep the following in mind:
 * Our framework is intended to be context-dependent. This means that you may replace our database with a database of your choice to enable BUtLAR to curate answers pertinent to the content of your choice. Essentially, future groups should modify the database to their use-case-specific scenario. Our current database pertains to Spring 2025 courses at Boston University.
 * Please update the Google ASR account and OpenAI API key. We have terminated our temporary Google Cloud account. We stored confidential keys in our .env folder.
-* We ran into issues where the responder was stuck in a feedback loop — that is, the responder would capture its own Text-To-Speech (TTS) output as input, thinking it was a query from the user. To address this, we had to employ audio flushing based on the length of the TTS output. This is important to keep in mind when understanding the audio capture processes, especially for support a looping conversation.
+* We ran into issues where the responder was stuck in a feedback loop — that is, the responder would capture its own Text-To-Speech (TTS) output as input, thinking it was a query from the user. To address this, we had to employ audio flushing based on the length of the TTS output. This is important to keep in mind when understanding the audio capture processes, especially when supporting looping conversations. It’s also worthwhile to note that this sometimes triggered an error in the Google ASR capture, specifically an Error 400 message. The ASR expects constant audio streaming, so flushing the audio disrupted this. Our system also uses a flag-based mechanism to manage conversation flow, pausing audio capture during system responses. 
 * We encountered challenges with the Raspberry Pi's local file handling for audio output (text-to-speech). To address this limitation, we implemented a Web Speech API text-to-speech (TTS) solution instead of continuing with OpenAI's TTS, which had been saving each response as an MP3 file. This approach created issues where each new response would overwrite the previous file and remain inaccessible for playback from the Pi. If future groups want to change this API, this is an important consideration to keep in mind. 
 
 
@@ -38,7 +40,7 @@ ssh yobe@128.197.180.176
 
 Navigate to the appropriate directory:
 cd BUtLAR_Voice-Powered-Digital_Human_Assistant/Audio/testing_audio/django_top
-
+```bash
 Running the Session
 1. Activate the GCloud virtual environment:
 <br/>source ~/gcloudenv/bin/activate
@@ -47,7 +49,7 @@ Running the Session
 3. Access the BUtLAR interface by navigating to:
 <br/>http://127.0.0.1:8000/butlar/interface/
 4. Press Enter to begin the session.
-
+```
 
 ## Contributors
 
