@@ -3,7 +3,7 @@
 [![Django](https://img.shields.io/badge/Django-Framework-092E20?logo=django&logoColor=white)](https://www.djangoproject.com/)
 [![miniaudio](https://img.shields.io/badge/miniaudio-Audio_Library-lightgrey)](https://github.com/mackron/miniaudio)
 
-*Our frontend implentation is extremely basic, it has just been implemented for voice activation and displaying the raw backend architecture.*
+*Our frontend implementation is extremely basic, it has just been implemented for voice activation and displaying the raw backend architecture.*
 
 ---
 
@@ -159,13 +159,13 @@ if "goodbye" in transcript_lower and ("butlar" in transcript_lower or "butler" i
 # Flowchart
 ![alt text](images/chart.png)
 
-### *Green indicates a user, blue indicates frontend, purple indicates backend, and brown is the database*
+### *Green indicates a user, blue indicates frontend, purple indicates backend, and orange is the database*
 
 # Future Work (Using BUtLAR across other datasets)
 [![VannaAI](https://img.shields.io/badge/VannaAI-Database_QA-skyblue)](https://vanna.ai/)
 
 "[Vanna](https://github.com/vanna-ai/vanna)
- is an MIT-licensed open-source Python RAG (Retrieval-Augmented Generation) framework for SQL generation and related functionality."
+ is an MIT-licensed open-source Python RAG (Retrieval-Augmented Generation) framework for SQL generation and related functionality" (Vanna-AI, 2024).
 
 A Google Cloud-hosted VM was created for this project to host a Postgres database. It was made following this
 [guide](https://medium.com/@harits.muhammad.only/how-to-deploy-free-postgresql-database-server-on-google-cloud-vm-instance-7dc0c8999a12). We use a ```e2-micro``` VM since it was the cheapest option.
