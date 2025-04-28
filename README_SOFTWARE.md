@@ -233,7 +233,7 @@ vn.connect_to_postgres(host=, dbname=, user, password=, port=)
 ```
 
 
-# Customer usage:
+# Customer Usage:
 To utilize this software project and to achieve everything that we have accomplished you will need to follow the steps below:
 
 1. Create a virtual environment based on the [requirements.txt](requirements.txt) file. **You do not need any other downloads other than having Python 3.12 and the Python packages specified by the requirements.txt**
@@ -241,7 +241,7 @@ To utilize this software project and to achieve everything that we have accompli
 https://cloud.google.com/resource-manager/docs/creating-managing-projects
 You can follow these instructions in [google_cloud_instructions.txt](requirements.txt)
 
-3. Create an API key for OpenAI and name it as ```SPEECHMATICS_KEY``` in the [.env](.env) file.
+3. Create an API key for OpenAI and name it as ```open_ai_api_key``` in the [.env](.env) file.
 
 4. Run the server via 
 
