@@ -22,7 +22,10 @@ class MyVanna(ChromaDB_VectorStore, OpenAI_Chat):
 
 def answer_course_question_new(question: str):
     vn = MyVanna(config={'api_key': api_key, 'model': 'gpt-3.5-turbo'})
-    vn.connect_to_postgres(host='34.60.28.103', dbname='ece_day_db', user='postgres', password='butlar', port='5432')
+
+
+    # FIXME: The dbname is always dynamic!
+    vn.connect_to_postgres(host='35.226.19.55', dbname='ece_day_db', user='postgres', password='butlar', port='5432')
     
     ### To make sure that the training data is being inherited properly:
     # training_data = vn.get_training_data()
