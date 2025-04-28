@@ -248,7 +248,7 @@ def process_audio_stream():
                     sys.stdout.flush()  # Flush to show processing start
 
                     # Generate and print response immediately
-
+                    
                     llm_response = text_to_llm(full_question.strip())
 
                     os.write(1, f"Response: {llm_response}\n".encode())  # Print immediately with os.write

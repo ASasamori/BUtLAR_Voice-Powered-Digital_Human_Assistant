@@ -4,6 +4,7 @@ from google.cloud import speech
 from google.cloud.speech_v1 import StreamingRecognizeRequest, StreamingRecognitionConfig, RecognitionConfig
 from six.moves import queue
 from test import interpret_vanna_msg
+import re
 
 RATE = 16000
 CHUNK = int(RATE / 10)  # 100ms
@@ -80,6 +81,28 @@ def listen_print_loop(responses, timeout=3):
 
     return full_transcript.strip()
 
+def clean_after_punctuation(text):
+    # Define punctuation marks you care about
+    punctuation_marks = r"[.!?]"
+    
+    # Find first punctuation
+    match = re.search(punctuation_marks, text)
+    if match:
+        first_punct_index = match.end()
+        
+        # Keep text up to and including the first punctuation
+        cleaned_text = text[:first_punct_index]
+        
+        # Option 1: If you want to add **only cleaned characters** after:
+        rest_of_text = text[first_punct_index:]
+        # Remove any non-space, non-punctuation, non-alphabetic junk after punctuation
+        rest_of_text = re.sub(r"[^a-zA-Z\s]", "", rest_of_text)
+        
+        return cleaned_text + rest_of_text.strip()
+    else:
+        # No punctuation found, return as-is
+        return text
+
 def main():
     client = speech.SpeechClient()
 
@@ -94,7 +117,6 @@ def main():
         interim_results=True,
     )
 
-    # Optional: Set device_index to AirPods if needed
     device_index = None
 
     with MicrophoneStream(RATE, CHUNK, device_index=device_index) as stream:
@@ -106,8 +128,8 @@ def main():
         transcript = listen_print_loop(responses)
 
     print(f"\nFinal Transcript: {transcript}")
-    print("\nCalling interpret_vanna_msg...")
-    llm_response = interpret_vanna_msg(transcript)
+    print(f"\nCalling interpret_vanna_msg with this transcript of {clean_after_punctuation(transcript)}")
+    llm_response = interpret_vanna_msg(clean_after_punctuation(transcript))
     print(f"LLM Response: {llm_response}")
 
 if __name__ == "__main__":
