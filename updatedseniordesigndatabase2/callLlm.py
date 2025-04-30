@@ -56,7 +56,7 @@ Examples:
   A: SELECT abstract_summary FROM teams WHERE team_name LIKE '%Team Alpha%';
 
 - Q: Where is Team Beta?
-  A: SELECT team_location FROM teams WHERE team_name LIKE '%Team Beta%';
+  A: SELECT team_location FROM teams WHERE team_name LIKE '%Team BUtLAR%';
 
 - Q: What is John Smith's project about?
   A: SELECT abstract_summary FROM teams WHERE team_members LIKE '%John Smith%';
@@ -71,6 +71,8 @@ Important Instructions:
 - Always use LIKE '%...'% for flexible matching.
 - If a person’s name is given, match against team_members.
 - If a team name is given, match against team_name.
+- If a team number is given, match against team_number
+- If a team location is asked, match against team_location
 - After answering any question, add: "If you want more information, go to **[team_location]**."
 
 User Question: {user_question}
