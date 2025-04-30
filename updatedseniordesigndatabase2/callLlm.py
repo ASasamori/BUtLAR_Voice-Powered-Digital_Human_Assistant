@@ -20,11 +20,13 @@ def lastNames(prompt):
         return None
 
 def generateSql(user_question):
-    user_question = user_question.upper()
+    """
+    Generates SQL queries based on user questions for the eceDay.db schema.
+    """
     prompt = f"""
-You are an expert SQL assistant. Based on the user’s question, generate a SQL query to retrieve the requested information from a SQLite database called 'eceDay.db'.
+You are a helpful assistant that generates SQL queries for a SQLite database named 'eceDay.db'.
 
-The database contains two tables:
+The schema includes:
 
 Table: teams
 - team_number (INTEGER)
@@ -40,49 +42,39 @@ Table: team_members
 - team_member (TEXT)
 - team_number (INTEGER)
 
-You should be able to answer questions like:
-- "Where is (NAME)'s table?"
-- "What is (TEAM)'s group about?"
-- "Where is (TEAM)?"
-- "What is (NAME)'s project about?"
-- "Who are the members in (TEAM)?"
-- "Who is the client for (TEAM)?"
+Instructions:
+- Use LOWER(team_name) LIKE LOWER('%...%') for partial team name matching.
+- Use team_number = [#] for numeric team lookups.
+- If the user asks about team members, JOIN teams and team_members ON team_number.
+- Only return the SQL query — no explanations.
 
 Examples:
-- Q: Where is John Smith's table?
-  A: SELECT team_location FROM teams WHERE team_members LIKE '%John Smith%';
+Q: What is SmoothOperator about?
+A: SELECT abstract_summary FROM teams WHERE LOWER(team_name) LIKE LOWER('%SmoothOperator%');
 
-- Q: What is Team Alpha's group about?
-  A: SELECT abstract_summary FROM teams WHERE team_name LIKE '%Team Alpha%';
+Q: Who is in team 14?
+A: SELECT team_member FROM team_members WHERE team_number = 14;
 
-- Q: Where is Team Beta?
-  A: SELECT team_location FROM teams WHERE team_name LIKE '%Team BUtLAR%';
+Q: Where is Mini Bots?
+A: SELECT team_location FROM teams WHERE LOWER(team_name) LIKE LOWER('%Mini Bots%');
 
-- Q: What is John Smith's project about?
-  A: SELECT abstract_summary FROM teams WHERE team_members LIKE '%John Smith%';
+Q: Who is the client for team 3?
+A: SELECT team_client FROM teams WHERE team_number = 3;
 
-- Q: Who are the members in Team Gamma?
-  A: SELECT team_members FROM teams WHERE team_name LIKE '%Team Gamma%';
+Q: What is the abstract for BUtLAR?
+A: SELECT abstract_summary FROM teams WHERE LOWER(team_name) LIKE LOWER('%BUtLAR%');
 
-- Q: Who is the client for Team Delta?
-  A: SELECT team_client FROM teams WHERE team_name LIKE '%Team Delta%';
+Now write the query to answer:
+{user_question}
 
-Important Instructions:
-- Always use LIKE '%...'% for flexible matching.
-- If a person’s name is given, match against team_members.
-- If a team name is given, match against team_name.
-- If a team number is given, match against team_number
-- If a team location is asked, match against team_location
-- After answering any question, add: "If you want more information, go to **[team_location]**."
-
-User Question: {user_question}
 Return only the SQL query.
 """
+
     try:
         completion = client.chat.completions.create(
-            model="gpt-4o-mini",
+            model="gpt-4o",
             messages=[
-                {"role": "system", "content": "You are an expert SQL assistant."},
+                {"role": "system", "content": "You are a helpful assistant."},
                 {"role": "user", "content": prompt}
             ]
         )
@@ -90,6 +82,7 @@ Return only the SQL query.
     except Exception as e:
         print(f"Error generating SQL query: {e}")
         return None
+
 
 def respondToUser(userResponse, result):
     promptResponse = f"""
