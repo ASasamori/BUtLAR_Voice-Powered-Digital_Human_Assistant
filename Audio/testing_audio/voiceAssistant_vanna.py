@@ -1,9 +1,10 @@
 import time
 import pyaudio
+import re
 from google.cloud import speech
 from google.cloud.speech_v1 import StreamingRecognizeRequest, StreamingRecognitionConfig, RecognitionConfig
 from six.moves import queue
-from test import interpret_vanna_msg
+from call_vanna import interpret_vanna_msg
 
 RATE = 16000
 CHUNK = int(RATE / 10)  # 100ms
@@ -18,8 +19,6 @@ class MicrophoneStream:
 
     def __enter__(self):
         self._audio_interface = pyaudio.PyAudio()
-
-        # Retrieves the default connection according to your device. Run test3.py to see
         if self.device_index is None:
             self.device_index = self._audio_interface.get_default_input_device_info()["index"]
 
@@ -54,15 +53,9 @@ class MicrophoneStream:
                 return
             yield StreamingRecognizeRequest(audio_content=chunk)
 
-def listen_print_loop(responses, timeout=3):
+def listen_print_loop(responses):
     full_transcript = ""
-    start_time = time.time()
-
     for response in responses:
-        if time.time() - start_time > timeout:
-            print("\n10 seconds passed. Stopping live transcription...")
-            break
-
         if not response.results:
             continue
 
@@ -71,18 +64,28 @@ def listen_print_loop(responses, timeout=3):
             continue
 
         transcript = result.alternatives[0].transcript
-
         if result.is_final:
             print(f"Final: {transcript}")
             full_transcript += transcript + " "
+            return full_transcript.strip()
         else:
             print(f"Interim: {transcript}", end="\r")
 
     return full_transcript.strip()
 
+def clean_after_punctuation(text):
+    punctuation_marks = r"[.!?]"
+    match = re.search(punctuation_marks, text)
+    if match:
+        first_punct_index = match.end()
+        cleaned_text = text[:first_punct_index]
+        rest_of_text = re.sub(r"[^a-zA-Z\s]", "", text[first_punct_index:])
+        return cleaned_text + rest_of_text.strip()
+    else:
+        return text
+
 def main():
     client = speech.SpeechClient()
-
     config = RecognitionConfig(
         encoding=speech.RecognitionConfig.AudioEncoding.LINEAR16,
         sample_rate_hertz=RATE,
@@ -94,21 +97,29 @@ def main():
         interim_results=True,
     )
 
-    # Optional: Set device_index to AirPods if needed
     device_index = None
 
+    print("Listening... (say 'goodbye' to exit)")
     with MicrophoneStream(RATE, CHUNK, device_index=device_index) as stream:
-        print("Listening... speak into the mic (10 seconds)...")
-        audio_generator = stream.generator()
-        requests = audio_generator
+        while True:
+            audio_generator = stream.generator()
+            responses = client.streaming_recognize(config=streaming_config, requests=audio_generator)
+            transcript = listen_print_loop(responses)
 
-        responses = client.streaming_recognize(config=streaming_config, requests=requests)
-        transcript = listen_print_loop(responses)
+            if not transcript:
+                continue  # Nothing captured, go again
 
-    print(f"\nFinal Transcript: {transcript}")
-    print("\nCalling interpret_vanna_msg...")
-    llm_response = interpret_vanna_msg(transcript)
-    print(f"LLM Response: {llm_response}")
+            cleaned_transcript = clean_after_punctuation(transcript)
+            lowered = cleaned_transcript.lower()
+
+            if "goodbye" in lowered or "bye" in lowered or "bye butler" in lowered:
+                print("Goodbye detected. Exiting...")
+                break
+
+            print(f"\nCalling interpret_vanna_msg with transcript: {cleaned_transcript}")
+            llm_response = interpret_vanna_msg(cleaned_transcript)
+            print(f"LLM Response: {llm_response}\n")
+            print("Ready for next question. Listening...")
 
 if __name__ == "__main__":
     main()

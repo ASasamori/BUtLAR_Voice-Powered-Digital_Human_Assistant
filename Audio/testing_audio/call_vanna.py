@@ -22,11 +22,14 @@ class MyVanna(ChromaDB_VectorStore, OpenAI_Chat):
 
 def answer_course_question_new(question: str):
     vn = MyVanna(config={'api_key': api_key, 'model': 'gpt-3.5-turbo'})
-    vn.connect_to_postgres(host='34.60.28.103', dbname='tutorialDB', user='postgres', password='butlar', port='5432')
+
+
+    # FIXME: The dbname is always dynamic!
+    vn.connect_to_postgres(host='34.9.3.158', dbname='ece_day_db', user='postgres', password='butlar', port='5432')
     
     ### To make sure that the training data is being inherited properly:
-    training_data = vn.get_training_data()
-    print(f"The value of training_data is {training_data}")
+    # training_data = vn.get_training_data()
+    # print(f"The value of training_data is {training_data}")
 
 
     try:
@@ -86,7 +89,7 @@ def interpret_vanna_msg(my_question):
     model="gpt-3.5-turbo",
     messages=[
         {"role": "developer", "content": "You are a helpful assistant in interpreting data tables into complete sentences and an intelligible response."},
-        {"role": "user", "content": f"Answer the question of: {my_question}, given this data table of{vanna_ans_tables}"}
+        {"role": "user", "content": f"Answer the question of: {my_question}, given this data table of: {vanna_ans_tables}"}
         ]
     )
     # print(f"The answer is {completion.choices[0].message.content}")

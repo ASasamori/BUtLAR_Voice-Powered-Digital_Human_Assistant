@@ -2,11 +2,11 @@ import time
 import pyaudio
 import wave
 from faster_whisper import WhisperModel
-from test import interpret_vanna_msg
+from call_vanna import interpret_vanna_msg
 
 RATE = 16000
 CHUNK = 1024
-RECORD_SECONDS = 10
+RECORD_SECONDS = 4
 OUTPUT_FILENAME = "temp_audio.wav"
 
 def record_audio(filename):
