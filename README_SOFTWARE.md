@@ -3,7 +3,7 @@
 [![Django](https://img.shields.io/badge/Django-Framework-092E20?logo=django&logoColor=white)](https://www.djangoproject.com/)
 [![miniaudio](https://img.shields.io/badge/miniaudio-Audio_Library-lightgrey)](https://github.com/mackron/miniaudio)
 
-*Our frontend implentation is extremely basic, it has just been implemented for voice activation and displaying the raw backend architecture.*
+*Our frontend implementation is extremely basic, it has just been implemented for voice activation and displaying the raw backend architecture.*
 
 ---
 
@@ -131,7 +131,7 @@ def correct_last_name(question):
 
 [voiceAssistant.py](Audio/testing_audio/voiceAssistant.py) streams live audio input to Google Cloud Speech-to-Text using the StreamingRecognizeRequest API. Audio is captured at 16 kHz, two-channel, 16-bit samples. The script also uses ```StreamingRecognizeRequest ``` configuration. In this way, there is automatic punctuation and interim results.
 
-Whenever the assistant is about to speak — for example, when it generates a TTS response based on a completed question — it writes a temporary flag indicating that it is “responding.” During this period, instead of reading real audio from the microphone, the generator deliberately produces silent audio chunks, made up of zero bytes. This allows the streaming connection to remain active, because Google’s API expects continuous audio, but it prevents the assistant’s own voice from being captured. Here, the silence injection is handled simply by yielding:
+Whenever the assistant is about to speak — for example, when it generates a TTS response based on a completed question — it writes a temporary flag indicating that it is “responding.” During this period, instead of reading real audio from the microphone, the generator deliberately produces silent audio chunks, made up of zero bytes. This allows the streaming connection to remain active because Google’s API expects continuous audio, but it prevents the assistant’s own voice from being captured. Here, the silence injection is handled simply by yielding:
 
 ```py 
 yield StreamingRecognizeRequest(audio_content=silent_chunk)
@@ -144,7 +144,7 @@ for _ in range(flush_chunks):
     _ = sys.stdin.buffer.read(4096)
 ```
 
-The code will also stop processing as soon as ```goodbye``` is spoken:
+The code will also stop processing as soon as ```goodbye``` is spoken, or if a timeout occurs. Here is the implementation of the former termination case:
 ```python
 if "goodbye" in transcript_lower and ("butlar" in transcript_lower or "butler" in transcript_lower):
     with open(flag_file, "w") as f:
@@ -159,28 +159,28 @@ if "goodbye" in transcript_lower and ("butlar" in transcript_lower or "butler" i
 # Flowchart
 ![alt text](images/chart.png)
 
-### *Green indicates a user, blue indicates frontend, purple indicates backend, and brown is the database*
+### *Green indicates a user, blue indicates frontend, purple indicates backend, and orange is the database*
 
 # Future Work (Using BUtLAR across other datasets)
 [![VannaAI](https://img.shields.io/badge/VannaAI-Database_QA-skyblue)](https://vanna.ai/)
 
 "[Vanna](https://github.com/vanna-ai/vanna)
- is an MIT-licensed open-source Python RAG (Retrieval-Augmented Generation) framework for SQL generation and related functionality." - 
+ is an MIT-licensed open-source Python RAG (Retrieval-Augmented Generation) framework for SQL generation and related functionality" (Vanna-AI, 2024).
 
-A Google Cloud hosted VM was created for this project to host a Postgres database. It was made following this
+A Google Cloud-hosted VM was created for this project to host a Postgres database. It was made following this
 [guide](https://medium.com/@harits.muhammad.only/how-to-deploy-free-postgresql-database-server-on-google-cloud-vm-instance-7dc0c8999a12). We use a ```e2-micro``` VM since it was the cheapest option.
 ![](images/VM_costs.png)
 
-VannaAI was adopted since it's usability across different platforms. You will need to assign a database, LLM, and metadata storage. Here are the options that you can choose from:
+VannaAI was adopted because of its usability across different platforms. You will need to assign a database, LLM, and metadata storage. Here are the options that you can choose from:
 
 #### Database:
 ``` 
-Postgres, Microsoft SQL Server, MySQL, DuckDB, Snowflake, BigQuery, SQLite, Oracle, or any other SQL-baseed database
+Postgres, Microsoft SQL Server, MySQL, DuckDB, Snowflake, BigQuery, SQLite, Oracle, or any other SQL-based database
 ```
 
 #### LLM:
 ``` 
-OpenAI, Azure OpenAI, Anthropic, Ollama, Gemini, Mistral, or other LLM model
+OpenAI, Azure OpenAI, Anthropic, Ollama, Gemini, Mistral, or other LLM models
 ```
 
 #### Metadata storage:
@@ -188,7 +188,7 @@ OpenAI, Azure OpenAI, Anthropic, Ollama, Gemini, Mistral, or other LLM model
 ChromaDB, Qdrant, Marqo, or any other vector database (this requires much more setup)
 ```
 
-Use the [intialize_database.ipynb](/Audio/testing_audio/intialize_database.ipynb) file to configure the appropriate API key and LLM.
+Use the [initialize_database.ipynb](/Audio/testing_audio/initialize_database.ipynb) file to configure the appropriate API key and LLM.
 
 Note that the following configurations are for OpenAI as the LLM, Postgres as the database, and ChromaDB as the vector field.
 
@@ -197,7 +197,7 @@ vn = MyVanna(config={'api_key': api_key, 'model': 'gpt-3.5-turbo'})
 vn.connect_to_postgres(host=, dbname=, user=, password=, port=)
 ```
 
-Add documentation from Vanna or other information that is easily parsable by the database. *You can follow the VannaAI documentation for more thorough explaination*
+Add documentation from Vanna or other information that is easily parsable by the database. *You can follow the VannaAI documentation for a more thorough explanation*
 
 ```python
 # The information schema query may need some tweaking depending on your database. This is a good starting point.
@@ -210,7 +210,7 @@ plan = vn.get_training_plan_generic(df_information_schema)
 The next portion of code is for training your data against your database. You can modify it slightly with the following methods. In testing with the ECE day dataset and the BU college courses, ```vn.train()``` was used the most extensively.
 
 ```python
-# DDL statements are powerful because they specify table names, colume names, types, and potentially relationships
+# DDL statements are powerful because they specify table names, column names, types, and potentially relationships
 vn.train(ddl="""
     CREATE TABLE IF NOT EXISTS my-table (
         id INT PRIMARY KEY,
@@ -226,28 +226,26 @@ vn.train(documentation="Our business defines OTIF score as the percentage of ord
 vn.train(sql="SELECT * FROM my-table WHERE name = 'John Doe'")
 ```
 
-After initializing your code up to this point, you can run it alongside  [voiceAssistant_vanna.py](voiceAssistant_vanna.py) that uses code from [call_vanna.py](call_vanna.py). You will need to change the details about the database in voiceAssistant, again.
+After initializing your code up to this point, you can run it alongside  [voiceAssistant_vanna.py](voiceAssistant_vanna.py) that uses code from [call_vanna.py](call_vanna.py). You will need to change the details about the database in voiceAssistant again.
 
 ```python
 vn.connect_to_postgres(host=, dbname=, user, password=, port=)
 ```
 
 
-# Customer usage:
-To utilize this software project and to achieve everything that we have accomplished you will need to follow the steps below:
+# Customer Usage:
+To utilize this software project and to achieve everything that we have accomplished, you will need to follow the steps below:
 
-1. Create a virtual environment based on the [requirements.txt](requirements.txt) file. **You do not need any other downloads other than having Python 3.12 and the Python packages specified by the requirements.txt**
-2. Create a Google Cloud project and make sure your terminal session connects to your service account. You can find a more detailed explanation on this link:
-https://cloud.google.com/resource-manager/docs/creating-managing-projects
-You can follow these instructions in [google_cloud_instructions.txt](requirements.txt)
+1. Create a virtual environment based on the [requirements.txt](requirements.txt) file. **You do not need any other downloads other than having Python 3.12 and the Python packages specified by the requirements.txt.**
+2. Create a Google Cloud project and make sure your terminal session connects to your service account. You can find a more detailed explanation at this [link](https://cloud.google.com/resource-manager/docs/creating-managing-projects). You can follow these instructions in [google_cloud_instructions.txt](requirements.txt).
 
-3. Create an API key for OpenAI and name it as ```SPEECHMATICS_KEY``` in the [.env](.env) file.
+3. Create an API key for OpenAI and name it as ```open_ai_api_key``` in the [.env](.env) file.
 
 4. Run the server via 
 
 ```daphne -b 127.0.0.1 -p 8000 django_top.asgi:application```
 
-5. Enter the url in the web browser of your choosing:
+5. Enter the URL in the web browser of your choice:
 
 ```http://127.0.0.1:8000/butlar/interface/```
 
