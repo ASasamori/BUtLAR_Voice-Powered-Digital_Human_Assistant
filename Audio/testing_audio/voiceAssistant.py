@@ -11,39 +11,17 @@ from fullDatabaseRetrieval import answer_course_question_new, answer_course_ques
 from test import interpret_vanna_msg
 import threading, queue
 from pathlib import Path
-from sql_database.txtToLLM import text_to_llm
+# from sql_database.txtToLLM import text_to_llm
+from ece_database.txtToLLM import text_to_llm
 import sounddevice as sd
 import soundfile as sf
 from dotenv import load_dotenv
 import numpy as np
-from speechmatics.client import WebsocketClient
-from speechmatics.models import (
-    ConnectionSettings,
-    AudioSettings,
-    TranscriptionConfig,
-    ServerMessageType
-)
 from httpx import HTTPStatusError
 import tempfile
 
 # PATH SETUP: Get the directory of this script
 script_dir = Path(__file__).resolve().parent
-
-# get API key
-dotenv_path = script_dir / '../../.env'  # Adjust path to match your structure
-load_dotenv(dotenv_path=dotenv_path)
-speechmatics_key = os.getenv("SPEECHMATICS_KEY")
-if not speechmatics_key:
-    raise ValueError("Speechmatics API key not found in .env file")
-
-
-# 🔐 Your Speechmatics real-time API key
-API_KEY = speechmatics_key  
-LANGUAGE = "en"
-SAMPLE_RATE = 16000
-CHANNELS = 1
-RECORD_SECONDS = 5
-DTYPE = "int16"
 
 def expand_course_vocab(codes):
     vocab = []
