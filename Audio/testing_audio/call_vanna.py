@@ -25,7 +25,7 @@ def answer_course_question_new(question: str):
 
 
     # FIXME: The dbname is always dynamic!
-    vn.connect_to_postgres(host='35.226.19.55', dbname='ece_day_db', user='postgres', password='butlar', port='5432')
+    vn.connect_to_postgres(host='34.9.3.158', dbname='ece_day_db', user='postgres', password='butlar', port='5432')
     
     ### To make sure that the training data is being inherited properly:
     # training_data = vn.get_training_data()
